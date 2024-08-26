@@ -9,10 +9,5 @@
 
     "include": [
         "source/**/*"
-<<<<<<< HEAD:TSOS-2024-main/TSOS-2024-main/tsconfig.json
-    ]
+    ],
 }
-=======
-    ]
-}
->>>>>>> e6a7401c1ce50694718716999a6b452e46c60a90:tsconfig.json
