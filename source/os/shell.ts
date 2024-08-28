@@ -79,6 +79,12 @@ module TSOS {
                 "- Displays the current date and time.");
             this.commandList[this.commandList.length] = sc;
 
+            // whereami
+            sc = new ShellCommand(this.shellWhereAmI,
+                "whereami",
+                "- Says where you are.");
+            this.commandList[this.commandList.length] = sc;
+
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
 
@@ -245,16 +251,24 @@ module TSOS {
                         _StdOut.putText("Ver will display what version LongOS is currently running.");
                         break;
                     case "shutdown":
-                        _StdOut.putText("Shutdown will shut down LongOS, but not the hardware that it runs on. Why would you want to shut it off?");
+                        _StdOut.putText("Shutdown will shut down LongOS, but not the hardware");
+                        _StdOut.advanceLine();
+                        _StdOut.putText("that it runs on. Why would you want to shut it off?");
                         break;
                     case "cls": 
-                        _StdOut.putText("Cls stands for clear screen and it will clear the screen. It also resets the cursor position to the top left.");
+                        _StdOut.putText("Cls stands for clear screen and it will clear the screen. ");
+                        _StdOut.advanceLine();
+                        _StdOut.putText(" It also resets the cursor position to the top left.");
                         break;
                     case "man":
-                        _StdOut.putText("Wait! That is this one. Man gives a better description of commands.");
+                        _StdOut.putText("Wait! That is this one.");
+                        _StdOut.advanceLine();
+                        _StdOut.putText("Man gives a better description of commands.");
                         break;
                     case "trace": 
-                        _StdOut.putText("Trace turns on and off the infromation about the OS. I know, it gets annoying.");
+                        _StdOut.putText("Trace turns on and off the infromation about the OS.");
+                        _StdOut.advanceLine();
+                        _StdOut.putText("I know, it gets annoying.");
                         break;
                     case "rot13":
                         _StdOut.putText("Does rot13 obfuscation on a string. It acts as a cipher.");
@@ -264,6 +278,11 @@ module TSOS {
                         break;
                     case "date":
                         _StdOut.putText("Shows the date and time. Why are you asking me this?");
+                        break;
+                    case "whereami":
+                        _StdOut.putText("Stop being weird, you know where you are...");
+                        _StdOut.advanceLine();
+                        _StdOut.putText("and what you have done.");
                         break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
@@ -316,12 +335,15 @@ module TSOS {
             }
         }
 
-
         public shellDate() {
             const currentDate = new Date()
             const dateAsString = currentDate.toLocaleDateString();
             const timeAsString = currentDate.toLocaleTimeString();
             _StdOut.putText(dateAsString + " " + timeAsString);
+        }
+
+        public shellWhereAmI() {
+            _StdOut.putText("You are in front of a computer screen.");
         }
 
     }
