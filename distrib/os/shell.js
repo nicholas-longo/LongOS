@@ -187,7 +187,7 @@ var TSOS;
             _StdOut.resetXY();
         }
         shellMan(args) {
-            if (args.length > 0) {
+            if (args.length == 1) {
                 var topic = args[0];
                 switch (topic) {
                     case "help":
@@ -217,6 +217,9 @@ var TSOS;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
+            }
+            else if (args.length > 1) {
+                _StdOut.putText("Usage: man <topic>  Please supply only one topic at a time.");
             }
             else {
                 _StdOut.putText("Usage: man <topic>  Please supply a topic.");
