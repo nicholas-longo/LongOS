@@ -227,6 +227,7 @@ module TSOS {
             _StdOut.resetXY();
         }
 
+        
         public shellMan(args: string[]) {
             if (args.length > 0) {
                 var topic = args[0];
@@ -234,7 +235,27 @@ module TSOS {
                     case "help":
                         _StdOut.putText("Help displays a list of (hopefully) valid commands.");
                         break;
-                    // TODO: Make descriptive MANual page entries for the the rest of the shell commands here.
+                    case "ver":
+                        _StdOut.putText("Ver will display what version LongOS is currently running.");
+                        break;
+                    case "shutdown":
+                        _StdOut.putText("Shutdown will shut down LongOS, but not the hardware that it runs on. Why would you want to shut it off?");
+                        break;
+                    case "cls": 
+                        _StdOut.putText("Cls stands for clear screen and it will clear the screen. It also resets the cursor position to the top left.");
+                        break;
+                    case "man":
+                        _StdOut.putText("Wait! That is this one. Man gives a better description of commands.");
+                        break;
+                    case "trace": 
+                        _StdOut.putText("Trace turns on and off the infromation about the OS. I know, it gets annoying.");
+                        break;
+                    case "rot13":
+                        _StdOut.putText("Does rot13 obfuscation on a string. It acts as a cipher.");
+                        break;
+                    case "prompt":
+                        _StdOut.putText("Sets the prompt. Good for if you get bored of looking at >");
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
