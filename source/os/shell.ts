@@ -262,6 +262,9 @@ module TSOS {
                     case "prompt":
                         _StdOut.putText("Sets the prompt. Good for if you get bored of looking at >");
                         break;
+                    case "date":
+                        _StdOut.putText("Shows the date and time. Why are you asking me this?");
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -313,7 +316,7 @@ module TSOS {
             }
         }
 
-        
+
         public shellDate() {
             const currentDate = new Date()
             const dateAsString = currentDate.toLocaleDateString();
