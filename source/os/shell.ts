@@ -85,6 +85,12 @@ module TSOS {
                 "- Says where you are.");
             this.commandList[this.commandList.length] = sc;
 
+            // rickroll
+            sc = new ShellCommand(this.shellRickRoll,
+                "rickroll",
+                "- Lol");
+            this.commandList[this.commandList.length] = sc;
+
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
 
@@ -284,6 +290,10 @@ module TSOS {
                         _StdOut.advanceLine();
                         _StdOut.putText("and what you have done.");
                         break;
+                    case "rickroll":
+                        window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank')
+                        _StdOut.putText("There is no escape.");
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -344,6 +354,11 @@ module TSOS {
 
         public shellWhereAmI() {
             _StdOut.putText("You are in front of a computer screen.");
+        }
+
+        // opens up a new tab and plays a cool video
+        public shellRickRoll() {
+            window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank')
         }
 
     }
