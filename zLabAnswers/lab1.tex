@@ -1,0 +1,95 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% CMPT 424
+% Some Semester
+% Lab/Assignment/Project X
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Short Sectioned Assignment
+% LaTeX Template
+% Version 1.0 (5/5/12)
+%
+% This template has been downloaded from: http://www.LaTeXTemplates.com
+% Original author: % Frits Wenneker (http://www.howtotex.com)
+% License: CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+% Modified by Alan G. Labouseur  - alan@labouseur.com
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[letterpaper, 10pt,DIV=13]{scrartcl} 
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm,xfrac} % Math packages
+\usepackage{sectsty} % Allows customizing section commands
+\usepackage{graphicx}
+\usepackage[lined,linesnumbered,commentsnumbered]{algorithm2e}
+\usepackage{listings}
+\usepackage{parskip}
+\usepackage{lastpage}
+
+\allsectionsfont{\normalfont\scshape} % Make all section titles in default font and small caps.
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{page \thepage\ of \pageref{LastPage}} % Page numbering for right footer
+
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs.
+
+\binoppenalty=3000
+\relpenalty=3000
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+   \normalfont \normalsize 
+   \textsc{CMPT 424 - Fall 2024 - Dr. Labouseur} \\[10pt] % Header stuff.
+   \horrule{0.5pt} \\[0.25cm] 	% Top horizontal rule
+   \huge Assignment One  \\     	    % Assignment title
+   \horrule{0.5pt} \\[0.25cm] 	% Bottom horizontal rule
+}
+
+\author{Nicholas Longo \\ \normalsize nicholas.longo2@marist.edu}
+
+\date{\normalsize\today} 	% Today's date.
+
+\begin{document}
+\maketitle % Print the title
+
+%----------------------------------------------------------------------------------------
+%   start PROBLEM ONE
+%----------------------------------------------------------------------------------------
+\section{Lab 1}
+
+\subsection{Question 1: What are the advantages and disadvantages of using the same	system	call interface for	manipulating both files and devices? }
+The main advantage of using the same system call interface for manipulating both files and devices is because the structure of them is so similar, they have overlapping functionality that can be efficiently captured using the same interface. This makes the operating system easier to use for the user. Since the idea of opening and closing files is similar to using and not using a device, a device can be given special properties and different system calls that distinguish it from a normal file, but still have the same interface as one. This can make the operating system’s user interface much more intuitive for the user, who now can treat everything as if it were a file. The disadvantage comes when developing it. Devices have many different functions, and some may be too complex to provide a reliable layer of abstraction. Even with completely different system calls, designing a user interface that is both easy to use but effective underneath can be very difficult. 
+
+
+\subsection{Question 2: Would it be possible for the user to develop a new command interpreter using the system call	interface provided by the operating system? How?}
+It is possible for the user to develop a new command interpreter using the system call interface because they can create files that have a specific name, which would then get called instead of an existing file from the operating system. Here in this new file, they can change the code and essentially develop a new command interpreter using the same system call interface. It is important to use a name that already has a known use in the operating system, because they are programmed to find and execute files based on their name. For example, say a user created a new file called “rm” and changed the code to duplicate a file. Now, instead of removing a file like it would have done originally, the operating systems will do the user specified process of duplicating a file. This does not change the old existing code of the operating systems, but allows users to change how it works by adding their own files. 
+
+
+
+\end{document}
