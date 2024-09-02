@@ -91,6 +91,12 @@ module TSOS {
                 "- Lol");
             this.commandList[this.commandList.length] = sc;
 
+            // status
+            sc = new ShellCommand(this.shellStatus,
+                "status",
+                "<string> - Sets the status");
+            this.commandList[this.commandList.length] = sc;
+
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
 
@@ -294,6 +300,9 @@ module TSOS {
                         window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank')
                         _StdOut.putText("There is no escape.");
                         break;
+                    case "status":
+                        _StdOut.putText("Change the status bar. Make it something cool!")
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -359,6 +368,19 @@ module TSOS {
         // opens up a new tab and plays a cool video
         public shellRickRoll() {
             window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank')
+        }
+
+        public shellStatus(args: string[]) {
+            if (args.length > 0) {
+                const statusMessage = args.join(" ");
+                const statusBar = document.getElementById("divStatusBar");
+                if(statusBar) { // make sure it runs after the DOM is fully loaded
+                    statusBar.innerHTML = statusMessage;
+                } 
+                _StdOut.putText("test");
+            } else {
+                _StdOut.putText("Usage: status <string>  Please supply a string.");
+            }
         }
 
     }
