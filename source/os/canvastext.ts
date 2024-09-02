@@ -25,6 +25,7 @@ module TSOS {
 
     export class CanvasTextFunctions {
 
+        //points that when drawn look like the symbol
         public static symbols = {
             ' ': { width: 16, points: [] },
             '!': { width: 10, points: [[5,21],[5,7],[-1,-1],[5,2],[4,1],[5,0],[6,1],[5,2]] },
@@ -136,6 +137,7 @@ module TSOS {
             return 7.0*size/25.0;
         }
 
+        //gets the width needed to draw a string, using the width that each character has
         public static measure(font, size, str) {
             var total = 0;
             var len = str.length;
