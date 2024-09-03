@@ -378,7 +378,13 @@ var TSOS;
                 _StdOut.putText("Invalid Program: Input must be A-F, 0-9, or whitespace");
                 return;
             }
-            // have an even amount of characters 
+            // make sure there are an even amount of non whitespace characters
+            const hasEvenNumberOfCharacters = userProgramInput.replace(/\s+/, ''); // replaces whitespace with empty string
+            // if amount of characters is odd
+            if (hasEvenNumberOfCharacters.length % 2 == 1) {
+                _StdOut.putText("Invalid Program: Number of characters must be even");
+                return;
+            }
             // ChatGPT 9/3. 
             // I prompted it to help generate the code to format the text in the text area on the following principles: 
             // 1. Eliminate whitespace between pairs

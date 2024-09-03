@@ -447,8 +447,13 @@ module TSOS {
                 return
             }
             
-           
-            // have an even amount of characters 
+            // make sure there are an even amount of non whitespace characters
+            const hasEvenNumberOfCharacters = userProgramInput.replace(/\s+/, '') // replaces whitespace with empty string
+            // if amount of characters is odd
+            if (hasEvenNumberOfCharacters.length % 2 == 1) {
+                _StdOut.putText("Invalid Program: Number of characters must be even")
+                return
+            }
 
             
 
