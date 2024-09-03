@@ -434,7 +434,7 @@ module TSOS {
             const textBox = document.getElementById("taProgramInput") as HTMLTextAreaElement // ChatGPT 9/3/2024. I asked why the textBox.value was not working, it said to make it into this data type
             const userProgramInput = textBox.value;
             
-            if(userProgramInput === '') {
+            if(userProgramInput.trim() === '') {
                 _StdOut.putText("Invalid Program: User Program Input is Empty");
                 return
             }
@@ -448,7 +448,7 @@ module TSOS {
             }
             
             // make sure there are an even amount of non whitespace characters
-            const hasEvenNumberOfCharacters = userProgramInput.replace(/\s+/, '') // replaces whitespace with empty string
+            const hasEvenNumberOfCharacters = userProgramInput.replace(/\s+/g, '') // replaces whitespace with empty string
             // if amount of characters is odd
             if (hasEvenNumberOfCharacters.length % 2 == 1) {
                 _StdOut.putText("Invalid Program: Number of characters must be even")
