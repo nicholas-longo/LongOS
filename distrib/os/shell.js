@@ -59,6 +59,12 @@ var TSOS;
             this.commandList[this.commandList.length] = sc;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
+            //update the date in the display bar every second
+            //Assistance From Chat GPT 9/3/2024
+            // Me: "Where can I put an interval in the shell.ts file so the time updates each second"
+            // Chat: "Modify the init() Method to Start Updating the Date Periodically: Inside the init() method of the Shell class, call updateDateInStatusBar() and set up an interval to call it regularly:"
+            this.updateDate();
+            setInterval(this.updateDate, 1000);
             // Display the initial prompt.
             this.putPrompt();
         }
@@ -318,14 +324,22 @@ var TSOS;
         shellStatus(args) {
             if (args.length > 0) {
                 const statusMessage = args.join(" ");
-                const statusBar = document.getElementById("divStatusBar");
+                const statusBar = document.getElementById("divStatusBarMessage");
                 if (statusBar) { // make sure it runs after the DOM is fully loaded
-                    statusBar.innerHTML = statusMessage;
+                    statusBar.innerText = statusMessage;
                 }
-                _StdOut.putText("test");
             }
             else {
                 _StdOut.putText("Usage: status <string>  Please supply a string.");
+            }
+        }
+        updateDate() {
+            const dateValue = document.getElementById("divStatusBarDate");
+            if (dateValue) {
+                const currentDate = new Date();
+                const dateAsString = currentDate.toLocaleDateString();
+                const timeAsString = currentDate.toLocaleTimeString();
+                dateValue.innerText = `${dateAsString} ${timeAsString}`;
             }
         }
     }
