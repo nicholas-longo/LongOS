@@ -434,6 +434,12 @@ module TSOS {
             const textBox = document.getElementById("taProgramInput") as HTMLTextAreaElement // ChatGPT 9/3/2024. I asked why the textBox.value was not working, it said to make it into this data type
             const userProgramInput = textBox.value;
             
+            if(userProgramInput == '') {
+                _StdOut.putText("Invalid Program: User Program Input is Empty");
+                return
+            }
+            
+            
             // needs to be A-F, 0-9
             // whitespace is allowed 
             // have an even amount of characters 
