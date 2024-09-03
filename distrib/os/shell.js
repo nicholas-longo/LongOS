@@ -57,6 +57,9 @@ var TSOS;
             // status
             sc = new TSOS.ShellCommand(this.shellStatus, "status", "<string> - Sets the status");
             this.commandList[this.commandList.length] = sc;
+            //bsod 
+            sc = new TSOS.ShellCommand(this.shellBSOD, "bsod", "- This tests the BSOD functionality");
+            this.commandList[this.commandList.length] = sc;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
             //update the date in the display bar every second
@@ -255,6 +258,9 @@ var TSOS;
                     case "status":
                         _StdOut.putText("Change the status bar. Make it something cool!");
                         break;
+                    case "bsod":
+                        _StdOut.putText("This will literally crash your computer. Be warned..");
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -341,6 +347,11 @@ var TSOS;
                 const timeAsString = currentDate.toLocaleTimeString();
                 dateValue.innerText = `${dateAsString} ${timeAsString}`;
             }
+        }
+        // add to the help and man
+        // first just make the canvas turn blue
+        shellBSOD() {
+            _StdOut.putText("test");
         }
     }
     TSOS.Shell = Shell;
