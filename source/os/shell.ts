@@ -455,8 +455,6 @@ module TSOS {
                 return
             }
 
-            
-
             // ChatGPT 9/3. 
             // I prompted it to help generate the code to format the text in the text area on the following principles: 
             // 1. Eliminate whitespace between pairs
