@@ -434,20 +434,22 @@ module TSOS {
             const textBox = document.getElementById("taProgramInput") as HTMLTextAreaElement // ChatGPT 9/3/2024. I asked why the textBox.value was not working, it said to make it into this data type
             const userProgramInput = textBox.value;
             
-            if(userProgramInput == '') {
+            if(userProgramInput === '') {
                 _StdOut.putText("Invalid Program: User Program Input is Empty");
                 return
             }
             
-            if(userProgramInput ) {
-                // todo
+            //ChatGPT 9/3. 
+            // I asked for regex condition where A-F, a-f, 0-9, and whitespace is acceptable
+            const isValidInput = /^[A-Fa-f0-9\s]*$/.test(userProgramInput)
+            if (!isValidInput) {
+                _StdOut.putText("Invalid Program: Input must be A-F, 0-9, or whitespace")
+                return
             }
             
-            // needs to be A-F, 0-9
-            // whitespace is allowed 
+           
             // have an even amount of characters 
 
-            //then format and update the textbox 
             
 
             // ChatGPT 9/3. 
