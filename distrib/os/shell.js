@@ -399,8 +399,9 @@ var TSOS;
                 .toUpperCase() // Convert all characters to uppercase
                 .match(/([A-Z]{2}|\d{2}|[A-Z]\d|\d[A-Z])/g) // Match two letters, two numbers, or letter-number pairs
                 ?.join(' ') || ''; // Join matched pairs with a space between them
-            textBox.innerText = formattedText;
-            _StdOut.putText(formattedText);
+            textBox.value = formattedText;
+            //this is a place holder for now
+            _StdOut.putText("Load Successful...");
         }
     }
     TSOS.Shell = Shell;

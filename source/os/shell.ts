@@ -470,9 +470,10 @@ module TSOS {
             .match(/([A-Z]{2}|\d{2}|[A-Z]\d|\d[A-Z])/g)  // Match two letters, two numbers, or letter-number pairs
             ?.join(' ') || '';  // Join matched pairs with a space between them
 
-            textBox.innerText = formattedText;
+            textBox.value = formattedText;
 
-            _StdOut.putText(formattedText);
+            //this is a place holder for now
+            _StdOut.putText("Load Successful...");
         }
 
     }
