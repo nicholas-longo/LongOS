@@ -352,6 +352,8 @@ var TSOS;
             const display = _DrawingContext;
             display.fillStyle = "blue";
             display.fillRect(0, 0, 500, 500); // hard coded width and height from canvas in index
+            display.fillStyle = "white";
+            display.fillText("It's so over.. you are gonna have to restart this.", 125, 250);
             _Kernel.krnShutdown(); // shutdown the OS if a BSOD is called
         }
     }
