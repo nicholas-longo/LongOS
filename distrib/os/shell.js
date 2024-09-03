@@ -348,12 +348,11 @@ var TSOS;
                 dateValue.innerText = `${dateAsString} ${timeAsString}`;
             }
         }
-        // add to the help and man
-        // first just make the canvas turn blue
         shellBSOD() {
             const display = _DrawingContext;
             display.fillStyle = "blue";
-            display.fillRect(0, 0, 500, 500); // hard coded width and height from canvas in index 
+            display.fillRect(0, 0, 500, 500); // hard coded width and height from canvas in index
+            _Kernel.krnShutdown(); // shutdown the OS if a BSOD is called
         }
     }
     TSOS.Shell = Shell;
