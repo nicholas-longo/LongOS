@@ -431,7 +431,9 @@ module TSOS {
         }
 
         public shellLoad() {
-            _StdOut.putText("hey")
+            const textBox = document.getElementById("taProgramInput") as HTMLTextAreaElement // ChatGPT 9/3/2024. I asked why the textBox.value was not working, it said to make it into this data type
+            const userProgramInput = textBox.value;
+            _StdOut.putText(userProgramInput);
         }
 
     }

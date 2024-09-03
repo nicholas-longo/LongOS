@@ -365,7 +365,9 @@ var TSOS;
             _Kernel.krnShutdown(); // shutdown the OS if a BSOD is called
         }
         shellLoad() {
-            _StdOut.putText("hey");
+            const textBox = document.getElementById("taProgramInput"); // ChatGPT
+            const userProgramInput = textBox.value;
+            _StdOut.putText(userProgramInput);
         }
     }
     TSOS.Shell = Shell;
