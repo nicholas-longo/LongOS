@@ -365,9 +365,25 @@ var TSOS;
             _Kernel.krnShutdown(); // shutdown the OS if a BSOD is called
         }
         shellLoad() {
-            const textBox = document.getElementById("taProgramInput"); // ChatGPT
+            const textBox = document.getElementById("taProgramInput"); // ChatGPT 9/3/2024. I asked why the textBox.value was not working, it said to make it into this data type
             const userProgramInput = textBox.value;
-            _StdOut.putText(userProgramInput);
+            // needs to be A-F, 0-9
+            // whitespace is allowed 
+            // have an even amount of characters 
+            //then format and update the textbox 
+            // ChatGPT 9/3. 
+            // I prompted it to help generate the code to format the text in the text area on the following principles: 
+            // 1. Eliminate whitespace between pairs
+            // 2. Numbers and Letters can start the pair
+            //Format the textarea if it is valid
+            const formattedText = userProgramInput
+                .split(/\s+/) // Split by any whitespace characters
+                .filter(Boolean) // Remove empty strings from the array
+                .join('') // Join without spaces to get the combined characters
+                .match(/([A-Za-z]\d|\d[A-Za-z])/g) // Match both letter-number and number-letter pairs
+                ?.join(' ') || ''; // Join matched pairs with a space between them
+            textBox.innerText = formattedText;
+            _StdOut.putText(formattedText);
         }
     }
     TSOS.Shell = Shell;
