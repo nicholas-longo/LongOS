@@ -439,6 +439,9 @@ module TSOS {
                 return
             }
             
+            if(userProgramInput ) {
+                // todo
+            }
             
             // needs to be A-F, 0-9
             // whitespace is allowed 
@@ -451,12 +454,15 @@ module TSOS {
             // I prompted it to help generate the code to format the text in the text area on the following principles: 
             // 1. Eliminate whitespace between pairs
             // 2. Numbers and Letters can start the pair
+            // 3. Numbers can be paired with numbers, letters can be paired with letters
+            // 4. Turn Lower Case into Upper
             //Format the textarea if it is valid
             const formattedText: string = userProgramInput
             .split(/\s+/)  // Split by any whitespace characters
             .filter(Boolean)  // Remove empty strings from the array
             .join('')  // Join without spaces to get the combined characters
-            .match(/([A-Za-z]\d|\d[A-Za-z])/g)  // Match both letter-number and number-letter pairs
+            .toUpperCase()  // Convert all characters to uppercase
+            .match(/([A-Z]{2}|\d{2}|[A-Z]\d|\d[A-Z])/g)  // Match two letters, two numbers, or letter-number pairs
             ?.join(' ') || '';  // Join matched pairs with a space between them
 
             textBox.innerText = formattedText;
