@@ -60,6 +60,9 @@ var TSOS;
             //bsod 
             sc = new TSOS.ShellCommand(this.shellBSOD, "bsod", "- This tests the BSOD functionality");
             this.commandList[this.commandList.length] = sc;
+            //load 
+            sc = new TSOS.ShellCommand(this.shellLoad, "load", "- Ensures that all code in User Program Input is valid.");
+            this.commandList[this.commandList.length] = sc;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
             //update the date in the display bar every second
@@ -259,7 +262,12 @@ var TSOS;
                         _StdOut.putText("Change the status bar. Make it something cool!");
                         break;
                     case "bsod":
-                        _StdOut.putText("This will literally crash your computer. Be warned..");
+                        _StdOut.putText("This will literally crash your OS. Be warned..");
+                        break;
+                    case "load":
+                        _StdOut.putText("Makes sure no funny business is loaded");
+                        _StdOut.advanceLine();
+                        _StdOut.putText("into User Program Input");
                         break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
@@ -355,6 +363,9 @@ var TSOS;
             display.fillStyle = "white";
             display.fillText("It's so over.. you are gonna have to restart this.", 125, 250);
             _Kernel.krnShutdown(); // shutdown the OS if a BSOD is called
+        }
+        shellLoad() {
+            _StdOut.putText("hey");
         }
     }
     TSOS.Shell = Shell;
