@@ -79,8 +79,7 @@ var TSOS;
                 220: { normal: '\\', shifted: '|' }, // Backslash
                 192: { normal: '`', shifted: '~' } // Backtick
             };
-            //TODO Tab completion (9)
-            // history with arrows (up = 38, down = 40)
+            //TODO  history with arrows (up = 38, down = 40)
             // capital letters && lower case letters || digits || special characters || space
             if ((keyCode >= 65) && (keyCode <= 90) ||
                 (keyCode >= 48 && keyCode <= 57) ||

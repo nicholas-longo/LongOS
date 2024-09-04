@@ -163,7 +163,7 @@ module TSOS {
         }
 
         public putPrompt() {
-            _StdOut.putText(_OsShell.promptStr + "" + this.buffer)
+            _StdOut.putText(_OsShell.promptStr + "" + this.buffer) // adds the symbol that is currently being used for the prompt and the text that was originally on the line before pressing tab
         }
 
         
