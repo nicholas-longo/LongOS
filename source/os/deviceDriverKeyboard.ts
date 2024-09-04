@@ -36,6 +36,7 @@ module TSOS {
 
            // Mapping of keycodes to characters, including shift-modified characters.
         const keyBoardMap = {
+            // 13: { normal: '\n', shifted: '\n'}, // Enter
             32: { normal: ' ', shifted: ' ' },  // Space
             48: { normal: '0', shifted: ')' },  // 0
             49: { normal: '1', shifted: '!' },  // 1
@@ -87,27 +88,18 @@ module TSOS {
         };
 
 
-            // letters, capital and lower case
-            if ((keyCode >= 65) && (keyCode <= 90)) { // letter
+        //TODO deal with tab
+            // capital letters && lower case letters || digits || special characters || space || enter
+            if ((keyCode >= 65) && (keyCode <= 90) || 
+                (keyCode >= 48 && keyCode <= 57) || 
+                (keyCode >= 186 && keyCode <= 222) || 
+                keyCode == 32) { 
                chr = isShifted ? keyBoardMap[keyCode].shifted : keyBoardMap[keyCode].normal; // if shifted, use the shifted version of that keycode. else, use normal
                 _KernelInputQueue.enqueue(chr);
-
-            // digits and shifted clicking digits 
-            } else if ((keyCode >= 48) && (keyCode <= 57)) {
-                if(isShifted === true){
-                    
-                }
-
-
-            }
-                else if (
-                        (keyCode == 32)                     ||   // space
-                        (keyCode == 13)                     ||  // enter
-                        (keyCode == 188)                     ||  // comma
-                        (keyCode === 190)  // period
-                ) {                       
+            } else if(keyCode === 13) { // deal with enter separately 
                 chr = String.fromCharCode(keyCode);
                 _KernelInputQueue.enqueue(chr);
+
             }
         }
     }
