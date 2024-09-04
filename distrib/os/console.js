@@ -12,6 +12,8 @@ var TSOS;
         currentXPosition;
         currentYPosition;
         buffer;
+        commands = ["ver", "help", "shutdown", "cls", "man", "trace", "rot13",
+            "prompt", "date", "whereami", "rickroll", "status", "bsod", "load"];
         constructor(currentFont = _DefaultFontFamily, currentFontSize = _DefaultFontSize, currentXPosition = 0, currentYPosition = _DefaultFontSize, buffer = "") {
             this.currentFont = currentFont;
             this.currentFontSize = currentFontSize;
@@ -41,10 +43,11 @@ var TSOS;
                     _OsShell.handleInput(this.buffer);
                     // ... and reset our buffer.
                     this.buffer = "";
+                    //TODO add everything that was in enter into an array, to be cycled through later by the arrow keys
                 }
                 //ChatGPT 9/4/2024
                 // I prompted it to remove the last item of the buffer and keep track of its width so only that character is deleted. 
-                else if (chr === String.fromCharCode(8)) {
+                else if (chr === String.fromCharCode(8)) { // backspace key
                     // Remove the last character from the buffer if it exists.
                     if (this.buffer.length > 0) {
                         // Remove the last character from the buffer.
@@ -57,6 +60,11 @@ var TSOS;
                         // Overwrite the last character with the background color to erase it.
                         this.eraseCharacter(offset);
                     }
+                }
+                else if (chr === String.fromCharCode(9)) {
+                    // count what starts with this.buffer 
+                    // add to autocomplete array (substring of thisbuffer: end)
+                    console.log(this.buffer);
                 }
                 else {
                     // This is a "normal" character, so ...
@@ -101,6 +109,15 @@ var TSOS;
         // when the backspace key is pressed, a rectangle that is the color of the background is drawn over the letter that, effectively deleting it. 
         eraseCharacter(offset) {
             _DrawingContext.clearRect(this.currentXPosition, this.currentYPosition - this.currentFontSize, offset, this.currentFontSize + _FontHeightMargin);
+        }
+        // print out the array given by the AutoComplete 
+        printAutoCompleteArrayToConsole(options) {
+            for (let i = 0; i < options.length; i++) {
+                if (i % 5 == 0) { // every 5 commands shown advance the line to ensure space
+                    _StdOut.advanceLine();
+                }
+                _StdOut.putText(options[i] + " ");
+            }
         }
     }
     TSOS.Console = Console;

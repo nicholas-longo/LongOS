@@ -8,6 +8,8 @@
 module TSOS {
 
     export class Console {
+        private commands: string[] = ["ver", "help", "shutdown", "cls", "man", "trace", "rot13", 
+                                    "prompt", "date", "whereami", "rickroll", "status", "bsod", "load"];
 
         constructor(public currentFont = _DefaultFontFamily,
                     public currentFontSize = _DefaultFontSize,
@@ -15,6 +17,7 @@ module TSOS {
                     public currentYPosition = _DefaultFontSize,
                     public buffer = "") {
         }
+
 
         public init(): void {
             this.clearScreen();
@@ -42,10 +45,12 @@ module TSOS {
                     _OsShell.handleInput(this.buffer);
                     // ... and reset our buffer.
                     this.buffer = "";
+                    
+                    //TODO add everything that was in enter into an array, to be cycled through later by the arrow keys
                 }  
                 //ChatGPT 9/4/2024
                 // I prompted it to remove the last item of the buffer and keep track of its width so only that character is deleted. 
-                else if (chr === String.fromCharCode(8)){ 
+                else if (chr === String.fromCharCode(8)){ // backspace key
                     // Remove the last character from the buffer if it exists.
                     if (this.buffer.length > 0) {
                         // Remove the last character from the buffer.
@@ -61,6 +66,15 @@ module TSOS {
                         // Overwrite the last character with the background color to erase it.
                         this.eraseCharacter(offset);
                     }
+                } else if (chr === String.fromCharCode(9)) {
+                    // count what starts with this.buffer 
+                    // add to autocomplete array (substring of thisbuffer: end)
+
+
+                    
+                    
+                    
+                    console.log(this.buffer)
                 } else {
                     // This is a "normal" character, so ...
                     // ... draw it on the screen...
@@ -71,7 +85,7 @@ module TSOS {
                 // TODO: Add a case for Ctrl-C that would allow the user to break the current program.
             }
         }
-
+        
         public putText(text): void {
             /*  My first inclination here was to write two functions: putChar() and putString().
                 Then I remembered that JavaScript is (sadly) untyped and it won't differentiate
@@ -103,11 +117,22 @@ module TSOS {
             // TODO: Handle scrolling. (iProject 1)
         }
 
-        // Chat GPT 9/4/2024
+         // Chat GPT 9/4/2024
         // I asked it to handle the logic of erasing only one character. It does this by drawing a new rectangle based on measurements from the last letter. 
         // when the backspace key is pressed, a rectangle that is the color of the background is drawn over the letter that, effectively deleting it. 
         public eraseCharacter(offset: number): void {
             _DrawingContext.clearRect(this.currentXPosition, this.currentYPosition - this.currentFontSize, offset, this.currentFontSize + _FontHeightMargin);
         }
+
+        // print out the array given by the AutoComplete 
+        public printAutoCompleteArrayToConsole(options: string[]): void {
+            for (let i = 0; i < options.length; i ++) {
+                if(i % 5 == 0) { // every 5 commands shown advance the line to ensure space
+                    _StdOut.advanceLine();
+                }
+                _StdOut.putText(options[i] + " ")
+            }
+        }
+
     }
  }

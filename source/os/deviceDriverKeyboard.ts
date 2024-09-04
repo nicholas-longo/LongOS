@@ -96,7 +96,7 @@ module TSOS {
                 keyCode == 32) { 
                chr = isShifted ? keyBoardMap[keyCode].shifted : keyBoardMap[keyCode].normal; // if shifted, use the shifted version of that keycode. else, use normal
                 _KernelInputQueue.enqueue(chr);
-            } else if(keyCode === 13 || keyCode === 8) { // special case characters
+            } else if(keyCode === 13 || keyCode === 8 || keyCode == 9) { // enter || backspace || tab
                 // Convert the keyCode (the hardware scan code) to its respective string. Add that string to the Kernel Input Queue to be processed
                 chr = String.fromCharCode(keyCode);
                 _KernelInputQueue.enqueue(chr);
