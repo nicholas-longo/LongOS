@@ -89,12 +89,7 @@ module TSOS {
 
             // letters, capital and lower case
             if ((keyCode >= 65) && (keyCode <= 90)) { // letter
-                if (isShifted === true) { 
-                    chr = String.fromCharCode(keyCode); // Uppercase A-Z1 
-                } else {
-                    chr = String.fromCharCode(keyCode + 32); // Lowercase a-z
-                }
-                // TODO: Check for caps-lock and handle as shifted if so.
+               chr = isShifted ? keyBoardMap[keyCode].shifted : keyBoardMap[keyCode].normal; // if shifted, use the shifted version of that keycode. else, use normal
                 _KernelInputQueue.enqueue(chr);
 
             // digits and shifted clicking digits 
@@ -112,9 +107,7 @@ module TSOS {
                         (keyCode === 190)  // period
                 ) {                       
                 chr = String.fromCharCode(keyCode);
-                console.log(chr)
                 _KernelInputQueue.enqueue(chr);
-                console.log(_KernelInputQueue)
             }
         }
     }
