@@ -62,16 +62,7 @@ var TSOS;
                     }
                 }
                 else if (chr === String.fromCharCode(9)) {
-                    // get all of the potential commands that start with the buffer
-                    const currentBuffer = this.buffer;
-                    const options = [];
-                    for (let i = 0; i < this.commands.length; i++) {
-                        if (this.commands[i].startsWith(currentBuffer)) {
-                            options.push(this.commands[i]); // add them to an array
-                        }
-                    }
-                    console.log('options: ' + options);
-                    this.printAutoCompleteArrayToConsole(options); // send that array to a function that will handle the printing
+                    this.autoComplete();
                 }
                 else {
                     // This is a "normal" character, so ...
@@ -117,14 +108,26 @@ var TSOS;
         eraseCharacter(offset) {
             _DrawingContext.clearRect(this.currentXPosition, this.currentYPosition - this.currentFontSize, offset, this.currentFontSize + _FontHeightMargin);
         }
-        // print out the array given by the AutoComplete 
-        printAutoCompleteArrayToConsole(options) {
-            for (let i = 0; i < options.length; i++) {
-                if (i % 5 == 0) { // every 5 commands shown advance the line to ensure space
-                    _StdOut.advanceLine();
+        autoComplete() {
+            const currentBuffer = this.buffer;
+            const options = [];
+            for (let i = 0; i < this.commands.length; i++) {
+                if (this.commands[i].startsWith(currentBuffer)) { // if a command begins with the value of the current buffer (what is on the prompt line)
+                    options.push(this.commands[i]);
                 }
-                _StdOut.putText(options[i] + " ");
             }
+            // tab will automatically complete the command if it is not ambiguous 
+            if (options.length === 1) {
+                this.completePrompt(options[0]);
+            }
+            else if (options.length > 1) {
+                //more logic
+            }
+        }
+        completePrompt(command) {
+            const endOfCommand = command.substring(this.buffer.length); // create a new string of the letters that were not included in the buffer
+            this.putText(endOfCommand);
+            this.buffer += endOfCommand; // because the letters get drawn, does not mean the OS will recognize it. In order for commands to work as predicted, the buffer needs to be updated
         }
     }
     TSOS.Console = Console;
