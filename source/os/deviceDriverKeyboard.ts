@@ -36,7 +36,6 @@ module TSOS {
 
            // Mapping of keycodes to characters, including shift-modified characters.
         const keyBoardMap = {
-            // 13: { normal: '\n', shifted: '\n'}, // Enter
             32: { normal: ' ', shifted: ' ' },  // Space
             48: { normal: '0', shifted: ')' },  // 0
             49: { normal: '1', shifted: '!' },  // 1
@@ -87,8 +86,10 @@ module TSOS {
             192: { normal: '`', shifted: '~' }  // Backtick
         };
 
+        //TODO, handle backspace (8)
+        // Tab completion (9)
+        // history with arrows (up = 38, down = 40)
 
-        //TODO deal with tab
             // capital letters && lower case letters || digits || special characters || space || enter
             if ((keyCode >= 65) && (keyCode <= 90) || 
                 (keyCode >= 48 && keyCode <= 57) || 

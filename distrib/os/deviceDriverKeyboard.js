@@ -30,7 +30,6 @@ var TSOS;
             var chr = "";
             // Mapping of keycodes to characters, including shift-modified characters.
             const keyBoardMap = {
-                // 13: { normal: '\n', shifted: '\n'}, // Enter
                 32: { normal: ' ', shifted: ' ' }, // Space
                 48: { normal: '0', shifted: ')' }, // 0
                 49: { normal: '1', shifted: '!' }, // 1
