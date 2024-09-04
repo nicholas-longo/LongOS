@@ -68,6 +68,7 @@ module TSOS {
                     }
                 } else if (chr === String.fromCharCode(9)) {
                     this.autoComplete()
+            
                 } else {
                     // This is a "normal" character, so ...
                     // ... draw it on the screen...
@@ -131,7 +132,7 @@ module TSOS {
             if (options.length === 1) {
                 this.completePrompt(options[0])
             } else if (options.length > 1) {
-                //more logic
+                this.multipleAutoComplete(options)
             } 
 
         }
@@ -142,6 +143,28 @@ module TSOS {
             this.buffer += endOfCommand; // because the letters get drawn, does not mean the OS will recognize it. In order for commands to work as predicted, the buffer needs to be updated
         }
 
+        public multipleAutoComplete(options: string[]) {
+            //get the total width of prompt and current buffer
+            const promptWidth = _DrawingContext.measureText(this.currentFont, this.currentFontSize, _OsShell.promptStr);
+            const bufferWidth = _DrawingContext.measureText(this.currentFont, this.currentFontSize, this.buffer);
+            const totalWidth = promptWidth + bufferWidth;
+
+            // delete the prompt and buffer
+            _DrawingContext.clearRect(0, this.currentYPosition - this.currentFontSize, totalWidth, this.currentFontSize + _FontHeightMargin);
+
+            // move the x position 12 pixels in - i think this looks pretty clean for the user
+            this.currentXPosition = 12;
+            
+            for (let i = 0; i < options.length; i ++ ) {
+                _StdOut.putText(options[i] + ' ');
+            }
+            this.advanceLine();
+            this.putPrompt();
+        }
+
+        public putPrompt() {
+            _StdOut.putText(_OsShell.promptStr + "" + this.buffer)
+        }
 
         
     }
