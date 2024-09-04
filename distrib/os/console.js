@@ -62,9 +62,16 @@ var TSOS;
                     }
                 }
                 else if (chr === String.fromCharCode(9)) {
-                    // count what starts with this.buffer 
-                    // add to autocomplete array (substring of thisbuffer: end)
-                    console.log(this.buffer);
+                    // get all of the potential commands that start with the buffer
+                    const currentBuffer = this.buffer;
+                    const options = [];
+                    for (let i = 0; i < this.commands.length; i++) {
+                        if (this.commands[i].startsWith(currentBuffer)) {
+                            options.push(this.commands[i]); // add them to an array
+                        }
+                    }
+                    console.log('options: ' + options);
+                    this.printAutoCompleteArrayToConsole(options); // send that array to a function that will handle the printing
                 }
                 else {
                     // This is a "normal" character, so ...
