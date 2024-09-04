@@ -35,12 +35,32 @@ module TSOS {
                 // Get the next character from the kernel input queue.
                 var chr = _KernelInputQueue.dequeue();
                 // Check to see if it's "special" (enter or ctrl-c) or "normal" (anything else that the keyboard device driver gave us).
+                
                 if (chr === String.fromCharCode(13)) { // the Enter key
                     // The enter key marks the end of a console command, so ...
                     // ... tell the shell ...
                     _OsShell.handleInput(this.buffer);
                     // ... and reset our buffer.
                     this.buffer = "";
+                }  
+                //ChatGPT 9/4/2024
+                // I prompted it to remove the last item of the buffer and keep track of its width so only that character is deleted. 
+                else if (chr === String.fromCharCode(8)){ 
+                    // Remove the last character from the buffer if it exists.
+                    if (this.buffer.length > 0) {
+                        // Remove the last character from the buffer.
+                        const lastChar = this.buffer.slice(-1);
+                        this.buffer = this.buffer.slice(0, -1);
+
+                        // Measure the width of the last character.
+                        const offset = _DrawingContext.measureText(this.currentFont, this.currentFontSize, lastChar);
+
+                        // Move the current X position back by the width of the last character.
+                        this.currentXPosition -= offset;
+
+                        // Overwrite the last character with the background color to erase it.
+                        this.eraseCharacter(offset);
+                    }
                 } else {
                     // This is a "normal" character, so ...
                     // ... draw it on the screen...
@@ -81,6 +101,13 @@ module TSOS {
                                      _FontHeightMargin;
 
             // TODO: Handle scrolling. (iProject 1)
+        }
+
+        // Chat GPT 9/4/2024
+        // I asked it to handle the logic of erasing only one character. It does this by drawing a new rectangle based on measurements from the last letter. 
+        // when the backspace key is pressed, a rectangle that is the color of the background is drawn over the letter that, effectively deleting it. 
+        public eraseCharacter(offset: number): void {
+            _DrawingContext.clearRect(this.currentXPosition, this.currentYPosition - this.currentFontSize, offset, this.currentFontSize + _FontHeightMargin);
         }
     }
  }

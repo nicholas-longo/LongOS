@@ -34,7 +34,7 @@ module TSOS {
             _Kernel.krnTrace("Key code:" + keyCode + " shifted:" + isShifted);
             var chr = "";
 
-           // Mapping of keycodes to characters, including shift-modified characters.
+           // Mapping of keycodes to characters, including shift-modified characters
         const keyBoardMap = {
             32: { normal: ' ', shifted: ' ' },  // Space
             48: { normal: '0', shifted: ')' },  // 0
@@ -86,18 +86,18 @@ module TSOS {
             192: { normal: '`', shifted: '~' }  // Backtick
         };
 
-        //TODO, handle backspace (8)
-        // Tab completion (9)
+        //TODO Tab completion (9)
         // history with arrows (up = 38, down = 40)
 
-            // capital letters && lower case letters || digits || special characters || space || enter
+            // capital letters && lower case letters || digits || special characters || space
             if ((keyCode >= 65) && (keyCode <= 90) || 
                 (keyCode >= 48 && keyCode <= 57) || 
                 (keyCode >= 186 && keyCode <= 222) || 
                 keyCode == 32) { 
                chr = isShifted ? keyBoardMap[keyCode].shifted : keyBoardMap[keyCode].normal; // if shifted, use the shifted version of that keycode. else, use normal
                 _KernelInputQueue.enqueue(chr);
-            } else if(keyCode === 13) { // deal with enter separately 
+            } else if(keyCode === 13 || keyCode === 8) { // special case characters
+                // Convert the keyCode (the hardware scan code) to its respective string. Add that string to the Kernel Input Queue to be processed
                 chr = String.fromCharCode(keyCode);
                 _KernelInputQueue.enqueue(chr);
 
