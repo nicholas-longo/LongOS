@@ -47,9 +47,9 @@ var TSOS;
                     _OsShell.handleInput(this.buffer);
                     // push the command that was run into the history buffer
                     this.commandHistoryArray.push(this.buffer);
+                    this.currentCommandHistoryIndex = -1; // reset the index for history
                     // ... and reset our buffer.
                     this.buffer = "";
-                    //TODO add everything that was in enter into an array, to be cycled through later by the arrow keys
                 }
                 //ChatGPT 9/4/2024
                 // I prompted it to remove the last item of the buffer and keep track of its width so only that character is deleted. 
@@ -160,10 +160,41 @@ var TSOS;
             _StdOut.putText(_OsShell.promptStr + "" + this.buffer); // adds the symbol that is currently being used for the prompt and the text that was originally on the line before pressing tab
         }
         commandHistory(isUpArrow) {
-            if (this.commandHistoryArray.length > 0) {
-                this.currentCommandHistoryIndex = this.commandHistoryArray.length; // set the current index to the length of the array
+            if (this.commandHistoryArray.length === 0) {
+                return;
             }
-            console.log(this.commandHistoryArray);
+            // if the current index is not set yet, set it to the most recent command
+            if (this.currentCommandHistoryIndex === -1) {
+                this.currentCommandHistoryIndex = this.commandHistoryArray.length;
+            }
+            //Chat GPT 9/5/24 
+            // I asked chat to help me redraw the canvas when I move through the command history. I also asked for it to help me stop redrawing the prompt string every single time I pressed an arrow key
+            // clear the current command on the screen
+            // clear the entire line (prompt + command)
+            _DrawingContext.clearRect(0, this.currentYPosition - this.currentFontSize, _Canvas.width, this.currentFontSize + _FontHeightMargin);
+            this.currentXPosition = 0;
+            this.putText(_OsShell.promptStr);
+            // adjust index depending on the direction (up or down)
+            if (isUpArrow) {
+                if (this.currentCommandHistoryIndex > 0) {
+                    this.currentCommandHistoryIndex--;
+                }
+            }
+            else {
+                if (this.currentCommandHistoryIndex < this.commandHistoryArray.length - 1) {
+                    this.currentCommandHistoryIndex++;
+                }
+                else {
+                    // if we go past the latest command, clear the buffer and return
+                    this.buffer = "";
+                    this.putText(this.buffer);
+                    return;
+                }
+            }
+            // get the command from history at the updated index
+            const command = this.commandHistoryArray[this.currentCommandHistoryIndex];
+            this.buffer = command;
+            this.putText(this.buffer);
         }
     }
     TSOS.Console = Console;
