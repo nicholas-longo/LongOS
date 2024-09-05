@@ -11,11 +11,16 @@ module TSOS {
         private commands: string[] = ["ver", "help", "shutdown", "cls", "man", "trace", "rot13", 
                                     "prompt", "date", "whereami", "rickroll", "status", "bsod", "load"];
 
+        private commandHistoryArray: string[]; 
+        private currentCommandHistoryIndex: number;
+
         constructor(public currentFont = _DefaultFontFamily,
                     public currentFontSize = _DefaultFontSize,
                     public currentXPosition = 0,
                     public currentYPosition = _DefaultFontSize,
                     public buffer = "") {
+                    this.commandHistoryArray = [],
+                    this.currentCommandHistoryIndex = -1;
         }
 
 
@@ -43,6 +48,10 @@ module TSOS {
                     // The enter key marks the end of a console command, so ...
                     // ... tell the shell ...
                     _OsShell.handleInput(this.buffer);
+                    
+                    // push the command that was run into the history buffer
+                    this.commandHistoryArray.push(this.buffer)
+                    
                     // ... and reset our buffer.
                     this.buffer = "";
                     
@@ -69,6 +78,10 @@ module TSOS {
                 } else if (chr === String.fromCharCode(9)) {
                     this.autoComplete()
             
+                } else if (chr === String.fromCharCode(38)){ // if it is the up arrow being passed, act a certain way
+                    this.commandHistory(true);
+                } else if (chr === String.fromCharCode(40)) {
+                    this.commandHistory(false) // if it is the down arrow being pressed, act a certain way
                 } else {
                     // This is a "normal" character, so ...
                     // ... draw it on the screen...
@@ -164,6 +177,13 @@ module TSOS {
 
         public putPrompt() {
             _StdOut.putText(_OsShell.promptStr + "" + this.buffer) // adds the symbol that is currently being used for the prompt and the text that was originally on the line before pressing tab
+        }
+
+        public commandHistory(isUpArrow: boolean) {
+            if(this.commandHistoryArray.length > 0) {
+                this.currentCommandHistoryIndex = this.commandHistoryArray.length; // set the current index to the length of the array
+            }
+            console.log(this.commandHistoryArray)
         }
 
         

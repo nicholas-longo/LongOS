@@ -14,12 +14,16 @@ var TSOS;
         buffer;
         commands = ["ver", "help", "shutdown", "cls", "man", "trace", "rot13",
             "prompt", "date", "whereami", "rickroll", "status", "bsod", "load"];
+        commandHistoryArray;
+        currentCommandHistoryIndex;
         constructor(currentFont = _DefaultFontFamily, currentFontSize = _DefaultFontSize, currentXPosition = 0, currentYPosition = _DefaultFontSize, buffer = "") {
             this.currentFont = currentFont;
             this.currentFontSize = currentFontSize;
             this.currentXPosition = currentXPosition;
             this.currentYPosition = currentYPosition;
             this.buffer = buffer;
+            this.commandHistoryArray = [],
+                this.currentCommandHistoryIndex = -1;
         }
         init() {
             this.clearScreen();
@@ -41,6 +45,8 @@ var TSOS;
                     // The enter key marks the end of a console command, so ...
                     // ... tell the shell ...
                     _OsShell.handleInput(this.buffer);
+                    // push the command that was run into the history buffer
+                    this.commandHistoryArray.push(this.buffer);
                     // ... and reset our buffer.
                     this.buffer = "";
                     //TODO add everything that was in enter into an array, to be cycled through later by the arrow keys
@@ -63,6 +69,12 @@ var TSOS;
                 }
                 else if (chr === String.fromCharCode(9)) {
                     this.autoComplete();
+                }
+                else if (chr === String.fromCharCode(38)) { // if it is the up arrow being passed, act a certain way
+                    this.commandHistory(true);
+                }
+                else if (chr === String.fromCharCode(40)) {
+                    this.commandHistory(false); // if it is the down arrow being pressed, act a certain way
                 }
                 else {
                     // This is a "normal" character, so ...
@@ -146,6 +158,12 @@ var TSOS;
         }
         putPrompt() {
             _StdOut.putText(_OsShell.promptStr + "" + this.buffer); // adds the symbol that is currently being used for the prompt and the text that was originally on the line before pressing tab
+        }
+        commandHistory(isUpArrow) {
+            if (this.commandHistoryArray.length > 0) {
+                this.currentCommandHistoryIndex = this.commandHistoryArray.length; // set the current index to the length of the array
+            }
+            console.log(this.commandHistoryArray);
         }
     }
     TSOS.Console = Console;
