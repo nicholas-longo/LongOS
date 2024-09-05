@@ -79,7 +79,6 @@ var TSOS;
                 220: { normal: '\\', shifted: '|' }, // Backslash
                 192: { normal: '`', shifted: '~' } // Backtick
             };
-            //TODO  history with arrows (up = 38, down = 40)
             // capital letters && lower case letters || digits || special characters || space
             if ((keyCode >= 65) && (keyCode <= 90) ||
                 (keyCode >= 48 && keyCode <= 57) ||
@@ -88,7 +87,7 @@ var TSOS;
                 chr = isShifted ? keyBoardMap[keyCode].shifted : keyBoardMap[keyCode].normal; // if shifted, use the shifted version of that keycode. else, use normal
                 _KernelInputQueue.enqueue(chr);
             }
-            else if (keyCode === 13 || keyCode === 8 || keyCode == 9) { // enter || backspace || tab
+            else if (keyCode === 13 || keyCode === 8 || keyCode == 9 || keyCode === 38 || keyCode === 40) { // enter || backspace || tab || up arrow || down arrow
                 // Convert the keyCode (the hardware scan code) to its respective string. Add that string to the Kernel Input Queue to be processed
                 chr = String.fromCharCode(keyCode);
                 _KernelInputQueue.enqueue(chr);
