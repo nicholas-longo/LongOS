@@ -118,14 +118,28 @@ module TSOS {
              * Font descent measures from the baseline to the lowest point in the font.
              * Font height margin is extra spacing between the lines.
              */
-            return this.currentYPosition += _DefaultFontSize + 
-                                     _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) +
-                                     _FontHeightMargin;
+            return  _DefaultFontSize + 
+                    _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) +
+                    _FontHeightMargin;
         }
 
-        public advanceLine(): void {
+       // 9/6/24 More inspiration from Josh Seligman's jOSh Hall of Fame Project. Specifically how the current screen is copied and redrawn using getImageData and putImageData
+       public advanceLine(): void {
             this.currentXPosition = 0;
-            
+            if (this.currentYPosition + this.getLineHeight() > _Canvas.height) {
+                // Solution inspired by https://www.w3schools.com/tags/canvas_getimagedata.asp - written by Josh
+                const screen = _DrawingContext.getImageData(0, this.getLineHeight(), _Canvas.width, _Canvas.height - this.getLineHeight()); // x pos, y pos, width, height
+                
+                // clear the current screen
+                this.clearScreen();
+
+                // put the new screen on top of it
+                _DrawingContext.putImageData(screen, 0, 0);
+            }
+            else {
+                // y not out of space, so do not have to scroll
+                this.currentYPosition += this.getLineHeight();
+            }
         }
 
          // Chat GPT 9/4/2024
