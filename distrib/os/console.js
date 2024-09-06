@@ -102,19 +102,19 @@ var TSOS;
                 this.currentXPosition = this.currentXPosition + offset;
             }
         }
-        advanceLine() {
-            this.currentXPosition = 0;
+        // 9/6/2024 Inspired by Josh Seligman's jOSh Hall of Fame Project. Separating the current y position into a function that can be called in order to move the screen correctly. 
+        getLineHeight() {
             /*
-             * Font size measures from the baseline to the highest point in the font.
-             * Font descent measures from the baseline to the lowest point in the font.
-             * Font height margin is extra spacing between the lines.
-             */
-            this.currentYPosition += _DefaultFontSize +
+            * Font size measures from the baseline to the highest point in the font.
+            * Font descent measures from the baseline to the lowest point in the font.
+            * Font height margin is extra spacing between the lines.
+            */
+            return this.currentYPosition += _DefaultFontSize +
                 _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) +
                 _FontHeightMargin;
-            if (this.currentYPosition > _Canvas.height) {
-                this.scroll();
-            }
+        }
+        advanceLine() {
+            this.currentXPosition = 0;
         }
         // Chat GPT 9/4/2024
         // I asked it to handle the logic of erasing only one character. It does this by drawing a new rectangle based on measurements from the last letter. 
@@ -197,8 +197,6 @@ var TSOS;
             const command = this.commandHistoryArray[this.currentCommandHistoryIndex];
             this.buffer = command;
             this.putText(this.buffer);
-        }
-        scroll() {
         }
     }
     TSOS.Console = Console;

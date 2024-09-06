@@ -111,20 +111,21 @@ module TSOS {
             }
          }
 
-        public advanceLine(): void {
-            this.currentXPosition = 0;
-            /*
+         // 9/6/2024 Inspired by Josh Seligman's jOSh Hall of Fame Project. Separating the current y position into a function that can be called in order to move the screen correctly. 
+        public getLineHeight(): number {
+             /*
              * Font size measures from the baseline to the highest point in the font.
              * Font descent measures from the baseline to the lowest point in the font.
              * Font height margin is extra spacing between the lines.
              */
-            this.currentYPosition += _DefaultFontSize + 
+            return this.currentYPosition += _DefaultFontSize + 
                                      _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) +
                                      _FontHeightMargin;
+        }
 
-            if(this.currentYPosition > _Canvas.height) {
-                this.scroll();
-            }
+        public advanceLine(): void {
+            this.currentXPosition = 0;
+            
         }
 
          // Chat GPT 9/4/2024
@@ -223,10 +224,5 @@ module TSOS {
 
         }
 
-        public scroll(): void {
-            
-        }
-
-        
     }
 }
