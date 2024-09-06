@@ -122,7 +122,9 @@ module TSOS {
                                      _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) +
                                      _FontHeightMargin;
 
-            // TODO: Handle scrolling. (iProject 1)
+            if(this.currentYPosition > _Canvas.height) {
+                this.scroll();
+            }
         }
 
          // Chat GPT 9/4/2024
@@ -219,6 +221,10 @@ module TSOS {
             this.buffer = command;
             this.putText(this.buffer);
 
+        }
+
+        public scroll(): void {
+            
         }
 
         

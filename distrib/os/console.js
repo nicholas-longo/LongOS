@@ -112,7 +112,9 @@ var TSOS;
             this.currentYPosition += _DefaultFontSize +
                 _DrawingContext.fontDescent(this.currentFont, this.currentFontSize) +
                 _FontHeightMargin;
-            // TODO: Handle scrolling. (iProject 1)
+            if (this.currentYPosition > _Canvas.height) {
+                this.scroll();
+            }
         }
         // Chat GPT 9/4/2024
         // I asked it to handle the logic of erasing only one character. It does this by drawing a new rectangle based on measurements from the last letter. 
@@ -195,6 +197,8 @@ var TSOS;
             const command = this.commandHistoryArray[this.currentCommandHistoryIndex];
             this.buffer = command;
             this.putText(this.buffer);
+        }
+        scroll() {
         }
     }
     TSOS.Console = Console;
