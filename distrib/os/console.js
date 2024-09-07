@@ -70,11 +70,11 @@ var TSOS;
                 else if (chr === String.fromCharCode(9)) {
                     this.autoComplete();
                 }
-                else if (chr === String.fromCharCode(38)) { // if it is the up arrow being passed, act a certain way
+                else if (chr === 'up') { // if it is the up arrow being passed, act a certain way. Hard coded due to an overlap with the & symbol
                     this.commandHistory(true);
                 }
-                else if (chr === String.fromCharCode(40)) {
-                    this.commandHistory(false); // if it is the down arrow being pressed, act a certain way
+                else if (chr === 'down') {
+                    this.commandHistory(false); // if it is the down arrow being pressed, act a certain way. Hard coded due to an overlap with the & symbol
                 }
                 else {
                     // This is a "normal" character, so ...
