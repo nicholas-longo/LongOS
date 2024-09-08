@@ -87,12 +87,12 @@ var TSOS;
                 chr = isShifted ? keyBoardMap[keyCode].shifted : keyBoardMap[keyCode].normal; // if shifted, use the shifted version of that keycode. else, use normal
                 _KernelInputQueue.enqueue(chr);
             }
-            else if (keyCode === 13 || keyCode === 8 || keyCode == 9) { // enter || backspace || tab || up arrow || down arrow
+            else if (keyCode === 13 || keyCode === 8 || keyCode == 9) { // enter || backspace || tab 
                 // Convert the keyCode (the hardware scan code) to its respective string. Add that string to the Kernel Input Queue to be processed
                 chr = String.fromCharCode(keyCode);
                 _KernelInputQueue.enqueue(chr);
             }
-            else if (keyCode === 38 || keyCode === 40) {
+            else if (keyCode === 38 || keyCode === 40) { //up arrow || down arrow
                 if (keyCode === 38) {
                     _KernelInputQueue.enqueue('up'); // keycode 38 overlaps with &, so up is passed as a character instead
                 }
