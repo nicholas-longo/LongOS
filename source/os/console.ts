@@ -107,9 +107,14 @@ module TSOS {
                 // Go character by character of the given text, drawing one at a time. 
                 for(let i = 0; i < text.length; i ++ ){
                     const character = text[i];
+                    var offset = _DrawingContext.measureText(this.currentFont, this.currentFontSize, character);
+                    if(this.currentXPosition + offset > _Canvas.width) {
+                        // if the newly typed character is going to exceed the width, advance the line
+                        this.advanceLine();
+                    }
                     _DrawingContext.drawText(this.currentFont, this.currentFontSize, this.currentXPosition, this.currentYPosition, character);
                     // Move the current X position. make sure to pass the character and not the whole text
-                    var offset = _DrawingContext.measureText(this.currentFont, this.currentFontSize, character);
+                    // sum up the offsets, if exeeds width, call advance line
                     this.currentXPosition = this.currentXPosition + offset;
                 }
 
