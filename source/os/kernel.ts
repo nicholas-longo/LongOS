@@ -169,16 +169,15 @@ module TSOS {
 
         public krnTrapError(msg) {
             Control.hostLog("OS ERROR - TRAP: " + msg);
-            // TODO: Display error on console, perhaps in some sort of colored screen. (Maybe blue?)
+            //TODO: Display error on console, perhaps in some sort of colored screen. (Maybe blue?)
 
-            //this could be it for the future, for now it is going to stay commented
-            // const display = _DrawingContext;
-            // display.fillStyle = "blue";
-            // display.fillRect(0,0, 500, 500) // hard coded width and height from canvas in index
+            const display = _DrawingContext;
+            display.fillStyle = "blue";
+            display.fillRect(0,0, 500, 500) // hard coded width and height from canvas in index
 
-            // display.fillStyle = "white"
-            // display.fillText("It's so over.. you are gonna have to restart this.", 125 , 250)
-            // _Kernel.krnShutdown(); // shutdown the OS if a BSOD is called
+            display.fillStyle = "white"
+            display.fillText("It's so over.. you are gonna have to restart this.", 125 , 250)
+            _Kernel.krnShutdown(); // shutdown the OS if a BSOD is called
 
 
             this.krnShutdown();

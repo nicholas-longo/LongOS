@@ -345,12 +345,7 @@ var TSOS;
             }
         }
         shellBSOD() {
-            const display = _DrawingContext;
-            display.fillStyle = "blue";
-            display.fillRect(0, 0, 500, 500); // hard coded width and height from canvas in index
-            display.fillStyle = "white";
-            display.fillText("It's so over.. you are gonna have to restart this.", 125, 250);
-            _Kernel.krnShutdown(); // shutdown the OS if a BSOD is called
+            _Kernel.krnTrapError('bsod test');
         }
         shellLoad() {
             const textBox = document.getElementById("taProgramInput"); // ChatGPT 9/3/2024. I asked why the textBox.value was not working, it said to make it into this data type
