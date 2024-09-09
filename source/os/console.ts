@@ -104,12 +104,19 @@ module TSOS {
             */
             if (text !== "") {
                 // Draw the text at the current X and Y coordinates.
-                _DrawingContext.drawText(this.currentFont, this.currentFontSize, this.currentXPosition, this.currentYPosition, text);
-                // Move the current X position.
-                var offset = _DrawingContext.measureText(this.currentFont, this.currentFontSize, text);
-                this.currentXPosition = this.currentXPosition + offset;
+                // Go character by character of the given text, drawing one at a time. 
+                for(let i = 0; i < text.length; i ++ ){
+                    const character = text[i];
+                    _DrawingContext.drawText(this.currentFont, this.currentFontSize, this.currentXPosition, this.currentYPosition, character);
+                    // Move the current X position. make sure to pass the character and not the whole text
+                    var offset = _DrawingContext.measureText(this.currentFont, this.currentFontSize, character);
+                    this.currentXPosition = this.currentXPosition + offset;
+                }
+
             }
          }
+
+        
 
          // 9/6/2024 Inspired by Josh Seligman's jOSh Hall of Fame Project. Separating the current y position into a function that can be called in order to move the screen correctly. 
         public getLineHeight(): number {
