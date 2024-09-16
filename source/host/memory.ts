@@ -7,6 +7,7 @@ module TSOS {
         }
         
         public init(): void {
+            
         }
     }
 }

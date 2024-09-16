@@ -42,6 +42,21 @@ var TSOS;
             }
             return retVal;
         }
+        // taken from my Org and Arch Project 
+        //formats a number into readable hex with a leading "0x"
+        static hexLog(hexNumber, length) {
+            const hexString = hexNumber.toString(16).toUpperCase();
+            const hexStringLength = hexString.length;
+            //if the hex given is less than the required length, add the proper amount of padded 0's
+            if (hexStringLength < length) {
+                const zeroCount = length - hexStringLength;
+                const paddedHexString = "0x" + "0".repeat(zeroCount) + hexString;
+                return paddedHexString;
+            }
+            else { // if the hex is equal to or larger than required, just give the hex string as is
+                return "0x" + hexString;
+            }
+        }
     }
     TSOS.Utils = Utils;
 })(TSOS || (TSOS = {}));
