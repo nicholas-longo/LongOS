@@ -33,6 +33,7 @@ var _MemoryAccessor: TSOS.MemoryAccessor;
 
 // Software (OS)
 var _MemoryManager: any =  null; 
+var _ProcessControlBlock: any = null; // MAY NEED TO CHANGE
 
 var _OSclock: number = 0;  // Page 23.
 
