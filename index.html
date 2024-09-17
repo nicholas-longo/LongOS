@@ -41,7 +41,7 @@
 
 <body onload="onDocumentLoad()">
 
-<div id="divMain" style="width:100%;">
+<div id="divTop" style="width:100%;">
 
    <div id="divButtonBar" style="margin:4px;">
       <input type="button"
@@ -69,73 +69,51 @@
              value="Reset"
              tabindex="2"
              onclick="TSOS.Control.hostBtnReset_click(this);">
+             
+             <div id="divStatusBar" style="margin-top: 15px; margin-left: 4px; width:500px; height:10px;">
+                <label>
+                   Date: 
+                </label>
+                <label id="divStatusBarDate"> 
+                    
+                </label>
+                <br>
+                <label>
+                   Status: 
+                </label>
+                <label id="divStatusBarMessage">
+                    
+                </label>
+             </div>
    </div>
    
-   <div id="divStatusBar" style="margin-top: 15px; margin-left: 4px; width:500px; height:10px;">
-      <label>
-         Date: 
-      </label>
-      <label id="divStatusBarDate"> 
-          
-      </label>
-      <br>
-      <label>
-         Status: 
-      </label>
-      <label id="divStatusBarMessage">
-          
-      </label>
-   </div>
-
-   <div id="divConsole" style="margin-top:40px; margin-left:4px; width:500px; height:500px; float:left;">
-      <label>
-         Console
-      </label>
-      <canvas id="display"
-              width="500px"
-              height="500px"
-              tabindex="3">
-      </canvas>
-   </div>
-
-
-   <div id="divLog" style="margin-left:520px;">
-      <label>
-         Host Log
-         <br>
-         <textarea name="taHostLog"
-                   id  ="taHostLog"
-                   rows="26"
-                   cols="48"
-         ></textarea>
-      </label>
-   </div>
-
-   <div id="divUserProgramInput" style="margin-left:520px;">
-      <label>
-         User Program Input
-         <br>
-         <textarea name="taProgramInput"
-                   id  ="taProgramInput"
-                   rows="8"
-                   cols="48"
-         ></textarea>
-      </label>
-   </div>
-
-
-   <div id="divMemory" style=" margin-left: 1000px;">
-      <table id = "memoryTable">
-
-      </table>
+   <div id="divMain">
+      <div id="divConsole">
+         <label>Console</label>
+         <canvas id="display" width="500px" height="500px" tabindex="3"></canvas>
+      </div>
    
+      <div id="divLogContainer">
+         <div id="divLog">
+            <label>Host Log</label>
+            <br>
+            <textarea name="taHostLog" id="taHostLog" rows="26" cols="48" readonly></textarea>
+         </div>
    
+         <div id="divUserProgramInput">
+            <label>User Program Input</label>
+            <br>
+            <textarea name="taProgramInput" id="taProgramInput" rows="8" cols="48"></textarea>
+         </div>
+      </div>
    
-   
+      <div id="divRight">
+         <div id="divMemory">
+            <label>Memory</label>
+            <table id="memoryTable"></table>
+         </div>
+      </div>
    </div>
-   
-</div>
-
 
 <p class="footerText" style="clear:both;">
    <br>

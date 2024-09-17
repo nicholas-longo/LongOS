@@ -46,3 +46,46 @@ h3 {
   font-size: 8pt;
   text-align: center;
 }
+
+#divMain {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 50px;
+}
+
+#divConsole {
+  margin-right: 20px;
+}
+
+#divLogContainer {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
+
+#divRight {
+  margin-left: 20px;
+}
+
+#divMemory {
+  width: 400px; 
+  height: 400px; 
+  overflow: auto; 
+  border: 1px solid #000; 
+}
+
+#memoryTable {
+  width: 100%; 
+  border-collapse: collapse; 
+}
+
+#memoryTable th, #memoryTable td {
+  border: 1px solid #000; 
+  padding: 8px; 
+}
+
+#divConsole label {
+  display: block;
+  margin-bottom: 8px;
+}
