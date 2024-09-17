@@ -107,6 +107,9 @@ var TSOS;
                 }
             }
         }
+        static updateMemory() {
+            // add in logic for updating the memory table
+        }
     }
     TSOS.Control = Control;
 })(TSOS || (TSOS = {}));

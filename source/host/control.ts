@@ -134,5 +134,9 @@ module TSOS {
             }
         }
 
+        public static updateMemory(): void {
+            // add in logic for updating the memory table
+        }
+
     }
 }
