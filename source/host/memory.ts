@@ -18,9 +18,9 @@ module TSOS {
     }
         
     // prob will change the number of bytes the memory array is
-    // initialize a blank memory array. the size will be able to store three programs that are 256 bytes 
+    // initialize a blank memory array. the size will first be 256 bytes so it can store one program
         public init(): void {
-            for (let i: number = 0x00; i < 0x300; i += 0x01) {
+            for (let i: number = 0x00; i < 0x100; i += 0x01) {
                 this.memory[i] = 0x00; 
             }
         }
