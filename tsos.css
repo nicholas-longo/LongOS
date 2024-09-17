@@ -70,9 +70,10 @@ h3 {
 
 #divMemory {
   width: 400px; 
-  height: 400px; 
+  height: 200px; 
   overflow: auto; 
   border: 1px solid #000; 
+  margin-bottom: 20px; /* Add space below Memory */
 }
 
 #memoryTable {
@@ -81,6 +82,41 @@ h3 {
 }
 
 #memoryTable th, #memoryTable td {
+  border: 1px solid #000; 
+  padding: 8px; 
+}
+
+#divPCB {
+  width: 600px; 
+  height: 200px; 
+  overflow: auto; 
+  border: 1px solid #000; 
+  margin-bottom: 20px; /* Add space below PCB */
+}
+
+#pcbTable {
+  width: 100%; 
+  border-collapse: collapse; 
+}
+
+#pcbTable th, #pcbTable td {
+  border: 1px solid #000; 
+  padding: 8px; 
+}
+
+#divCPU {
+  width: 600px; 
+  height: 200px; 
+  overflow: auto; 
+  border: 1px solid #000; 
+}
+
+#cpuTable {
+  width: 100%; 
+  border-collapse: collapse; 
+}
+
+#cpuTable th, #cpuTable td {
   border: 1px solid #000; 
   padding: 8px; 
 }
