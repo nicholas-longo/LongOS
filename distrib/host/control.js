@@ -108,7 +108,16 @@ var TSOS;
             }
         }
         static updateMemory() {
-            // add in logic for updating the memory table
+            let memTable = document.getElementById("memoryTable");
+            const memory = _MemoryAccessor.getMemory(); // the current memory array
+            for (let i = 0; i < memTable.rows.length; i++) {
+                const row = memTable.rows[i];
+                for (let j = 1; j < row.cells.length; j++) {
+                    const cell = row.cells[j];
+                    const index = i * 8 + (j - 1); // *8 to account for the current row, j - 1 because j starts at 1
+                    cell.innerHTML = memory[index].toString(16).toUpperCase(); // converts a number into a hexidecimal string. i am avoiding the hexLog function because I do not want padding
+                }
+            }
         }
     }
     TSOS.Control = Control;

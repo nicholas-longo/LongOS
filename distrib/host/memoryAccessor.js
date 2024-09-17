@@ -8,6 +8,10 @@ var TSOS;
         constructor(memory) {
             this.memory = memory;
         }
+        //calls the getMemory() the memory from memory
+        getMemory() {
+            return _Memory.getMemory();
+        }
         // calls the setMAR() from memory
         setMAR(address) {
             _Memory.setMAR(address);
@@ -46,7 +50,7 @@ var TSOS;
             for (let i = 0; i < program.length; i++) {
                 this.writeImmediate(startingAddress + i, program[i]); // address increments by 1 each time and is passed as the MAR, correct code is passed as the MDR
             }
-            TSOS.Control.updateMemory(); // add this in later
+            TSOS.Control.updateMemory();
         }
     }
     TSOS.MemoryAccessor = MemoryAccessor;
