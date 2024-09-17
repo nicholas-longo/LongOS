@@ -419,6 +419,11 @@ module TSOS {
                 _StdOut.putText("Invalid Program: User Program Input is Empty");
                 return
             }
+
+            if(userProgramInput.length > 512) {
+                _StdOut.putText("Invalid Program: User Program Exceeds 256 Bytes");
+                return
+            }
             
             //ChatGPT 9/3. 
             // I asked for regex condition where A-F, a-f, 0-9, and whitespace is acceptable
