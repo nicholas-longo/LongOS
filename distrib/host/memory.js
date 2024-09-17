@@ -22,6 +22,15 @@ var TSOS;
                 this.memory[i] = 0x00;
             }
         }
+        getMemory() {
+            return this.memory;
+        }
+        getMAR() {
+            return this.MAR;
+        }
+        setMAR(value) {
+            this.MAR = value;
+        }
         getMDR() {
             return this.MDR;
         }
@@ -35,6 +44,13 @@ var TSOS;
         // write the contents of the MDR to memory at the location indicated by the MAR
         write() {
             this.memory[this.MAR] = this.MDR;
+        }
+        //MAR, MDR, and memory array are all overwritten with 0's
+        reset() {
+            this.MAR = 0;
+            this.MDR = 0;
+            //makes the entire array 0's
+            this.memory.fill(0x00);
         }
     }
     TSOS.Memory = Memory;

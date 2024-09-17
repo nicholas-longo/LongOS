@@ -25,6 +25,18 @@ module TSOS {
             }
         }
 
+        public getMemory(): number[] {
+            return this.memory;
+        }
+
+        public getMAR(): number {
+            return this.MAR;
+        }
+    
+        public setMAR(value: number): void {
+            this.MAR = value;
+        }
+
         public getMDR(): number {
             return this.MDR;
         }
@@ -41,6 +53,14 @@ module TSOS {
         // write the contents of the MDR to memory at the location indicated by the MAR
         public write(): void {
             this.memory[this.MAR] = this.MDR;
+        }
+
+        //MAR, MDR, and memory array are all overwritten with 0's
+        public reset(): void {
+            this.MAR = 0;
+            this.MDR = 0; 
+            //makes the entire array 0's
+            this.memory.fill(0x00);
         }
     }
 }

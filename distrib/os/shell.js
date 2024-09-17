@@ -387,8 +387,17 @@ var TSOS;
                 .match(/([A-Z]{2}|\d{2}|[A-Z]\d|\d[A-Z])/g) // Match two letters, two numbers, or letter-number pairs
                 ?.join(' ') || ''; // Join matched pairs with a space between them
             textBox.value = formattedText;
-            //this is a place holder for now
-            _StdOut.putText("Load Successful...");
+            // make each op code into a list
+            const hexStringArray = textBox.value.split(" ");
+            let program = [];
+            for (let i = 0; i < hexStringArray.length; i++) {
+                let value = parseInt(hexStringArray[i], 16); // convert the string hex into a number and push to the temporary memory array
+                program.push(value);
+            }
+            // load the program into memory
+            _MemoryAccessor.flashMemory(program);
+            //this is a place holder for now, will display the process id
+            _StdOut.putText("load successful");
         }
     }
     TSOS.Shell = Shell;

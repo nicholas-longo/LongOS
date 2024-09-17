@@ -72,7 +72,7 @@ var TSOS;
             _Memory = new TSOS.Memory();
             _Memory.init();
             Control.intializeMemoryTable(); // create the memory table
-            _MemoryAccessor = new TSOS.MemoryAccessor();
+            _MemoryAccessor = new TSOS.MemoryAccessor(_Memory);
             // ... then set the host clock pulse ...
             _hardwareClockID = setInterval(TSOS.Devices.hostClockPulse, CPU_CLOCK_INTERVAL);
             // .. and call the OS Kernel Bootstrap routine.
