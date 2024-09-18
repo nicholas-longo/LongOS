@@ -9,7 +9,7 @@ module TSOS {
         private MAR: number; // memory address register
         private MDR: number; // memory data register
 
-         constructor() {;
+         constructor() {
         //initializes the memory array
         this.memory = [];
         this.MAR = 0;

@@ -8,7 +8,6 @@ var TSOS;
         MAR; // memory address register
         MDR; // memory data register
         constructor() {
-            ;
             //initializes the memory array
             this.memory = [];
             this.MAR = 0;

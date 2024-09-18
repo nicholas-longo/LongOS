@@ -466,8 +466,15 @@ module TSOS {
                 program.push(value) 
             }
             
+            // make sure there is space for a program
+            // use the memory manager to make sure space is not filled up
+
             // load the program into memory
             _MemoryAccessor.flashMemory(program)
+
+            // create the pcb
+
+            
             
             //this is a place holder for now, will display the process id
             _StdOut.putText("load successful");
