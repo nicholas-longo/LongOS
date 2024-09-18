@@ -44,17 +44,17 @@ var TSOS;
         }
         // taken from my Org and Arch Project 
         //formats a number into readable hex with a leading "0x"
-        static hexLog(hexNumber, length) {
+        static hexLog(hexNumber, length, noPadding) {
             const hexString = hexNumber.toString(16).toUpperCase();
             const hexStringLength = hexString.length;
-            //if the hex given is less than the required length, add the proper amount of padded 0's
+            // pad with 0's if necessary
             if (hexStringLength < length) {
                 const zeroCount = length - hexStringLength;
-                const paddedHexString = "0x" + "0".repeat(zeroCount) + hexString;
-                return paddedHexString;
+                const paddedHexString = "0".repeat(zeroCount) + hexString;
+                return noPadding ? paddedHexString : "0x" + paddedHexString; // if noPadding is true, do not put "0x" in front of the number. this is for some very specific cases and is not always needed. hence the optional param
             }
-            else { // if the hex is equal to or larger than required, just give the hex string as is
-                return "0x" + hexString;
+            else {
+                return noPadding ? hexString : "0x" + hexString;
             }
         }
     }

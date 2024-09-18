@@ -143,7 +143,7 @@ module TSOS {
                 for(let j = 1; j < row.cells.length ; j ++) {
                     const cell = row.cells[j];
                     const index = i * 8 + (j - 1); // *8 to account for the current row, j - 1 because j starts at 1
-                    cell.innerHTML = memory[index].toString(16).toUpperCase(); // converts a number into a hexidecimal string. i am avoiding the hexLog function because I do not want padding
+                    cell.innerHTML = Utils.hexLog(memory[index], 2, true); // converts a number into a hexidecimal string. i am avoiding the hexLog function because I do not want padding
                 }
             }
         }
@@ -165,19 +165,20 @@ module TSOS {
             
             // create and fill the cells with the corresponding values
             let pcCell = row.insertCell();
-            pcCell.innerHTML = PC.toString(16).toUpperCase();
+            pcCell.innerHTML = Utils.hexLog(PC, 2, true); // true is for aesthetics 
             
             let accCell = row.insertCell();
-            accCell.innerHTML = accumulator.toString(16).toUpperCase();
+            accCell.innerHTML = Utils.hexLog(accumulator, 2, true);;
             
             let xRegCell = row.insertCell();
-            xRegCell.innerHTML = xReg.toString(16).toUpperCase();
+            xRegCell.innerHTML = Utils.hexLog(xReg, 2, true);;
             
             let yRegCell = row.insertCell();
-            yRegCell.innerHTML = yReg.toString(16).toUpperCase();
+            yRegCell.innerHTML = Utils.hexLog(yReg, 2, true);;
             
             let zFlagCell = row.insertCell();
-            zFlagCell.innerHTML = zFlag.toString();
+            zFlagCell.innerHTML = Utils.hexLog(zFlag, 2, true);;
+
 
         }
 

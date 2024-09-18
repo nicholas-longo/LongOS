@@ -38,31 +38,31 @@ module TSOS {
             // fill the cells in
 
             let pidCell = row.insertCell();
-            pidCell.innerHTML = pcbEntry.PID.toString(16).toUpperCase();
+            pidCell.innerHTML = Utils.hexLog(pcbEntry.PID, 2, true);
             
             let priorityCell = row.insertCell();
-            priorityCell.innerHTML = pcbEntry.priority.toString();
+            priorityCell.innerHTML = Utils.hexLog(pcbEntry.priority, 2, true);;
             
             let locationCell = row.insertCell();
             locationCell.innerHTML = pcbEntry.location;
 
             let segmentCell = row.insertCell();
-            segmentCell.innerHTML = pcbEntry.segment.toString();
+            segmentCell.innerHTML = Utils.hexLog(pcbEntry.segment, 2, true);;
             
             let pcCell = row.insertCell();
-            pcCell.innerHTML = pcbEntry.PC.toString(16).toUpperCase(); // Again, assuming hexadecimal representation
+            pcCell.innerHTML = Utils.hexLog(pcbEntry.PC, 2, true);
             
             let accCell = row.insertCell();
-            accCell.innerHTML = pcbEntry.acc.toString(16).toUpperCase();
+            accCell.innerHTML = Utils.hexLog(pcbEntry.acc, 2, true);
             
             let xRegCell = row.insertCell();
-            xRegCell.innerHTML = pcbEntry.xReg.toString(16).toUpperCase();
+            xRegCell.innerHTML = Utils.hexLog(pcbEntry.xReg, 2, true);
             
             let yRegCell = row.insertCell();
-            yRegCell.innerHTML = pcbEntry.yReg.toString(16).toUpperCase();
+            yRegCell.innerHTML = Utils.hexLog(pcbEntry.yReg, 2, true);
             
             let zFlagCell = row.insertCell();
-            zFlagCell.innerHTML = pcbEntry.zFlag.toString();
+            zFlagCell.innerHTML = Utils.hexLog(pcbEntry.zFlag, 2, true);
             
             let statusCell = row.insertCell();
             statusCell.innerHTML = pcbEntry.Status;

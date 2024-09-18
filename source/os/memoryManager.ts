@@ -16,7 +16,7 @@ module TSOS {
 
         public isSpaceAvailable(): boolean {
             for (let i = 0; i < this.memoryAvailability.length; i ++) {
-                if(this.memoryAvailability[i] == true) {
+                if(this.memoryAvailability[i] === true) {
                     this.allocateSegment(i); // sets the segment to the first available spot
                     return true
                 } 

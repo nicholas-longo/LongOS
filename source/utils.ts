@@ -47,18 +47,18 @@ module TSOS {
 
         // taken from my Org and Arch Project 
          //formats a number into readable hex with a leading "0x"
-            public static hexLog(hexNumber: number, length: number): string {
-                const hexString = hexNumber.toString(16).toUpperCase();
-                const hexStringLength = hexString.length;
+         public static hexLog(hexNumber: number, length: number, noPadding?: boolean): string {
+            const hexString = hexNumber.toString(16).toUpperCase();
+            const hexStringLength = hexString.length;
         
-                //if the hex given is less than the required length, add the proper amount of padded 0's
-                if (hexStringLength < length) {
-                    const zeroCount = length - hexStringLength;
-                    const paddedHexString = "0x" + "0".repeat(zeroCount) + hexString;
-                    return paddedHexString;
-                } else { // if the hex is equal to or larger than required, just give the hex string as is
-                    return "0x" + hexString;
-                } 
+            // pad with 0's if necessary
+            if (hexStringLength < length) {
+                const zeroCount = length - hexStringLength;
+                const paddedHexString = "0".repeat(zeroCount) + hexString;
+                return noPadding ? paddedHexString : "0x" + paddedHexString; // if noPadding is true, do not put "0x" in front of the number. this is for some very specific cases and is not always needed. hence the optional param
+            } else {
+                return noPadding ? hexString : "0x" + hexString;
             }
+        }
     }
 }
