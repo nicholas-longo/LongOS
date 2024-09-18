@@ -90,6 +90,7 @@ module TSOS {
             // ... Create and initialize the CPU (because it's part of the hardware)  ...
             _CPU = new Cpu();  // Note: We could simulate multi-core systems by instantiating more than one instance of the CPU here.
             _CPU.init();       //       There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool.
+            Control.updateCPUTable();
             _Memory = new Memory()
             _Memory.init();
             Control.intializeMemoryTable(); // create the memory table
@@ -145,6 +146,39 @@ module TSOS {
                     cell.innerHTML = memory[index].toString(16).toUpperCase(); // converts a number into a hexidecimal string. i am avoiding the hexLog function because I do not want padding
                 }
             }
+        }
+
+        // used for displaying the cpu to the console
+        public static updateCPUTable(): void {
+            // get the table 
+            let cpuTable = document.getElementById("cpuTable") as HTMLTableElement;
+            
+            // get the starting values of the cpu
+            const PC = _CPU.PC;
+            const accumulator = _CPU.Acc;
+            const xReg = _CPU.Xreg;
+            const yReg = _CPU.Yreg;
+            const zFlag = _CPU.Zflag;
+            
+            // create the cells accordingly 
+            let row = cpuTable.insertRow()
+            
+            // create and fill the cells with the corresponding values
+            let pcCell = row.insertCell();
+            pcCell.innerHTML = PC.toString(16).toUpperCase();
+            
+            let accCell = row.insertCell();
+            accCell.innerHTML = accumulator.toString(16).toUpperCase();
+            
+            let xRegCell = row.insertCell();
+            xRegCell.innerHTML = xReg.toString(16).toUpperCase();
+            
+            let yRegCell = row.insertCell();
+            yRegCell.innerHTML = yReg.toString(16).toUpperCase();
+            
+            let zFlagCell = row.insertCell();
+            zFlagCell.innerHTML = zFlag.toString();
+
         }
 
     }

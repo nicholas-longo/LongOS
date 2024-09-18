@@ -70,9 +70,9 @@ h3 {
 
 #divMemory {
   width: 700px; 
-  height: 200px; 
+  height: 300px; 
   overflow: auto; 
-  border: 1px solid #000; 
+  border: none; 
   margin-bottom: 20px; /* Add space below Memory */
 }
 
@@ -90,7 +90,7 @@ h3 {
   width: 700px; 
   height: 200px; 
   overflow: auto; 
-  border: 1px solid #000; 
+  border: none; 
   margin-bottom: 20px; /* Add space below PCB */
 }
 
@@ -106,9 +106,9 @@ h3 {
 
 #divCPU {
   width: 700px; 
-  height: 200px; 
+  height: 100px; 
   overflow: auto; 
-  border: 1px solid #000; 
+  border: none; 
 }
 
 #cpuTable {

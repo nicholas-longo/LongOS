@@ -19,7 +19,7 @@ var TSOS;
         Yreg;
         Zflag;
         isExecuting;
-        constructor(PC = 0, Acc = 0, Xreg = 0, Yreg = 0, Zflag = 0, isExecuting = false) {
+        constructor(PC = 0x00, Acc = 0x00, Xreg = 0x00, Yreg = 0x00, Zflag = 0x00, isExecuting = false) {
             this.PC = PC;
             this.Acc = Acc;
             this.Xreg = Xreg;
@@ -28,11 +28,11 @@ var TSOS;
             this.isExecuting = isExecuting;
         }
         init() {
-            this.PC = 0;
-            this.Acc = 0;
-            this.Xreg = 0;
-            this.Yreg = 0;
-            this.Zflag = 0;
+            this.PC = 0x00;
+            this.Acc = 0x00;
+            this.Xreg = 0x00;
+            this.Yreg = 0x00;
+            this.Zflag = 0x00;
             this.isExecuting = false;
         }
         cycle() {
