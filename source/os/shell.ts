@@ -482,9 +482,12 @@ module TSOS {
             //update the table entry
             pcbEntry.updatePCBTable(pcbEntry);
 
-            //this is a place holder for now, will display the process id
-            _StdOut.putText("load successful");
+            //show the process id and priority
+            _StdOut.putText(`Process ID: ${pcbEntry.PID} Priority: ${pcbEntry.priority}`);
         }
 
+        // shell run 
+        // this will need to run code in memory, i will make it later. It also has to make the respective pcbEntry terminated
+        // then when I make another pcb, i will have to use a PID that was not used
     }
 }

@@ -25,7 +25,7 @@ var TSOS;
         }
         init() {
             this.PID = 0;
-            this.priority = 0;
+            this.priority = 8;
             this.location = "Memory";
             this.segment = 0;
             this.PC = 0;
