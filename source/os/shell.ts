@@ -466,16 +466,22 @@ module TSOS {
                 program.push(value) 
             }
             
-            // make sure there is space for a program
             // use the memory manager to make sure space is not filled up
+            if (!_MemoryManager.isSpaceAvailable()){
+                _StdOut.putText("Failed to Load: No memory available")
+                return;
+            } 
 
             // load the program into memory
             _MemoryAccessor.flashMemory(program)
 
-            // create the pcb
+            // create the pcb 
+            let pcbEntry = new ProcessControlBlock();
+            // give it the default values
+            pcbEntry.init(); 
+            //update the table entry
+            pcbEntry.updatePCBTable(pcbEntry);
 
-            
-            
             //this is a place holder for now, will display the process id
             _StdOut.putText("load successful");
         }
