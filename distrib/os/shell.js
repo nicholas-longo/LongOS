@@ -418,12 +418,22 @@ var TSOS;
         // prompt the cpu to begin its work
         // will have to change the status of the pcb block a few times, but I will add the logic for that a bit later because that is for project 3
         shellRun(args) {
-            if (args.length > 0) {
-                _StdOut.putText('t');
-            }
-            else {
+            if (args.length <= 0) { // make sure there is a PID given
                 _StdOut.putText("Usage: run <PID>  Please supply a PID.");
+                return;
             }
+            const PID = parseInt(args[0]); // get the user inputted PID
+            const pcb = _PCBManager.findPCB(PID); // get the current pcb
+            if (!pcb) { // makes sure the pid provided is valid
+                _StdOut.putText(`The PID: ${PID} is not valid.`);
+                return;
+            }
+            _StdOut.putText(`Executing process ${PID}`);
+            // do cpu stuff and run the program here
+            // this logic will need to change, but since there is only one program you terminate it when it is done
+            _PCBManager.updatePCBStatus(PID, "Terminated");
+            _PCBManager.terminatePCB(PID); // terminate the current pcb 
+            // deallocate memory
         }
     }
     TSOS.Shell = Shell;

@@ -49,6 +49,7 @@ module TSOS {
         }
 
         public updateStatus(status: string): void {
+            console.log(status)
             this.Status = status;
         }
 

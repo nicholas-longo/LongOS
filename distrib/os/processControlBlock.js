@@ -53,6 +53,7 @@ var TSOS;
             row.insertCell().innerHTML = this.Status;
         }
         updateStatus(status) {
+            console.log(status);
             this.Status = status;
         }
     }
