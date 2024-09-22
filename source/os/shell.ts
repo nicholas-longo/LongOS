@@ -109,6 +109,12 @@ module TSOS {
                 "- Ensures that all code in User Program Input is valid.");
             this.commandList[this.commandList.length] = sc;
 
+            //load 
+            sc = new ShellCommand(this.shellRun,
+                "run",
+                "<PID> runs the code for the specified process ID.");
+            this.commandList[this.commandList.length] = sc;
+
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
 
@@ -318,6 +324,9 @@ module TSOS {
                     case "load":
                         _StdOut.putText("Makes sure no funny business is loaded into User Program Input")
                         break;
+                    case "run":
+                        _StdOut.putText("This will run the program stored in memory according to the given PID. You may use this one quite a bit.")
+                        break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
                 }
@@ -484,7 +493,17 @@ module TSOS {
         }
 
         // shell run 
-        // this will need to run code in memory, i will make it later. It also has to make the respective pcbEntry terminated
-        // then when I make another pcb, i will have to use a PID that was not used
+        // terminate the existing pcb
+        // prompt the cpu to begin its work
+        // will have to change the status of the pcb block a few times, but I will add the logic for that a bit later because that is for project 3
+        public shellRun(args) {
+            if (args.length > 0) {
+                _StdOut.putText('t')
+            } else {
+                _StdOut.putText("Usage: run <PID>  Please supply a PID.");
+            }
+
+
+        }
     }
 }
