@@ -19,6 +19,7 @@ var TSOS;
             _KernelBuffers = new Array(); // Buffers... for the kernel.
             _KernelInputQueue = new TSOS.Queue(); // Where device input lands before being processed out somewhere.
             _MemoryManager = new TSOS.MemoryManager(); // deals with allocation and memory protection
+            _PCBManager = new TSOS.PCBManager(); // deals with keeping track of and changing the values for PCB
             // Initialize the console.
             _Console = new TSOS.Console(); // The command line interface / console I/O device.
             _Console.init();
