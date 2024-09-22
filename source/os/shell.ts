@@ -475,12 +475,9 @@ module TSOS {
             // load the program into memory
             _MemoryAccessor.flashMemory(program)
 
-            // create the pcb 
-            let pcbEntry = new ProcessControlBlock();
-            // give it the default values
-            pcbEntry.init(); 
-            //update the table entry
-            pcbEntry.updatePCBTable(pcbEntry);
+            // create the pcb using the manager and update the table
+            const pcbEntry = _PCBManager.createPCB(8); // pass the priority of 8 as default for a program
+            pcbEntry.updatePCBTable();
 
             //show the process id and priority
             _StdOut.putText(`Process ID: ${pcbEntry.PID} Priority: ${pcbEntry.priority}`);

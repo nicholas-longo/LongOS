@@ -20,8 +20,8 @@ module TSOS {
             _KernelInterruptQueue = new Queue();  // A (currently) non-priority queue for interrupt requests (IRQs).
             _KernelBuffers = new Array();         // Buffers... for the kernel.
             _KernelInputQueue = new Queue();      // Where device input lands before being processed out somewhere.
-            _MemoryManager = new MemoryManager() // deals with allocation and memory protection
-            _PCBManager = new PCBManager()      // deals with keeping track of and changing the values for PCB
+            _MemoryManager = new MemoryManager(); // deals with allocation and memory protection
+            _PCBManager = new PCBManager();         // deals with creating and terminating pcb blocks
 
             // Initialize the console.
             _Console = new Console();             // The command line interface / console I/O device.

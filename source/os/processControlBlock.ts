@@ -15,7 +15,7 @@ module TSOS {
                     
         }
         
-        public init(): void {
+        public init(pid: number): void {
             this.PID = 0; 
             this.priority = 8; 
             this.location = "Memory";
@@ -29,43 +29,27 @@ module TSOS {
         }
 
 
-        public updatePCBTable(pcbEntry : ProcessControlBlock): void {
+        public updatePCBTable(): void {
             // add the current pcb object to the table
             // eventually will need some logic for dealing with multiple of these
             let pcbTable = document.getElementById("pcbTable") as HTMLTableElement;
             let row = pcbTable.insertRow(); // make the row
 
             // fill the cells in
+            row.insertCell().innerHTML = Utils.hexLog(this.PID, 2, true);
+            row.insertCell().innerHTML = Utils.hexLog(this.priority, 2, true);
+            row.insertCell().innerHTML = this.location;
+            row.insertCell().innerHTML = Utils.hexLog(this.segment, 2, true);
+            row.insertCell().innerHTML = Utils.hexLog(this.PC, 2, true);
+            row.insertCell().innerHTML = Utils.hexLog(this.acc, 2, true);
+            row.insertCell().innerHTML = Utils.hexLog(this.xReg, 2, true);
+            row.insertCell().innerHTML = Utils.hexLog(this.yReg, 2, true);
+            row.insertCell().innerHTML = Utils.hexLog(this.zFlag, 2, true);
+            row.insertCell().innerHTML = this.Status;
+        }
 
-            let pidCell = row.insertCell();
-            pidCell.innerHTML = Utils.hexLog(pcbEntry.PID, 2, true);
-            
-            let priorityCell = row.insertCell();
-            priorityCell.innerHTML = Utils.hexLog(pcbEntry.priority, 2, true);;
-            
-            let locationCell = row.insertCell();
-            locationCell.innerHTML = pcbEntry.location;
-
-            let segmentCell = row.insertCell();
-            segmentCell.innerHTML = Utils.hexLog(pcbEntry.segment, 2, true);;
-            
-            let pcCell = row.insertCell();
-            pcCell.innerHTML = Utils.hexLog(pcbEntry.PC, 2, true);
-            
-            let accCell = row.insertCell();
-            accCell.innerHTML = Utils.hexLog(pcbEntry.acc, 2, true);
-            
-            let xRegCell = row.insertCell();
-            xRegCell.innerHTML = Utils.hexLog(pcbEntry.xReg, 2, true);
-            
-            let yRegCell = row.insertCell();
-            yRegCell.innerHTML = Utils.hexLog(pcbEntry.yReg, 2, true);
-            
-            let zFlagCell = row.insertCell();
-            zFlagCell.innerHTML = Utils.hexLog(pcbEntry.zFlag, 2, true);
-            
-            let statusCell = row.insertCell();
-            statusCell.innerHTML = pcbEntry.Status;
+        public updateStatus(status: string): void {
+            this.Status = status;
         }
 
     }

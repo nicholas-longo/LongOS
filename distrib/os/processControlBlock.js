@@ -23,7 +23,7 @@ var TSOS;
             this.zFlag = zFlag;
             this.Status = Status;
         }
-        init() {
+        init(pid) {
             this.PID = 0;
             this.priority = 8;
             this.location = "Memory";
@@ -35,34 +35,25 @@ var TSOS;
             this.zFlag = 0;
             this.Status = "Resident";
         }
-        updatePCBTable(pcbEntry) {
+        updatePCBTable() {
             // add the current pcb object to the table
             // eventually will need some logic for dealing with multiple of these
             let pcbTable = document.getElementById("pcbTable");
             let row = pcbTable.insertRow(); // make the row
             // fill the cells in
-            let pidCell = row.insertCell();
-            pidCell.innerHTML = TSOS.Utils.hexLog(pcbEntry.PID, 2, true);
-            let priorityCell = row.insertCell();
-            priorityCell.innerHTML = TSOS.Utils.hexLog(pcbEntry.priority, 2, true);
-            ;
-            let locationCell = row.insertCell();
-            locationCell.innerHTML = pcbEntry.location;
-            let segmentCell = row.insertCell();
-            segmentCell.innerHTML = TSOS.Utils.hexLog(pcbEntry.segment, 2, true);
-            ;
-            let pcCell = row.insertCell();
-            pcCell.innerHTML = TSOS.Utils.hexLog(pcbEntry.PC, 2, true);
-            let accCell = row.insertCell();
-            accCell.innerHTML = TSOS.Utils.hexLog(pcbEntry.acc, 2, true);
-            let xRegCell = row.insertCell();
-            xRegCell.innerHTML = TSOS.Utils.hexLog(pcbEntry.xReg, 2, true);
-            let yRegCell = row.insertCell();
-            yRegCell.innerHTML = TSOS.Utils.hexLog(pcbEntry.yReg, 2, true);
-            let zFlagCell = row.insertCell();
-            zFlagCell.innerHTML = TSOS.Utils.hexLog(pcbEntry.zFlag, 2, true);
-            let statusCell = row.insertCell();
-            statusCell.innerHTML = pcbEntry.Status;
+            row.insertCell().innerHTML = TSOS.Utils.hexLog(this.PID, 2, true);
+            row.insertCell().innerHTML = TSOS.Utils.hexLog(this.priority, 2, true);
+            row.insertCell().innerHTML = this.location;
+            row.insertCell().innerHTML = TSOS.Utils.hexLog(this.segment, 2, true);
+            row.insertCell().innerHTML = TSOS.Utils.hexLog(this.PC, 2, true);
+            row.insertCell().innerHTML = TSOS.Utils.hexLog(this.acc, 2, true);
+            row.insertCell().innerHTML = TSOS.Utils.hexLog(this.xReg, 2, true);
+            row.insertCell().innerHTML = TSOS.Utils.hexLog(this.yReg, 2, true);
+            row.insertCell().innerHTML = TSOS.Utils.hexLog(this.zFlag, 2, true);
+            row.insertCell().innerHTML = this.Status;
+        }
+        updateStatus(status) {
+            this.Status = status;
         }
     }
     TSOS.ProcessControlBlock = ProcessControlBlock;
