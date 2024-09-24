@@ -36,7 +36,25 @@ module TSOS {
         public cycle(): void {
             _Kernel.krnTrace('CPU cycle');
             // TODO: Accumulate CPU usage and profiling statistics here.
-            // Do the real work here. Be sure to set this.isExecuting appropriately.
+            // Do the real work here. Be sure to set this.isExecuting appropriately.\
+            
         }
+
+        public fetch(): void {
+
+        }
+
+        public decode(): void {
+            
+        }
+
+        public execute(): void {
+            
+        }
+
+        // remember the program counter. start by accessing the memory. remember that control needs to update the cpu gui
+
+
+
     }
 }
