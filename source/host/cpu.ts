@@ -81,6 +81,10 @@ module TSOS {
                     this.PC += 0x0001
                     this.execute1(); // only one decode needed
                     break;
+                //break
+                case (0x00):
+                    this.execute1();
+                    break;
             }
         }
 
@@ -95,6 +99,10 @@ module TSOS {
                     this.Acc = _MemoryAccessor.getMDR();
                     console.log(this.PC);
                     break;
+                //break
+                case(0x00):
+                    this.isExecuting = false; // end the execution. this may need to change when multiple programs are concurrent
+                    
             }
         }
 

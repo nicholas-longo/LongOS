@@ -40,7 +40,7 @@ var TSOS;
             this.Xreg = 0x00;
             this.Yreg = 0x00;
             this.Zflag = 0x00;
-            this.isExecuting = true;
+            this.isExecuting = false;
         }
         cycle() {
             _Kernel.krnTrace('CPU cycle');
@@ -72,6 +72,10 @@ var TSOS;
                     this.PC += 0x0001;
                     this.execute1(); // only one decode needed
                     break;
+                //break
+                case (0x00):
+                    this.execute1();
+                    break;
             }
         }
         decode2() {
@@ -83,6 +87,9 @@ var TSOS;
                     this.Acc = _MemoryAccessor.getMDR();
                     console.log(this.PC);
                     break;
+                //break
+                case (0x00):
+                    this.isExecuting = false; // end the execution. this may need to change when multiple programs are concurrent
             }
         }
         execute2() {

@@ -159,7 +159,7 @@ module TSOS {
             const yReg = _CPU.Yreg;
             const zFlag = _CPU.Zflag;
            
-            let row: HTMLTableRowElement | null = cpuTable.rows[0]; 
+            let row: HTMLTableRowElement | null = cpuTable.rows[1]; 
 
             // if the row does not exist, make one
             if (!row) {

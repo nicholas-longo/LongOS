@@ -428,8 +428,23 @@ var TSOS;
                 _StdOut.putText(`The PID: ${PID} is not valid.`);
                 return;
             }
+            // where do I deal with these PCBs. I do not think run should get called more than once so i feel that logic needs to be handled elsewhere
+            const status = pcb.Status;
+            switch (status) {
+                case ("Resident"):
+                    _PCBManager.updatePCBStatus("Ready"); // change pcb status
+                    _CPU.isExecuting = true; // where do i make the cpu execution start to be true
+                    break;
+                case ("Ready"):
+                case ("Running"):
+                    _StdOut.putText("Cannot run program, already running.");
+                    break;
+                case ("Terminated"):
+                    _StdOut.putText(`Process ID: ${PID} is already terminated.`);
+                    break;
+            }
             _StdOut.putText(`Executing process ${PID}`);
-            // do cpu stuff and run the program here
+            // WHERE DOES THIS GO??? 
             // this logic will need to change, but since there is only one program you terminate it when it is done
             _PCBManager.updatePCBStatus(PID, "Terminated");
             _PCBManager.terminatePCB(PID); // terminate the current pcb 
