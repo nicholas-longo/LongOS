@@ -122,31 +122,28 @@ var TSOS;
         }
         // used for displaying the cpu to the console
         static updateCPUTable() {
-            // get the table 
             let cpuTable = document.getElementById("cpuTable");
-            // get the starting values of the cpu
+            // get the current values from the CPU
             const PC = _CPU.PC;
             const accumulator = _CPU.Acc;
             const xReg = _CPU.Xreg;
             const yReg = _CPU.Yreg;
             const zFlag = _CPU.Zflag;
-            // create the cells accordingly 
-            let row = cpuTable.insertRow();
-            // create and fill the cells with the corresponding values
-            let pcCell = row.insertCell();
-            pcCell.innerHTML = TSOS.Utils.hexLog(PC, 2, true); // true is for aesthetics 
-            let accCell = row.insertCell();
-            accCell.innerHTML = TSOS.Utils.hexLog(accumulator, 2, true);
-            ;
-            let xRegCell = row.insertCell();
-            xRegCell.innerHTML = TSOS.Utils.hexLog(xReg, 2, true);
-            ;
-            let yRegCell = row.insertCell();
-            yRegCell.innerHTML = TSOS.Utils.hexLog(yReg, 2, true);
-            ;
-            let zFlagCell = row.insertCell();
-            zFlagCell.innerHTML = TSOS.Utils.hexLog(zFlag, 2, true);
-            ;
+            console.log(PC);
+            let row = cpuTable.rows[0];
+            // if the row does not exist, make one
+            if (!row) {
+                row = cpuTable.insertRow();
+                for (let i = 0; i < 5; i++) {
+                    row.insertCell();
+                }
+            }
+            // update the rows 
+            row.cells[0].innerHTML = TSOS.Utils.hexLog(PC, 2, true);
+            row.cells[1].innerHTML = TSOS.Utils.hexLog(accumulator, 2, true);
+            row.cells[2].innerHTML = TSOS.Utils.hexLog(xReg, 2, true);
+            row.cells[3].innerHTML = TSOS.Utils.hexLog(yReg, 2, true);
+            row.cells[4].innerHTML = TSOS.Utils.hexLog(zFlag, 2, true);
         }
     }
     TSOS.Control = Control;

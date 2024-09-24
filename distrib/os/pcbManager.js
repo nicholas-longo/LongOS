@@ -14,7 +14,6 @@ var TSOS;
             pcb.priority = priority;
             this.pcbQueue.push(pcb);
             this.nextPID++; // make sure to update the next pid when a new pcb is created
-            console.log(this.getPCBs());
             return pcb;
         }
         // Chat GPT 9/22/24 

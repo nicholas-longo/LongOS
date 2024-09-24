@@ -39,18 +39,18 @@ module TSOS {
             this.Xreg = 0x00;
             this.Yreg = 0x00;
             this.Zflag = 0x00;
-            this.isExecuting = false;
+            this.isExecuting = false; 
         }
 
         public cycle(): void {
             _Kernel.krnTrace('CPU cycle');
             // TODO: Accumulate CPU usage and profiling statistics here.
             // Do the real work here. Be sure to set this.isExecuting appropriately.
-            this.fetch();
-            this.decode1();
-            this.decode2();
-            this.execute1();
-            this.execute2();
+            
+            this.fetch(); // begins the CPU pipeline
+            
+            Control.updateCPUTable(); 
+            Control.updateMemory(); 
         }
 
 
@@ -67,11 +67,21 @@ module TSOS {
 
             // increment the program counter to the next address because the current memory address was read
             this.PC += 0x0001;
+            this.decode1(); // call the first decode
 
         }
 
         public decode1(): void {
-            
+            switch (this.IR) {
+                // load the accumlator with a constant
+                case (0xA9):
+                    //set the MAR to the memory address to the program counter and read its contents
+                    _MemoryAccessor.setMAR(this.PC);
+                    _MemoryAccessor.read();
+                    this.PC += 0x0001
+                    this.execute1(); // only one decode needed
+                    break;
+            }
         }
 
         public decode2(): void {
@@ -79,7 +89,13 @@ module TSOS {
         }
 
         public execute1(): void {
-            
+            switch (this.IR) {
+                //load the accumulator with a constant
+                case (0xA9):
+                    this.Acc = _MemoryAccessor.getMDR();
+                    console.log(this.PC);
+                    break;
+            }
         }
 
         public execute2(): void {

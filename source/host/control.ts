@@ -150,36 +150,32 @@ module TSOS {
 
         // used for displaying the cpu to the console
         public static updateCPUTable(): void {
-            // get the table 
             let cpuTable = document.getElementById("cpuTable") as HTMLTableElement;
-            
-            // get the starting values of the cpu
+
+            // get the current values from the CPU
             const PC = _CPU.PC;
             const accumulator = _CPU.Acc;
             const xReg = _CPU.Xreg;
             const yReg = _CPU.Yreg;
             const zFlag = _CPU.Zflag;
-            
-            // create the cells accordingly 
-            let row = cpuTable.insertRow()
-            
-            // create and fill the cells with the corresponding values
-            let pcCell = row.insertCell();
-            pcCell.innerHTML = Utils.hexLog(PC, 2, true); // true is for aesthetics 
-            
-            let accCell = row.insertCell();
-            accCell.innerHTML = Utils.hexLog(accumulator, 2, true);;
-            
-            let xRegCell = row.insertCell();
-            xRegCell.innerHTML = Utils.hexLog(xReg, 2, true);;
-            
-            let yRegCell = row.insertCell();
-            yRegCell.innerHTML = Utils.hexLog(yReg, 2, true);;
-            
-            let zFlagCell = row.insertCell();
-            zFlagCell.innerHTML = Utils.hexLog(zFlag, 2, true);;
+           
+            let row: HTMLTableRowElement | null = cpuTable.rows[0]; 
 
+            // if the row does not exist, make one
+            if (!row) {
+                row = cpuTable.insertRow();
 
+                for (let i = 0; i < 5; i++) {
+                    row.insertCell();
+                }
+            }
+
+            // update the rows 
+            row.cells[0].innerHTML = Utils.hexLog(PC, 2, true);       
+            row.cells[1].innerHTML = Utils.hexLog(accumulator, 2, true); 
+            row.cells[2].innerHTML = Utils.hexLog(xReg, 2, true);       
+            row.cells[3].innerHTML = Utils.hexLog(yReg, 2, true);       
+            row.cells[4].innerHTML = Utils.hexLog(zFlag, 2, true);      
         }
 
     }

@@ -509,8 +509,19 @@ module TSOS {
                 return;
             }
 
+            const status = pcb.Status; 
+            switch(status) {
+                case("Resident"): 
+                    // change status to ready
+                    // let the cpu know it can execute
+
+            }
+            
+
             _StdOut.putText(`Executing process ${PID}`)
             // do cpu stuff and run the program here
+
+            // change status to ready, then isExecuting becomes true 
 
 
             // this logic will need to change, but since there is only one program you terminate it when it is done
