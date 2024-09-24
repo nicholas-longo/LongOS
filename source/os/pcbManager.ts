@@ -1,11 +1,11 @@
 module TSOS {
     export class PCBManager {
         private nextPID: number;
-        private pcbs: ProcessControlBlock[]; 
+        private pcbQueue: ProcessControlBlock[]; 
 
         constructor() {
             this.nextPID = 0; 
-            this.pcbs = []; 
+            this.pcbQueue = []; 
         }
 
         // create a new PCB with a unique PID and return it
@@ -13,8 +13,9 @@ module TSOS {
             const pcb = new ProcessControlBlock();
             pcb.init(this.nextPID); // get the new unique id for the pcb
             pcb.priority = priority; 
-            this.pcbs.push(pcb); 
+            this.pcbQueue.push(pcb); 
             this.nextPID++; // make sure to update the next pid when a new pcb is created
+            console.log(this.getPCBs())
             return pcb;
         }
 
@@ -23,7 +24,7 @@ module TSOS {
         // I needed help with identifying a unique PCB so I can adjust its attributes, the find method was given to me and helps remedy that
         // Find PCB by PID
         public findPCB(pid: number): ProcessControlBlock | undefined {
-            return this.pcbs.find(pcb => pcb.PID === pid);
+            return this.pcbQueue.find(pcb => pcb.PID === pid);
         }
 
         // update the status of a PCB
@@ -41,11 +42,11 @@ module TSOS {
         // active pcb list so no changes can be made to it after the program was executed
         // TODO shellRun will need to take care of this step when it is over 
         public terminatePCB(pid: number): void {
-            this.pcbs = this.pcbs.filter(pcb => pcb.PID !== pid);
+            this.pcbQueue = this.pcbQueue.filter(pcb => pcb.PID !== pid);
         }
 
         public getPCBs(): ProcessControlBlock[] {
-            return this.pcbs;
+            return this.pcbQueue;
         }
 
 

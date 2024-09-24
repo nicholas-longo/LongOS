@@ -516,8 +516,11 @@ module TSOS {
             // this logic will need to change, but since there is only one program you terminate it when it is done
             _PCBManager.updatePCBStatus(PID, "Terminated");
             _PCBManager.terminatePCB(PID);  // terminate the current pcb 
-
-            // deallocate memory
+            
+            
+            // deallocate memory segment the pcb is using
+            const segment = pcb.segment; 
+            _MemoryManager.deallocateSegement(segment)
 
 
 

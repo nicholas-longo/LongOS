@@ -11,6 +11,9 @@ var TSOS;
         yReg;
         zFlag;
         Status;
+        // chatGPT 9/24 helped me refactor this in a way so a row is not created during the shellRun
+        // by having a tableRow, pcbs can be kept track of and dealt with as necessary
+        tableRow = null;
         constructor(PID = 0, priority = 0, location = "", segment = 0, PC = 0, acc = 0, xReg = 0, yReg = 0, zFlag = 0, Status = "") {
             this.PID = PID;
             this.priority = priority;
@@ -24,7 +27,7 @@ var TSOS;
             this.Status = Status;
         }
         init(pid) {
-            this.PID = 0;
+            this.PID = pid;
             this.priority = 8;
             this.location = "Memory";
             this.segment = 0;
@@ -36,24 +39,27 @@ var TSOS;
             this.Status = "Resident";
         }
         updatePCBTable() {
-            // add the current pcb object to the table
-            // eventually will need some logic for dealing with multiple of these
-            let pcbTable = document.getElementById("pcbTable");
-            let row = pcbTable.insertRow(); // make the row
-            // fill the cells in
-            row.insertCell().innerHTML = TSOS.Utils.hexLog(this.PID, 2, true);
-            row.insertCell().innerHTML = TSOS.Utils.hexLog(this.priority, 2, true);
-            row.insertCell().innerHTML = this.location;
-            row.insertCell().innerHTML = TSOS.Utils.hexLog(this.segment, 2, true);
-            row.insertCell().innerHTML = TSOS.Utils.hexLog(this.PC, 2, true);
-            row.insertCell().innerHTML = TSOS.Utils.hexLog(this.acc, 2, true);
-            row.insertCell().innerHTML = TSOS.Utils.hexLog(this.xReg, 2, true);
-            row.insertCell().innerHTML = TSOS.Utils.hexLog(this.yReg, 2, true);
-            row.insertCell().innerHTML = TSOS.Utils.hexLog(this.zFlag, 2, true);
-            row.insertCell().innerHTML = this.Status;
+            if (!this.tableRow) {
+                // only create a new row if the PCB does not already exist 
+                let pcbTable = document.getElementById("pcbTable");
+                this.tableRow = pcbTable.insertRow();
+                for (let i = 0; i < 10; i++) {
+                    this.tableRow.insertCell();
+                }
+            }
+            // update cells
+            this.tableRow.cells[0].innerHTML = TSOS.Utils.hexLog(this.PID, 2, true);
+            this.tableRow.cells[1].innerHTML = TSOS.Utils.hexLog(this.priority, 2, true);
+            this.tableRow.cells[2].innerHTML = this.location;
+            this.tableRow.cells[3].innerHTML = TSOS.Utils.hexLog(this.segment, 2, true);
+            this.tableRow.cells[4].innerHTML = TSOS.Utils.hexLog(this.PC, 2, true);
+            this.tableRow.cells[5].innerHTML = TSOS.Utils.hexLog(this.acc, 2, true);
+            this.tableRow.cells[6].innerHTML = TSOS.Utils.hexLog(this.xReg, 2, true);
+            this.tableRow.cells[7].innerHTML = TSOS.Utils.hexLog(this.yReg, 2, true);
+            this.tableRow.cells[8].innerHTML = TSOS.Utils.hexLog(this.zFlag, 2, true);
+            this.tableRow.cells[9].innerHTML = this.Status;
         }
         updateStatus(status) {
-            console.log(status);
             this.Status = status;
         }
     }
