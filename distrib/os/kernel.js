@@ -120,8 +120,9 @@ var TSOS;
             _PCBManager.updatePCBStatus(pid, "Terminated"); // this will also write the current cpu registers into the pcb table
             _PCBManager.terminatePCB(pid); // Remove from both queues
             // this will eventually need to deal with multiple programs, for now it is okay just being one
-            _CPU.isExecuting = false; // turn the cpu off when the process is terminated
-            TSOS.Control.clearCPUTable(); // clear the rows after a process is done THIS WILL CHANGE FOR PROJECT 3
+            _CPU.isExecuting = false;
+            //_CPU.init(); // turn the cpu off when the process is terminated
+            TSOS.Control.updateCPUTable(); // clear the rows after a process is done THIS WILL CHANGE FOR PROJECT 3
         }
         krnTimerISR() {
             // The built-in TIMER (not clock) Interrupt Service Routine (as opposed to an ISR coming from a device driver). {

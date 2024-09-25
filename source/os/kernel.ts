@@ -137,9 +137,8 @@ module TSOS {
             _PCBManager.updatePCBStatus(pid, "Terminated"); // this will also write the current cpu registers into the pcb table
             _PCBManager.terminatePCB(pid);  // Remove from both queues
         
-            // this will eventually need to deal with multiple programs, for now it is okay just being one
-            _CPU.isExecuting = false; // turn the cpu off when the process is terminated
-            Control.clearCPUTable(); // clear the rows after a process is done THIS WILL CHANGE FOR PROJECT 3
+            _CPU.init(); // turn the cpu off when the process is terminated and reset the registers
+            Control.updateCPUTable(); // clear the rows after a process is done THIS WILL CHANGE FOR PROJECT 3
         }
 
         public krnTimerISR() {

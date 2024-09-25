@@ -178,16 +178,17 @@ module TSOS {
             row.cells[4].innerHTML = Utils.hexLog(zFlag, 2, true);      
         }
 
-        public static clearCPUTable(): void {
-            let cpuTable = document.getElementById("cpuTable") as HTMLTableElement;
-            let row: HTMLTableRowElement | null = cpuTable.rows[1];
-            // clear the rows 
-            row.cells[0].innerHTML = "00";       
-            row.cells[1].innerHTML = "00"; 
-            row.cells[2].innerHTML = "00";       
-            row.cells[3].innerHTML = "00";       
-            row.cells[4].innerHTML = "00"; 
-        }
+        // likely not going to be used but keeping as a backup if needed
+        // public static clearCPUTable(): void {
+        //     let cpuTable = document.getElementById("cpuTable") as HTMLTableElement;
+        //     let row: HTMLTableRowElement | null = cpuTable.rows[1];
+        //     // clear the rows 
+        //     row.cells[0].innerHTML = "00";       
+        //     row.cells[1].innerHTML = "00"; 
+        //     row.cells[2].innerHTML = "00";       
+        //     row.cells[3].innerHTML = "00";       
+        //     row.cells[4].innerHTML = "00"; 
+        // }
 
     }
 }
