@@ -62,6 +62,18 @@ var TSOS;
         updateStatus(status) {
             this.Status = status;
         }
+        updateCPURegistersOnPCB() {
+            this.tableRow.cells[0].innerHTML = TSOS.Utils.hexLog(this.PID, 2, true);
+            this.tableRow.cells[1].innerHTML = TSOS.Utils.hexLog(this.priority, 2, true);
+            this.tableRow.cells[2].innerHTML = this.location;
+            this.tableRow.cells[3].innerHTML = TSOS.Utils.hexLog(this.segment, 2, true);
+            this.tableRow.cells[4].innerHTML = TSOS.Utils.hexLog(_CPU.PC, 2, true);
+            this.tableRow.cells[5].innerHTML = TSOS.Utils.hexLog(_CPU.Acc, 2, true);
+            this.tableRow.cells[6].innerHTML = TSOS.Utils.hexLog(_CPU.Xreg, 2, true);
+            this.tableRow.cells[7].innerHTML = TSOS.Utils.hexLog(_CPU.Yreg, 2, true);
+            this.tableRow.cells[8].innerHTML = TSOS.Utils.hexLog(_CPU.Zflag, 2, true);
+            this.tableRow.cells[9].innerHTML = this.Status;
+        }
     }
     TSOS.ProcessControlBlock = ProcessControlBlock;
 })(TSOS || (TSOS = {}));

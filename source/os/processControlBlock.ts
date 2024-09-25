@@ -60,5 +60,18 @@ module TSOS {
             this.Status = status;
         }
 
+        public updateCPURegistersOnPCB(): void {
+            this.tableRow.cells[0].innerHTML = Utils.hexLog(this.PID, 2, true);
+            this.tableRow.cells[1].innerHTML = Utils.hexLog(this.priority, 2, true);
+            this.tableRow.cells[2].innerHTML = this.location;
+            this.tableRow.cells[3].innerHTML = Utils.hexLog(this.segment, 2, true);
+            this.tableRow.cells[4].innerHTML = Utils.hexLog(_CPU.PC, 2, true);
+            this.tableRow.cells[5].innerHTML = Utils.hexLog(_CPU.Acc, 2, true);
+            this.tableRow.cells[6].innerHTML = Utils.hexLog(_CPU.Xreg, 2, true);
+            this.tableRow.cells[7].innerHTML = Utils.hexLog(_CPU.Yreg, 2, true);
+            this.tableRow.cells[8].innerHTML = Utils.hexLog(_CPU.Zflag, 2, true);
+            this.tableRow.cells[9].innerHTML = this.Status;
+        }
+
     }
 }

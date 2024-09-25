@@ -33,9 +33,13 @@ module TSOS {
             const pcb = this.findPCB(pid);
             if (pcb) {
                 pcb.updateStatus(status); 
-                pcb.updatePCBTable(); 
                 if (status === "Ready") {
                     this.pcbReadyQueue.push(pcb); // Chat GPT 9/25/24 helped me find where to add a pcb to the ready queue. I knew it was when it was "ready," but I did not know the best place to do so
+                }
+                if(status === "Terminated"){
+                    pcb.updateCPURegistersOnPCB(); // makes sure when a program is terminated, it will be updated with the current cpu's registers and not overwritten 
+                } else {
+                    pcb.updatePCBTable();
                 }
             }
         }
@@ -48,6 +52,9 @@ module TSOS {
         public terminatePCB(pid: number): void {
             this.pcbQueue = this.pcbQueue.filter(pcb => pcb.PID !== pid);
             this.pcbReadyQueue = this.pcbReadyQueue.filter(pcb => pcb.PID !== pid);
+
+            // add in the ending result of the pcb. will need to change for project 3, for now it just has to update at the end
+
         }
 
         public getPCBs(): ProcessControlBlock[] {
@@ -67,6 +74,12 @@ module TSOS {
         public getPCBSegment(pid): number {
             const pcb = this.findPCB(pid)
             return pcb.segment; 
+        }
+
+        public updateCPURegistersOnPCB(pid): void {
+            const pcb = this.findPCB(pid);
+            console.log(pcb)
+            pcb.updateCPURegistersOnPCB(); // gets the values of the CPU registers and updates the PCB accordingly
         }
 
     }
