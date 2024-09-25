@@ -513,7 +513,7 @@ module TSOS {
             switch(status) {
                 case("Resident"): 
                     _PCBManager.updatePCBStatus(PID, "Ready"); // change pcb status. this also puts it into the ready queue because the updatePCBStatus will do that if the status is "Ready"
-                    _CPU.isExecuting = true;
+                    _CPU.isExecuting = true; // CHANGE FOR PROJECT 3. IT WILL NEED TO USE THE SCHEDULER
                     _StdOut.putText(`Executing process ${PID}`)
                     break;
                 case("Ready"): 

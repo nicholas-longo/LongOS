@@ -116,11 +116,12 @@ var TSOS;
         }
         krnTerminateProcess(pid) {
             // Terminate the process
-            _MemoryManager.deallocateSegement(_PCBManager.getPCBSegment(pid)); // Deallocate memory
+            _MemoryManager.deallocateSegement(_PCBManager.getPCBSegment(pid)); // Deallocate memory. call before the PID gets removed and becomes invalid
             _PCBManager.updatePCBStatus(pid, "Terminated");
-            _PCBManager.terminatePCB(pid); // Remove from queues
+            _PCBManager.terminatePCB(pid); // Remove from both queues
             // this will eventually need to deal with multiple programs, for now it is okay just being one
             _CPU.isExecuting = false; // turn the cpu off when the process is terminated
+            TSOS.Control.clearCPUTable(); // clear the rows after a process is done THIS WILL CHANGE FOR PROJECT 3
         }
         krnTimerISR() {
             // The built-in TIMER (not clock) Interrupt Service Routine (as opposed to an ISR coming from a device driver). {

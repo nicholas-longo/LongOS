@@ -139,6 +139,7 @@ module TSOS {
         
             // this will eventually need to deal with multiple programs, for now it is okay just being one
             _CPU.isExecuting = false; // turn the cpu off when the process is terminated
+            Control.clearCPUTable(); // clear the rows after a process is done THIS WILL CHANGE FOR PROJECT 3
         }
 
         public krnTimerISR() {

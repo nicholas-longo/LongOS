@@ -144,6 +144,16 @@ var TSOS;
             row.cells[3].innerHTML = TSOS.Utils.hexLog(yReg, 2, true);
             row.cells[4].innerHTML = TSOS.Utils.hexLog(zFlag, 2, true);
         }
+        static clearCPUTable() {
+            let cpuTable = document.getElementById("cpuTable");
+            let row = cpuTable.rows[1];
+            // clear the rows 
+            row.cells[0].innerHTML = "00";
+            row.cells[1].innerHTML = "00";
+            row.cells[2].innerHTML = "00";
+            row.cells[3].innerHTML = "00";
+            row.cells[4].innerHTML = "00";
+        }
     }
     TSOS.Control = Control;
 })(TSOS || (TSOS = {}));
