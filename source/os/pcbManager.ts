@@ -1,10 +1,12 @@
 module TSOS {
     export class PCBManager {
         private nextPID: number;
+        private pcbReadyQueue: ProcessControlBlock[];
         private pcbQueue: ProcessControlBlock[]; 
 
         constructor() {
             this.nextPID = 0; 
+            this.pcbReadyQueue = [];
             this.pcbQueue = []; 
         }
 
@@ -32,6 +34,9 @@ module TSOS {
             if (pcb) {
                 pcb.updateStatus(status); 
                 pcb.updatePCBTable(); 
+                if (status === "Ready") {
+                    this.pcbReadyQueue.push(pcb); // Chat GPT 9/25/24 helped me find where to add a pcb to the ready queue. I knew it was when it was "ready," but I did not know the best place to do so
+                }
             }
         }
 
@@ -42,12 +47,27 @@ module TSOS {
         // TODO shellRun will need to take care of this step when it is over 
         public terminatePCB(pid: number): void {
             this.pcbQueue = this.pcbQueue.filter(pcb => pcb.PID !== pid);
+            this.pcbReadyQueue = this.pcbReadyQueue.filter(pcb => pcb.PID !== pid);
         }
 
         public getPCBs(): ProcessControlBlock[] {
             return this.pcbQueue;
         }
 
+        public getFirstReadyProcess(): ProcessControlBlock | undefined {
+            return this.pcbReadyQueue[0]; 
+        }
+
+        // Chat GPT 9/25/2024 this is going to be more useful for project 3, but for now it can still be used. This is called when the kernel is checking if there is anything else left in the readyQueue before ending the cpu execution
+        public getNextReadyProcess(): ProcessControlBlock | undefined {
+            return this.pcbReadyQueue.shift(); // Get the next ready process
+        }
+
+        // used for memory deallocation
+        public getPCBSegment(pid): number {
+            const pcb = this.findPCB(pid)
+            return pcb.segment; 
+        }
 
     }
 }

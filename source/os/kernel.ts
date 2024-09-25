@@ -123,9 +123,22 @@ module TSOS {
                     _krnKeyboardDriver.isr(params);   // Kernel mode device driver
                     _StdIn.handleInput();
                     break;
+                case SOFTWARE_INTERRUPT:
+                    this.krnTerminateProcess(params);  // Handle process termination
+                    break;
                 default:
                     this.krnTrapError("Invalid Interrupt Request. irq=" + irq + " params=[" + params + "]");
             }
+        }
+
+        public krnTerminateProcess(pid: number): void {
+            // Terminate the process
+            _MemoryManager.deallocateSegement(_PCBManager.getPCBSegment(pid));  // Deallocate memory. call before the PID gets removed and becomes invalid
+            _PCBManager.updatePCBStatus(pid, "Terminated");
+            _PCBManager.terminatePCB(pid);  // Remove from both queues
+        
+            // this will eventually need to deal with multiple programs, for now it is okay just being one
+            _CPU.isExecuting = false; // turn the cpu off when the process is terminated
         }
 
         public krnTimerISR() {

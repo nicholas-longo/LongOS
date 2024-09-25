@@ -107,9 +107,20 @@ var TSOS;
                     _krnKeyboardDriver.isr(params); // Kernel mode device driver
                     _StdIn.handleInput();
                     break;
+                case SOFTWARE_INTERRUPT:
+                    this.krnTerminateProcess(params); // Handle process termination
+                    break;
                 default:
                     this.krnTrapError("Invalid Interrupt Request. irq=" + irq + " params=[" + params + "]");
             }
+        }
+        krnTerminateProcess(pid) {
+            // Terminate the process
+            _MemoryManager.deallocateSegement(_PCBManager.getPCBSegment(pid)); // Deallocate memory
+            _PCBManager.updatePCBStatus(pid, "Terminated");
+            _PCBManager.terminatePCB(pid); // Remove from queues
+            // this will eventually need to deal with multiple programs, for now it is okay just being one
+            _CPU.isExecuting = false; // turn the cpu off when the process is terminated
         }
         krnTimerISR() {
             // The built-in TIMER (not clock) Interrupt Service Routine (as opposed to an ISR coming from a device driver). {

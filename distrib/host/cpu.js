@@ -85,11 +85,11 @@ var TSOS;
                 //load the accumulator with a constant
                 case (0xA9):
                     this.Acc = _MemoryAccessor.getMDR();
-                    console.log(this.PC);
                     break;
                 //break
                 case (0x00):
-                    this.isExecuting = false; // end the execution. this may need to change when multiple programs are concurrent
+                    _KernelInterruptQueue.enqueue(new TSOS.Interrupt(SOFTWARE_INTERRUPT, _PCBManager.getFirstReadyProcess().PID)); // use this for now, returns the PID of the pcb
+                    break;
             }
         }
         execute2() {
