@@ -5,8 +5,26 @@
 module TSOS {
     export class MemoryAccessor {
         private memory: Memory; 
+        private HOB: number;
+        private LOB: number;
         constructor(memory: Memory) {
             this.memory = memory
+        }
+
+        public getHOB(): number {
+            return this.HOB;
+        }
+    
+        public setHOB(value: number): void {
+            this.HOB = value;
+        }
+    
+        public getLOB(): number {
+            return this.LOB;
+        }
+    
+        public setLOB(value: number): void {
+            this.LOB = value;
         }
 
         //calls the getMemory() the memory from memory
@@ -61,6 +79,18 @@ module TSOS {
                 this.writeImmediate(startingAddress + i, program[i]) // address increments by 1 each time and is passed as the MAR, correct code is passed as the MDR
             }
             Control.updateMemory(); 
+        }
+
+        // uses bitwise operations to properly format the high and low order bytes
+        public setMARFromLittleEndian(HOB: number, LOB: number): void {
+            //HOB << 8 shifts the high order bit 8 bits to the left. 
+            // if HOB was 0xAA, it would become 0xAA00 after HOB << 8
+            // now with the value 0xAA00, you can use a bitwise or which is this symbol: |
+            // this will compare two hex numbers and 
+            // make the new number have the value of the bit from the bit that was not 0
+            // for example, 0xAA00 | 0xBB = 0xAABB
+            const address = (HOB << 8) | LOB;
+            this.setMAR(address);
         }
     }
 }

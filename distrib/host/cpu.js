@@ -10,6 +10,7 @@
      This code references page numbers in the text book:
      Operating System Concepts 8th edition by Silberschatz, Galvin, and Gagne.  ISBN 978-0-470-12872-5
      ------------ */
+// a lot of this code is modified from my org and arch project, the steps to each instruction are the same (except for break and sys call)
 var TSOS;
 (function (TSOS) {
     class Cpu {
@@ -76,9 +77,49 @@ var TSOS;
                 case (0x00):
                     this.execute1();
                     break;
+                //Load the accumlator from memory
+                case (0xAD):
+                    _MemoryAccessor.setMAR(this.PC);
+                    _MemoryAccessor.read();
+                    _MemoryAccessor.setLOB(_MemoryAccessor.getMDR());
+                    this.PC += 0x0001;
+                    this.decode2();
+                    break;
+                //store the accumlator in memory
+                case (0x8D):
+                    _MemoryAccessor.setMAR(this.PC);
+                    _MemoryAccessor.read();
+                    _MemoryAccessor.setLOB(_MemoryAccessor.getMDR());
+                    this.PC += 0x0001;
+                    this.decode2();
+                    break;
             }
         }
         decode2() {
+            switch (this.IR) {
+                //load the accumulator from memory
+                case (0xAD):
+                    _MemoryAccessor.setMAR(this.PC);
+                    _MemoryAccessor.read();
+                    _MemoryAccessor.setHOB(_MemoryAccessor.getMDR());
+                    //set the MAR using little endian
+                    _MemoryAccessor.setMARFromLittleEndian(_MemoryAccessor.getHOB(), _MemoryAccessor.getLOB());
+                    _MemoryAccessor.read();
+                    this.PC += 0x0001;
+                    this.execute1();
+                    break;
+                //store the accumulator in memory
+                case (0x8D):
+                    _MemoryAccessor.setMAR(this.PC);
+                    _MemoryAccessor.read();
+                    _MemoryAccessor.setHOB(_MemoryAccessor.getMDR());
+                    //set the MAR using little endian
+                    _MemoryAccessor.setMARFromLittleEndian(_MemoryAccessor.getHOB(), _MemoryAccessor.getLOB());
+                    _MemoryAccessor.read();
+                    this.PC += 0x0001;
+                    this.execute1();
+                    break;
+            }
         }
         execute1() {
             switch (this.IR) {
@@ -89,6 +130,15 @@ var TSOS;
                 //break
                 case (0x00):
                     _KernelInterruptQueue.enqueue(new TSOS.Interrupt(SOFTWARE_INTERRUPT, _PCBManager.getFirstReadyProcess().PID)); // use this for now, returns the PID of the pcb
+                    break;
+                //load the accumulator from memory
+                case (0xAD):
+                    this.Acc = _MemoryAccessor.getMDR();
+                    break;
+                //store the accumulator in memory
+                case (0x8D):
+                    _MemoryAccessor.setMDR(this.Acc);
+                    _MemoryAccessor.write();
                     break;
             }
         }
