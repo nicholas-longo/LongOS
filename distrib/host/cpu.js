@@ -95,6 +95,12 @@ var TSOS;
                 case (0x00): //break
                     this.execute1();
                     break;
+                case (0xAA): //load the x reg from the acc
+                    this.execute1();
+                    break;
+                case (0xA8): //load the y reg from the acc
+                    this.execute1();
+                    break;
             }
         }
         decode2() {
@@ -152,6 +158,14 @@ var TSOS;
                 //load the accumulator from the x register
                 case (0x8A):
                     this.Acc = this.Xreg;
+                    break;
+                //load the x reg from accumulator
+                case (0xAA):
+                    this.Xreg = this.Acc;
+                    break;
+                //load the y reg from accumulator
+                case (0xA8):
+                    this.Yreg = this.Acc;
                     break;
                 //break
                 case (0x00):
