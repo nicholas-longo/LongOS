@@ -75,26 +75,32 @@ module TSOS {
 
         public decode1(): void {
             switch (this.IR) {
-                // load the accumlator with a constant
-                case (0xA9):
-                    //set the MAR to the memory address to the program counter and read its contents
-                    _MemoryAccessor.setMAR(this.PC);
+                // requires only one decode
+                case (0xA9): // load the accumlator with a constant
+                case (0xA0): //load the y register with a constant
+                case (0xA2): // load the x register with a constant
+                    _MemoryAccessor.setMAR(this.PC); //set the MAR to the memory address to the program counter and read its contents
                     _MemoryAccessor.read();
                     this.PC += 0x0001
-                    this.execute1(); // only one decode needed
-                    break;
-                //break
-                case (0x00):
-                    this.execute1();
+                    this.execute1(); // only one decode needed, jump straight to
                     break;
                 
+                
+
+                // requires a second decode
                 case (0xAD): //Load the accumlator from memory
                 case (0x8D): //store the accumlator in memory
+                case (0xAC): // load the y register from memory
                     _MemoryAccessor.setMAR(this.PC);
                     _MemoryAccessor.read(); 
                     _MemoryAccessor.setLOB(_MemoryAccessor.getMDR());
                     this.PC += 0x0001
                     this.decode2(); 
+                    break;
+
+                // special cases with varying logic
+                case (0x00):  //break
+                    this.execute1();
                     break;
             }
         }
@@ -137,6 +143,14 @@ module TSOS {
                 case (0x8D):
                     _MemoryAccessor.setMDR(this.Acc);
                     _MemoryAccessor.write();
+                    break;
+                //load the x reg with a constant
+                case (0xA2): 
+                    this.Xreg = _MemoryAccessor.getMDR();
+                    break;
+                //load the y reg with a constant
+                case (0xA0):
+                    this.Yreg = _MemoryAccessor.getMDR();
                     break;
                     
             }
