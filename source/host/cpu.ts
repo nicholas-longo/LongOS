@@ -91,6 +91,7 @@ module TSOS {
                 case (0xAD): //Load the accumlator from memory
                 case (0x8D): //store the accumlator in memory
                 case (0xAC): // load the y register from memory
+                case (0xAE): // load the x register from memory
                     _MemoryAccessor.setMAR(this.PC);
                     _MemoryAccessor.read(); 
                     _MemoryAccessor.setLOB(_MemoryAccessor.getMDR());
@@ -109,6 +110,8 @@ module TSOS {
             switch(this.IR) {
                 case(0xAD): //load the accumulator from memory
                 case(0x8D): //store the accumulator in memory
+                case(0xAC): // load the y register from memory
+                case(0xAE): // load the x register from memory
                     _MemoryAccessor.setMAR(this.PC);
                     _MemoryAccessor.read(); 
                     _MemoryAccessor.setHOB(_MemoryAccessor.getMDR());
@@ -151,6 +154,14 @@ module TSOS {
                 //load the y reg with a constant
                 case (0xA0):
                     this.Yreg = _MemoryAccessor.getMDR();
+                    break;
+                //load the y reg from memory
+                case (0xAC):
+                    this.Yreg = _MemoryAccessor.getMDR(); 
+                    break;
+                //load the x reg from memory
+                case (0xAE):
+                    this.Xreg = _MemoryAccessor.getMDR();
                     break;
                     
             }
