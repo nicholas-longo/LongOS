@@ -93,6 +93,12 @@ var TSOS;
                 case (0x00): //break
                     this.execute1();
                     break;
+                //SYS calls 
+                case (0xFF):
+                    if (this.Xreg == 0x01) {
+                        this.execute1();
+                        break;
+                    }
                 //branch n bytes if Z flag = 0
                 case (0xD0):
                     if (this.Zflag == 0) { // if the z flag is not set, decode the next byte and branch
@@ -181,6 +187,13 @@ var TSOS;
                 case (0x6D):
                     this.Acc += _MemoryAccessor.getMDR(); // add the MDR to the value in the accumulator already
                     break;
+                //SYS Calls
+                case (0xFF):
+                    //SYS call 1 - if there is a 0x01 at the x register, print the integer in the y register
+                    if (this.Xreg == 0x01) {
+                        console.log("SYS Call 1: Integer in Y register = " + this.Yreg);
+                        break;
+                    }
             }
         }
         execute2() {
@@ -226,4 +239,5 @@ var TSOS;
 })(TSOS || (TSOS = {}));
 // going to need to check and make sure that the HOB is not greater than 0, if it is find a way to break the program and not let it execute
 // DO that for project 3
+// when zflag becomes 1, stop branching. x reg is what needs to change for the ec to work as expected
 //# sourceMappingURL=cpu.js.map

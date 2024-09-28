@@ -105,6 +105,12 @@ module TSOS {
                 case (0x00): //break
                     this.execute1()
                     break;
+                 //SYS calls 
+                case (0xFF):
+                    if(this.Xreg == 0x01) {
+                        this.execute1();
+                        break;
+                    }
 
                 //branch n bytes if Z flag = 0
                 case (0xD0):
@@ -182,7 +188,6 @@ module TSOS {
                 //break
                 case(0x00):
                     _KernelInterruptQueue.enqueue(new Interrupt(SOFTWARE_INTERRUPT, _PCBManager.getFirstReadyProcess().PID)); // use this for now, returns the PID of the pcb
-                    console.log(_Memory.getMemory());
                     break; 
                 //compare byte in mem to x reg, if equal set z flag to 1.
                 case (0xEC):
@@ -198,6 +203,13 @@ module TSOS {
                 case (0x6D):
                     this.Acc += _MemoryAccessor.getMDR(); // add the MDR to the value in the accumulator already
                     break;
+                //SYS Calls
+                case (0xFF):
+                    //SYS call 1 - if there is a 0x01 at the x register, print the integer in the y register
+                    if(this.Xreg == 0x01) {
+                        console.log("SYS Call 1: Integer in Y register = " + this.Yreg);
+                        break;
+                    }
                     
             }
         }
@@ -217,8 +229,6 @@ module TSOS {
                     this.Acc ++; // add one to the value gotten from memory
                     this.writeBack();
                     break;
-                
-
             }
         }
 
