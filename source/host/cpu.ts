@@ -92,6 +92,7 @@ module TSOS {
                 case (0xAE): // load the x register from memory
                 case (0xEC): // compare a byte in mem to x reg, if equal set z flag to 1
                 case (0xEE): // increment a byte in memory
+                case (0x6D): // add content of an address to the accumulator and update the accumulator
                     _MemoryAccessor.setMAR(this.PC);
                     _MemoryAccessor.read(); 
                     _MemoryAccessor.setLOB(_MemoryAccessor.getMDR());
@@ -109,12 +110,13 @@ module TSOS {
 
         public decode2(): void {
             switch(this.IR) {
-                case(0xAD): //load the accumulator from memory
-                case(0x8D): //store the accumulator in memory
-                case(0xAC): // load the y register from memory
-                case(0xAE): // load the x register from memory
-                case(0xEC): // compare a byte in mem to x reg, if equal set z flag to 1 
+                case (0xAD): //load the accumulator from memory
+                case (0x8D): //store the accumulator in memory
+                case (0xAC): // load the y register from memory
+                case (0xAE): // load the x register from memory
+                case (0xEC): // compare a byte in mem to x reg, if equal set z flag to 1 
                 case (0xEE): // increment a byte in memory
+                case (0x6D): // add content of an address to the accumulator and update the accumulator
                     _MemoryAccessor.setMAR(this.PC);
                     _MemoryAccessor.read(); 
                     _MemoryAccessor.setHOB(_MemoryAccessor.getMDR());
@@ -178,6 +180,10 @@ module TSOS {
                 case (0xEE):
                     this.Acc = _MemoryAccessor.getMDR(); // get the value from memory
                     this.execute2();
+                    break;
+                 // add content of an address to the accumulator and update the accumulator
+                case (0x6D):
+                    this.Acc += _MemoryAccessor.getMDR(); // add the MDR to the value in the accumulator already
                     break;
                     
             }
