@@ -85,8 +85,6 @@ module TSOS {
                     this.execute1(); // only one decode needed, jump straight to
                     break;
                 
-                
-
                 // requires a second decode
                 case (0xAD): //Load the accumlator from memory
                 case (0x8D): //store the accumlator in memory
@@ -101,18 +99,11 @@ module TSOS {
 
                 // special cases that do not have opperands
                 case (0x98): //load the accumulator from y reg 
-                    this.execute1();
-                    break; // CHECK IF THESE BREAKS ARE NEEDED FOR SOME REASON THEY ARE NOT IN PREV PROJ
                 case (0x8A): //load the accumulator from x reg
-                    this.execute1();
-                    break;
-                case (0x00):  //break
-                    this.execute1();
-                    break;
                 case (0xA8): //load the y reg from the acc
-                    this.execute1();
-                    break;
                 case (0xAA): //load the x reg from the acc
+                case (0xEA): // No OP 
+                case (0x00):  //break
                     this.execute1()
                     break;
             }
@@ -185,6 +176,9 @@ module TSOS {
                 //load the x reg from accumulator
                 case (0xAA):
                     this.Xreg = this.Acc
+                    break;
+                //no op
+                case(0xEA):
                     break;
                 //break
                 case(0x00):
