@@ -93,6 +93,19 @@ var TSOS;
                 case (0x00): //break
                     this.execute1();
                     break;
+                //branch n bytes if Z flag = 0
+                case (0xD0):
+                    if (this.Zflag == 0) { // if the z flag is not set, decode the next byte and branch
+                        _MemoryAccessor.setMAR(this.PC);
+                        _MemoryAccessor.read();
+                        this.addRelativeOffsetToPC(_MemoryAccessor.getMDR()); // called to correctly alter the PC when branching
+                        this.PC += 0x0001; //this is needed so the fetch does not grab the wrong value
+                        break;
+                    }
+                    else { // if the z flag is set, skip the next memory address and continue the program
+                        this.PC += 0x0002;
+                        break;
+                    }
             }
         }
         decode2() {
@@ -196,6 +209,16 @@ var TSOS;
                     _MemoryAccessor.setMDR(this.Acc);
                     _MemoryAccessor.write(); // replace the original value in memory with the new incremented value
                     break;
+            }
+        }
+        //properly add the relative offset to program counter
+        addRelativeOffsetToPC(relativeOffset) {
+            if (relativeOffset <= 0x7F) { // 127 in decimal - each value can be added to PC as is
+                this.PC += relativeOffset;
+            }
+            else { // values must be adjusted before they can be subtracted
+                relativeOffset = 0x100 - relativeOffset; // get the proper value if you need to decrement the branch
+                this.PC -= relativeOffset;
             }
         }
     }
