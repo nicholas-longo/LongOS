@@ -79,7 +79,6 @@ module TSOS {
                 case (0xA9): // load the accumlator with a constant
                 case (0xA0): //load the y register with a constant
                 case (0xA2): // load the x register with a constant
-                case (0xEC): // compare a byte in mem to x reg, if equal set z flag to 1
                     _MemoryAccessor.setMAR(this.PC); //set the MAR to the memory address to the program counter and read its contents
                     _MemoryAccessor.read();
                     this.PC += 0x0001
@@ -91,6 +90,7 @@ module TSOS {
                 case (0x8D): //store the accumlator in memory
                 case (0xAC): // load the y register from memory
                 case (0xAE): // load the x register from memory
+                case (0xEC): // compare a byte in mem to x reg, if equal set z flag to 1
                     _MemoryAccessor.setMAR(this.PC);
                     _MemoryAccessor.read(); 
                     _MemoryAccessor.setLOB(_MemoryAccessor.getMDR());
@@ -99,10 +99,6 @@ module TSOS {
                     break;
 
                 // special cases that do not have opperands
-                case (0x98): //load the accumulator from y reg 
-                case (0x8A): //load the accumulator from x reg
-                case (0xA8): //load the y reg from the acc
-                case (0xAA): //load the x reg from the acc
                 case (0xEA): // No OP 
                 case (0x00): //break
                     this.execute1()
@@ -162,22 +158,6 @@ module TSOS {
                 //load the x reg from memory
                 case (0xAE):
                     this.Xreg = _MemoryAccessor.getMDR();
-                    break;
-                //load the accumulator from the y register
-                case (0x98):
-                    this.Acc = this.Yreg;
-                    break; 
-                //load the accumulator from the x register
-                case (0x8A) :
-                    this.Acc = this.Xreg;
-                    break;
-                //load the y reg from accumulator
-                case (0xA8):
-                    this.Yreg = this.Acc;
-                    break;
-                //load the x reg from accumulator
-                case (0xAA):
-                    this.Xreg = this.Acc
                     break;
                 //no op
                 case(0xEA):

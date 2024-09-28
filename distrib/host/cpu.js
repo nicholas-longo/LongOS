@@ -69,7 +69,6 @@ var TSOS;
                 case (0xA9): // load the accumlator with a constant
                 case (0xA0): //load the y register with a constant
                 case (0xA2): // load the x register with a constant
-                case (0xEC): // compare a byte in mem to x reg, if equal set z flag to 1
                     _MemoryAccessor.setMAR(this.PC); //set the MAR to the memory address to the program counter and read its contents
                     _MemoryAccessor.read();
                     this.PC += 0x0001;
@@ -80,6 +79,7 @@ var TSOS;
                 case (0x8D): //store the accumlator in memory
                 case (0xAC): // load the y register from memory
                 case (0xAE): // load the x register from memory
+                case (0xEC): // compare a byte in mem to x reg, if equal set z flag to 1
                     _MemoryAccessor.setMAR(this.PC);
                     _MemoryAccessor.read();
                     _MemoryAccessor.setLOB(_MemoryAccessor.getMDR());
