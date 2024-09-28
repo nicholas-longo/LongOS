@@ -87,16 +87,9 @@ module TSOS {
                 case (0x00):
                     this.execute1();
                     break;
-                //Load the accumlator from memory
-                case (0xAD):
-                    _MemoryAccessor.setMAR(this.PC);
-                    _MemoryAccessor.read(); 
-                    _MemoryAccessor.setLOB(_MemoryAccessor.getMDR());
-                    this.PC += 0x0001
-                    this.decode2() 
-                    break;
-                //store the accumlator in memory
-                case (0x8D):
+                
+                case (0xAD): //Load the accumlator from memory
+                case (0x8D): //store the accumlator in memory
                     _MemoryAccessor.setMAR(this.PC);
                     _MemoryAccessor.read(); 
                     _MemoryAccessor.setLOB(_MemoryAccessor.getMDR());
@@ -108,21 +101,8 @@ module TSOS {
 
         public decode2(): void {
             switch(this.IR) {
-                //load the accumulator from memory
-                case(0xAD): 
-                    _MemoryAccessor.setMAR(this.PC);
-                    _MemoryAccessor.read(); 
-                    _MemoryAccessor.setHOB(_MemoryAccessor.getMDR());
-    
-                    //set the MAR using little endian
-                    _MemoryAccessor.setMARFromLittleEndian(_MemoryAccessor.getHOB(), _MemoryAccessor.getLOB());
-                    _MemoryAccessor.read();
-    
-                    this.PC += 0x0001;
-                    this.execute1()
-                    break;
-                //store the accumulator in memory
-                case(0x8D):
+                case(0xAD): //load the accumulator from memory
+                case(0x8D): //store the accumulator in memory
                     _MemoryAccessor.setMAR(this.PC);
                     _MemoryAccessor.read(); 
                     _MemoryAccessor.setHOB(_MemoryAccessor.getMDR());
@@ -136,7 +116,6 @@ module TSOS {
                     break;
             }
 
-
         }
 
         public execute1(): void {
@@ -148,6 +127,7 @@ module TSOS {
                 //break
                 case(0x00):
                     _KernelInterruptQueue.enqueue(new Interrupt(SOFTWARE_INTERRUPT, _PCBManager.getFirstReadyProcess().PID)); // use this for now, returns the PID of the pcb
+                    console.log(_Memory.getMemory());
                     break; 
                 //load the accumulator from memory
                 case (0xAD):
@@ -172,3 +152,7 @@ module TSOS {
 
     }
 }
+
+
+// going to need to check and make sure that the HOB is not greater than 0, if it is find a way to break the program and not let it execute
+// DO that for project 3

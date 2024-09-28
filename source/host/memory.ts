@@ -38,7 +38,7 @@ module TSOS {
         }
 
         public getMDR(): number {
-            return this.MDR;
+            return this.MDR; 
         }
     
         public setMDR(value: number): void {
@@ -48,6 +48,7 @@ module TSOS {
         // reads the memory location in the MAR and updates the MDR
         public read(): void {
             this.MDR = this.memory[this.MAR];
+            
         }
     
         // write the contents of the MDR to memory at the location indicated by the MAR
