@@ -171,7 +171,6 @@ var TSOS;
                 //break
                 case (0x00):
                     _KernelInterruptQueue.enqueue(new TSOS.Interrupt(SOFTWARE_INTERRUPT, _PCBManager.getFirstReadyProcess().PID)); // use this for now, returns the PID of the pcb
-                    console.log(_Memory.getMemory());
                     break;
                 //compare byte in mem to x reg, if equal set z flag to 1.
                 case (0xEC):
@@ -239,5 +238,4 @@ var TSOS;
 })(TSOS || (TSOS = {}));
 // going to need to check and make sure that the HOB is not greater than 0, if it is find a way to break the program and not let it execute
 // DO that for project 3
-// when zflag becomes 1, stop branching. x reg is what needs to change for the ec to work as expected
 //# sourceMappingURL=cpu.js.map
