@@ -69,6 +69,7 @@ var TSOS;
                 case (0xA9): // load the accumlator with a constant
                 case (0xA0): //load the y register with a constant
                 case (0xA2): // load the x register with a constant
+                case (0xEC): // compare a byte in mem to x reg, if equal set z flag to 1
                     _MemoryAccessor.setMAR(this.PC); //set the MAR to the memory address to the program counter and read its contents
                     _MemoryAccessor.read();
                     this.PC += 0x0001;
@@ -102,6 +103,7 @@ var TSOS;
                 case (0x8D): //store the accumulator in memory
                 case (0xAC): // load the y register from memory
                 case (0xAE): // load the x register from memory
+                case (0xEC): // compare a byte in mem to x reg, if equal set z flag to 1 
                     _MemoryAccessor.setMAR(this.PC);
                     _MemoryAccessor.read();
                     _MemoryAccessor.setHOB(_MemoryAccessor.getMDR());
@@ -168,9 +170,25 @@ var TSOS;
                     _KernelInterruptQueue.enqueue(new TSOS.Interrupt(SOFTWARE_INTERRUPT, _PCBManager.getFirstReadyProcess().PID)); // use this for now, returns the PID of the pcb
                     console.log(_Memory.getMemory());
                     break;
+                //compare byte in mem to x reg, if equal set z flag to 1.
+                case (0xEC):
+                    this.Xreg = _MemoryAccessor.getMDR(); // get the byte in memory and set to x reg KEEP AN EYE ON THIS
+                    this.execute2(); // then call this to compare it to the x register
+                    break;
             }
         }
         execute2() {
+            switch (this.IR) {
+                //compare byte in mem to x reg, if equal set z flag to 1.
+                case (0xEC):
+                    if (this.Acc === this.Xreg) {
+                        this.Zflag = 1;
+                    }
+                    else {
+                        this.Zflag = 0;
+                    }
+                    break;
+            }
         }
     }
     TSOS.Cpu = Cpu;
