@@ -91,6 +91,7 @@ module TSOS {
                 case (0xAC): // load the y register from memory
                 case (0xAE): // load the x register from memory
                 case (0xEC): // compare a byte in mem to x reg, if equal set z flag to 1
+                case (0xEE): // increment a byte in memory
                     _MemoryAccessor.setMAR(this.PC);
                     _MemoryAccessor.read(); 
                     _MemoryAccessor.setLOB(_MemoryAccessor.getMDR());
@@ -113,6 +114,7 @@ module TSOS {
                 case(0xAC): // load the y register from memory
                 case(0xAE): // load the x register from memory
                 case(0xEC): // compare a byte in mem to x reg, if equal set z flag to 1 
+                case (0xEE): // increment a byte in memory
                     _MemoryAccessor.setMAR(this.PC);
                     _MemoryAccessor.read(); 
                     _MemoryAccessor.setHOB(_MemoryAccessor.getMDR());
@@ -172,6 +174,11 @@ module TSOS {
                     this.Xreg = _MemoryAccessor.getMDR(); // get the byte in memory and set to x reg KEEP AN EYE ON THIS
                     this.execute2(); // then call this to compare it to the x register
                     break;
+                //increment a byte in memory
+                case (0xEE):
+                    this.Acc = _MemoryAccessor.getMDR(); // get the value from memory
+                    this.execute2();
+                    break;
                     
             }
         }
@@ -186,13 +193,26 @@ module TSOS {
                         this.Zflag = 0;
                     }
                     break;
+                //increment a byte in memory
+                case(0xEE):
+                    this.Acc ++; // add one to the value gotten from memory
+                    this.writeBack();
+                    break;
                 
 
             }
         }
 
-        // remember the program counter. start by accessing the memory. remember that control needs to update the cpu gui
-
+        // special step for writing back to memory. used for just the EE instruction
+        public writeBack(): void {
+            switch (this.IR) {
+                //increment a byte in memory
+                case(0xEE):
+                    _MemoryAccessor.setMDR(this.Acc); 
+                    _MemoryAccessor.write(); // replace the original value in memory with the new incremented value
+                    break;
+            }
+        }
 
 
     }
