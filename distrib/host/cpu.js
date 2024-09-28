@@ -85,7 +85,13 @@ var TSOS;
                     this.PC += 0x0001;
                     this.decode2();
                     break;
-                // special cases with varying logic
+                // special cases that do not have opperands
+                case (0x98): //load the accumulator from y reg 
+                    this.execute1();
+                    break; // CHECK IF THESE BREAKS ARE NEEDED FOR SOME REASON THEY ARE NOT IN PREV PROJ
+                case (0x8A): //load the accumulator from x reg
+                    this.execute1();
+                    break;
                 case (0x00): //break
                     this.execute1();
                     break;
@@ -114,11 +120,6 @@ var TSOS;
                 case (0xA9):
                     this.Acc = _MemoryAccessor.getMDR();
                     break;
-                //break
-                case (0x00):
-                    _KernelInterruptQueue.enqueue(new TSOS.Interrupt(SOFTWARE_INTERRUPT, _PCBManager.getFirstReadyProcess().PID)); // use this for now, returns the PID of the pcb
-                    console.log(_Memory.getMemory());
-                    break;
                 //load the accumulator from memory
                 case (0xAD):
                     this.Acc = _MemoryAccessor.getMDR();
@@ -143,6 +144,19 @@ var TSOS;
                 //load the x reg from memory
                 case (0xAE):
                     this.Xreg = _MemoryAccessor.getMDR();
+                    break;
+                //load the accumulator from the y register
+                case (0x98):
+                    this.Acc = this.Yreg;
+                    break;
+                //load the accumulator from the x register
+                case (0x8A):
+                    this.Acc = this.Xreg;
+                    break;
+                //break
+                case (0x00):
+                    _KernelInterruptQueue.enqueue(new TSOS.Interrupt(SOFTWARE_INTERRUPT, _PCBManager.getFirstReadyProcess().PID)); // use this for now, returns the PID of the pcb
+                    console.log(_Memory.getMemory());
                     break;
             }
         }
