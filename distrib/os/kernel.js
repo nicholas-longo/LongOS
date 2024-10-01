@@ -109,7 +109,7 @@ var TSOS;
                     break;
                 case SOFTWARE_INTERRUPT:
                     this.krnTerminateProcess(params); // Handle process termination
-                    _StdOut.advanceLine();
+                    _StdOut.advanceLine(); // consider changing this when you have multiple programs running at once PROJECT 3
                     _StdOut.putPrompt();
                     break;
                 case SYSTEM_CALL_PRINT_INT:
