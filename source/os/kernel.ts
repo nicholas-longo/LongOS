@@ -130,11 +130,8 @@ module TSOS {
                     _StdOut.putText(params[0].toString()); // Print the Integer in the Y Register
                     break;
                 case SYSTEM_CALL_PRINT_STRING: 
-                    // add string logic here
-                    // read the memory address, loop until 00 character is met, print each one out
-                    let characterAsByte = 0x61
-                    console.log((characterAsByte))
-                    console.log(Utils.byteToChar(characterAsByte));
+                    let characterAsByte = params[0]
+                    _StdOut.putText(Utils.byteToChar(characterAsByte));
                     break; 
                 default:
                     this.krnTrapError("Invalid Interrupt Request. irq=" + irq + " params=[" + params + "]");

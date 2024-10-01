@@ -356,11 +356,12 @@ var TSOS;
         shellLoad() {
             const textBox = document.getElementById("taProgramInput"); // ChatGPT 9/3/2024. I asked why the textBox.value was not working, it said to make it into this data type
             const userProgramInput = textBox.value;
+            const userProgramInputWithoutSpaces = userProgramInput.replace(/\s+/g, ''); // used to make sure spaces are not counted when calculating program size
             if (userProgramInput.trim() === '') {
                 _StdOut.putText("Invalid Program: User Program Input is Empty");
                 return;
             }
-            if (userProgramInput.length > 512) {
+            if (userProgramInputWithoutSpaces.length > 512) {
                 _StdOut.putText("Invalid Program: User Program Exceeds 256 Bytes");
                 return;
             }

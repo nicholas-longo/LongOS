@@ -121,7 +121,7 @@ module TSOS {
                         this.PC += 0x0001; //this is needed so the fetch does not grab the wrong value
                         break;
                     } else { // if the z flag is set, skip the next memory address and continue the program
-                        this.PC += 0x0002
+                        this.PC += 0x0001 // only jump one because the program is going to end and then fetch will deal with the program counter properly
                         break;
                     }
             }
@@ -209,13 +209,23 @@ module TSOS {
                         _KernelInterruptQueue.enqueue(new Interrupt(SYSTEM_CALL_PRINT_INT, [this.Yreg])); // construct the y register as an array so it can be printed by being passed as an interrupt
                         break;
                     } else if (this.Xreg == 0x02) { //SYS call 2 - print the 00 terminated string stored at the address in the Y register
-                        _MemoryAccessor.setMAR(this.Yreg); // set the MAR to the y register, because the address we need is currently in the y register. No higher order byte needed, because y reg can only hold one byte.
-                        _MemoryAccessor.read();
-                        const characterAsByte = _MemoryAccessor.getMDR()
-                        _KernelInterruptQueue.enqueue(new Interrupt(SYSTEM_CALL_PRINT_STRING, [characterAsByte])); 
-                        break;
+                        let address = this.Yreg;
+                        let charAsByte: number;
+
+                        // Loop through memory until we hit a null terminator (0x00)
+                        do {
+                            _MemoryAccessor.setMAR(address);  // Set MAR to the current address in Yreg
+                            _MemoryAccessor.read();           // Read from memory
+                            charAsByte = _MemoryAccessor.getMDR(); // Get the byte at memory[MAR]
+
+                            if (charAsByte !== 0x00) {
+                                _KernelInterruptQueue.enqueue(new Interrupt(SYSTEM_CALL_PRINT_STRING, [charAsByte]));
+                            }
+
+                            address++; // Move to the next byte in memory
+                        } while (charAsByte !== 0x00); // Stop when we hit the null terminator
                     }
-                    
+                    break;
             }
         }
 
