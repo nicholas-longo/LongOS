@@ -107,7 +107,7 @@ module TSOS {
                     break;
                  //SYS calls 
                 case (0xFF):
-                    if(this.Xreg == 0x01) {
+                    if(this.Xreg === 0x01 || this.Xreg === 0x02) {
                         this.execute1();
                         break;
                     }
@@ -205,9 +205,14 @@ module TSOS {
                     break;
                 //SYS Calls
                 case (0xFF):
-                    //SYS call 1 - if there is a 0x01 at the x register, print the integer in the y register
-                    if(this.Xreg == 0x01) {
+                    if(this.Xreg == 0x01) { //SYS call 1 - if there is a 0x01 at the x register, print the integer in the y register
                         _KernelInterruptQueue.enqueue(new Interrupt(SYSTEM_CALL_PRINT_INT, [this.Yreg])); // construct the y register as an array so it can be printed by being passed as an interrupt
+                        break;
+                    } else if (this.Xreg == 0x02) { //SYS call 2 - print the 00 terminated string stored at the address in the Y register
+                        _MemoryAccessor.setMAR(this.Yreg); // set the MAR to the y register, because the address we need is currently in the y register. No higher order byte needed, because y reg can only hold one byte.
+                        _MemoryAccessor.read();
+                        const characterAsByte = _MemoryAccessor.getMDR()
+                        _KernelInterruptQueue.enqueue(new Interrupt(SYSTEM_CALL_PRINT_STRING, [characterAsByte])); 
                         break;
                     }
                     

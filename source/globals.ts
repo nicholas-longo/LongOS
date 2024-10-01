@@ -24,6 +24,8 @@ const SOFTWARE_INTERRUPT: number = 2;
 
 const SYSTEM_CALL_PRINT_INT: number = 3; 
 
+const SYSTEM_CALL_PRINT_STRING: number = 4; 
+
 
 //
 // Global Variables
