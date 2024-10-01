@@ -134,7 +134,7 @@ var TSOS;
             // if the row does not exist, make one
             if (!row) {
                 row = cpuTable.insertRow();
-                for (let i = 0; i < 5; i++) {
+                for (let i = 0; i < 6; i++) {
                     row.insertCell();
                 }
             }
