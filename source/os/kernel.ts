@@ -125,6 +125,8 @@ module TSOS {
                     break;
                 case SOFTWARE_INTERRUPT:
                     this.krnTerminateProcess(params);  // Handle process termination
+                    _StdOut.advanceLine();
+                    _StdOut.putPrompt();
                     break;
                 case SYSTEM_CALL_PRINT_INT:
                     _StdOut.putText(params[0].toString()); // Print the Integer in the Y Register
