@@ -125,6 +125,7 @@ var TSOS;
             let cpuTable = document.getElementById("cpuTable");
             // get the current values from the CPU
             const PC = _CPU.PC;
+            const IR = _CPU.IR;
             const accumulator = _CPU.Acc;
             const xReg = _CPU.Xreg;
             const yReg = _CPU.Yreg;
@@ -139,10 +140,11 @@ var TSOS;
             }
             // update the rows 
             row.cells[0].innerHTML = TSOS.Utils.hexLog(PC, 2, true);
-            row.cells[1].innerHTML = TSOS.Utils.hexLog(accumulator, 2, true);
-            row.cells[2].innerHTML = TSOS.Utils.hexLog(xReg, 2, true);
-            row.cells[3].innerHTML = TSOS.Utils.hexLog(yReg, 2, true);
-            row.cells[4].innerHTML = TSOS.Utils.hexLog(zFlag, 2, true);
+            row.cells[1].innerHTML = TSOS.Utils.hexLog(IR, 2, true);
+            row.cells[2].innerHTML = TSOS.Utils.hexLog(accumulator, 2, true);
+            row.cells[3].innerHTML = TSOS.Utils.hexLog(xReg, 2, true);
+            row.cells[4].innerHTML = TSOS.Utils.hexLog(yReg, 2, true);
+            row.cells[5].innerHTML = TSOS.Utils.hexLog(zFlag, 2, true);
         }
     }
     TSOS.Control = Control;

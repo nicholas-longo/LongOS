@@ -154,6 +154,7 @@ module TSOS {
 
             // get the current values from the CPU
             const PC = _CPU.PC;
+            const IR = _CPU.IR;
             const accumulator = _CPU.Acc;
             const xReg = _CPU.Xreg;
             const yReg = _CPU.Yreg;
@@ -172,10 +173,11 @@ module TSOS {
 
             // update the rows 
             row.cells[0].innerHTML = Utils.hexLog(PC, 2, true);       
-            row.cells[1].innerHTML = Utils.hexLog(accumulator, 2, true); 
-            row.cells[2].innerHTML = Utils.hexLog(xReg, 2, true);       
-            row.cells[3].innerHTML = Utils.hexLog(yReg, 2, true);       
-            row.cells[4].innerHTML = Utils.hexLog(zFlag, 2, true);      
+            row.cells[1].innerHTML = Utils.hexLog(IR, 2, true);  
+            row.cells[2].innerHTML = Utils.hexLog(accumulator, 2, true); 
+            row.cells[3].innerHTML = Utils.hexLog(xReg, 2, true);       
+            row.cells[4].innerHTML = Utils.hexLog(yReg, 2, true);       
+            row.cells[5].innerHTML = Utils.hexLog(zFlag, 2, true);      
         }
 
         // likely not going to be used but keeping as a backup if needed

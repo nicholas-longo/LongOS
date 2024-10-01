@@ -121,7 +121,7 @@ module TSOS {
                         this.PC += 0x0001; //this is needed so the fetch does not grab the wrong value
                         break;
                     } else { // if the z flag is set, skip the next memory address and continue the program
-                        this.PC += 0x0001 // only jump one because the program is going to end and then fetch will deal with the program counter properly
+                        //this.PC += 0x0001 // only jump one because the program is going to end and then fetch will deal with the program counter properly
                         break;
                     }
             }
@@ -191,7 +191,7 @@ module TSOS {
                     break; 
                 //compare byte in mem to x reg, if equal set z flag to 1.
                 case (0xEC):
-                    this.Xreg = _MemoryAccessor.getMDR(); // get the byte in memory and set to x reg KEEP AN EYE ON THIS
+                    this.Acc = _MemoryAccessor.getMDR(); // get the byte in memory and set to x reg KEEP AN EYE ON THIS - changed as of 10/1 to accumulator, may need more testing
                     this.execute2(); // then call this to compare it to the x register
                     break;
                 //increment a byte in memory
@@ -211,7 +211,7 @@ module TSOS {
                     } else if (this.Xreg == 0x02) { //SYS call 2 - print the 00 terminated string stored at the address in the Y register
                         let address = this.Yreg;
                         let charAsByte: number;
-
+                        //Chat GPT 10/1/24 I asked for help on how to access the memory value stored at the y register and construct a string until the null terminator
                         // Loop through memory until we hit a null terminator (0x00)
                         do {
                             _MemoryAccessor.setMAR(address);  // Set MAR to the current address in Yreg
