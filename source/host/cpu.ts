@@ -226,7 +226,7 @@ module TSOS {
                         } while (charAsByte !== 0x00); // Stop when we hit the null terminator
                     }
                     break;
-            }
+            } 
         }
 
         public execute2(): void {
