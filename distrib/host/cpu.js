@@ -190,7 +190,7 @@ var TSOS;
                 case (0xFF):
                     //SYS call 1 - if there is a 0x01 at the x register, print the integer in the y register
                     if (this.Xreg == 0x01) {
-                        console.log("SYS Call 1: Integer in Y register = " + this.Yreg);
+                        _KernelInterruptQueue.enqueue(new TSOS.Interrupt(SYSTEM_CALL_PRINT_INT, [this.Yreg])); // construct the y register as an array so it can be printed by being passed as an interrupt
                         break;
                     }
             }

@@ -22,6 +22,8 @@ const KEYBOARD_IRQ: number = 1;
 
 const SOFTWARE_INTERRUPT: number = 2; 
 
+const SYSTEM_CALL_PRINT_INT: number = 3; 
+
 
 //
 // Global Variables

@@ -126,6 +126,9 @@ module TSOS {
                 case SOFTWARE_INTERRUPT:
                     this.krnTerminateProcess(params);  // Handle process termination
                     break;
+                case SYSTEM_CALL_PRINT_INT:
+                    _StdOut.putText(params[0].toString()); // Print the Integer in the Y Register
+                    break;
                 default:
                     this.krnTrapError("Invalid Interrupt Request. irq=" + irq + " params=[" + params + "]");
             }
