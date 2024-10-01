@@ -56,6 +56,10 @@ var TSOS;
             // Unload the Device Drivers?
             // More?
             //
+            _CPU.isExecuting = false; // turn off the cpu so it does not continue running any programs
+            // I found this code on Josh Seligman's jOSh project. I was desperate to figure out how to turn off that hostlog. I had to...
+            this.krnTrace('Shut down the CPU and HostLog.');
+            clearInterval(_hardwareClockID);
             this.krnTrace("end shutdown OS");
         }
         krnOnCPUClockPulse() {
