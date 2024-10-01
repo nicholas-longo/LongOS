@@ -121,7 +121,7 @@ module TSOS {
                         this.PC += 0x0001; //this is needed so the fetch does not grab the wrong value
                         break;
                     } else { // if the z flag is set, skip the next memory address and continue the program
-                        //this.PC += 0x0001 // only jump one because the program is going to end and then fetch will deal with the program counter properly
+                        this.PC += 0x0001 // only jump one because the program is going to end and then fetch will deal with the program counter properly
                         break;
                     }
             }
@@ -262,9 +262,17 @@ module TSOS {
         public addRelativeOffsetToPC(relativeOffset: number): void {
             if (relativeOffset <= 0x7F) { // 127 in decimal - each value can be added to PC as is
                 this.PC += relativeOffset; 
+                // wrap around if greater than 0xFF
+                if (this.PC > 0xFF) {
+                    this.PC -= 0x100; // wrap around to start from 0
+                }
             } else { // values must be adjusted before they can be subtracted
                 relativeOffset = 0x100 - relativeOffset; // get the proper value if you need to decrement the branch
                 this.PC -= relativeOffset;
+                // wrap around if less than 0x00
+                if (this.PC < 0x00) {
+                    this.PC += 0x100; // wrap around to end at 0xFF
+                }
             }
         }
 
