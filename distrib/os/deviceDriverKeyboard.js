@@ -24,9 +24,11 @@ var TSOS;
         }
         krnKbdDispatchKeyPress(params) {
             // Parse the params.  TODO: Check that the params are valid and osTrapError if not.
+            console.log(params);
             var keyCode = params[0];
             var isShifted = params[1];
-            _Kernel.krnTrace("Key code:" + keyCode + " shifted:" + isShifted);
+            var controlPressed = params[2];
+            _Kernel.krnTrace("Key code:" + keyCode + " shifted: " + isShifted + " control pressed: " + controlPressed);
             var chr = "";
             // Mapping of keycodes to characters, including shift-modified characters
             const keyBoardMap = {
@@ -79,6 +81,11 @@ var TSOS;
                 220: { normal: '\\', shifted: '|' }, // Backslash
                 192: { normal: '`', shifted: '~' } // Backtick
             };
+            // kill the running program if control C is pressed 
+            if (keyCode === 67 && controlPressed) {
+                _KernelInterruptQueue.enqueue(new TSOS.Interrupt(SOFTWARE_INTERRUPT, _PCBManager.getFirstReadyProcess().PID));
+                return; // this is to stop c from being printed
+            }
             // capital letters && lower case letters || digits || special characters || space
             if ((keyCode >= 65) && (keyCode <= 90) ||
                 (keyCode >= 48 && keyCode <= 57) ||
