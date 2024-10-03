@@ -66,6 +66,8 @@ module TSOS {
             // Unload the Device Drivers?
             // More?
             //
+
+            _PCBManager.terminateAllReadyPCBs(); // update the status of all pcbs to Terminated
             _CPU.isExecuting = false // turn off the cpu so it does not continue running any programs
 
             // I found this code on Josh Seligman's jOSh project. I was desperate to figure out how to turn off that hostlog. I had to...

@@ -68,8 +68,16 @@ var TSOS;
         }
         updateCPURegistersOnPCB(pid) {
             const pcb = this.findPCB(pid);
-            console.log(pcb);
             pcb.updateCPURegistersOnPCB(); // gets the values of the CPU registers and updates the PCB accordingly
+        }
+        // called if there is a shutdown
+        terminateAllReadyPCBs() {
+            while (this.pcbReadyQueue.length > 0) {
+                const pcb = this.getNextReadyProcess(); // get a pcb and then remove it
+                if (pcb) {
+                    this.updatePCBStatus(pcb.PID, "Terminated");
+                }
+            }
         }
     }
     TSOS.PCBManager = PCBManager;
