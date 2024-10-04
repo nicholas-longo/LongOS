@@ -193,11 +193,13 @@ module TSOS {
             // 1. Remove leading and trailing spaces.
             buffer = Utils.trim(buffer);
 
-            // 2. Lower-case it.
-            buffer = buffer.toLowerCase();
+            // // 2. Lower-case it.
+            // buffer = buffer.toLowerCase();
 
             // 3. Separate on spaces so we can determine the command and command-line args, if any.
             var tempList = buffer.split(" ");
+
+            tempList[0] = tempList[0].toLowerCase(); // make only the command lower case, keep the arguments as the case they are provided
 
             // 4. Take the first (zeroth) element and use that as the command.
             var cmd = tempList.shift();  // Yes, you can do that to an array in JavaScript. See the Queue class.
