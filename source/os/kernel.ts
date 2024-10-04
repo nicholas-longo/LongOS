@@ -62,6 +62,24 @@ module TSOS {
         public initializeStepButtons(): void {
             const toggleButton = document.getElementById('toggleButton');
             const stepButton = document.getElementById('stepButton');
+
+            //Chat GPT 10/4/24 I asked for help on how to set up the event listeners to see when the button is pressed and act accordingly. It used the question mark in the syntax in order to make sure the buttons are not null or undefined '
+            // If step ready is true, and isSingleStepMode is true, then one cycle will execute
+            // If isSingleStepMode is false, then the cpu will just execute normally
+
+            // toggle between single-step and normal mode
+            toggleButton?.addEventListener('click', () => {
+                _isSingleStepMode = !_isSingleStepMode;
+                this.krnTrace(`Single-step mode: ${_isSingleStepMode ? 'ON' : 'OFF'}`);
+                _stepReady = false;  // reset step flag
+            });
+
+            // proceed one step if in single-step mode
+            stepButton?.addEventListener('click', () => {
+                if (_isSingleStepMode) {
+                    _stepReady = true;  // signal that we are ready to execute one step
+                }
+            });
         }
 
         public krnShutdown() {
@@ -101,6 +119,15 @@ module TSOS {
                 var interrupt = _KernelInterruptQueue.dequeue();
                 this.krnInterruptHandler(interrupt.irq, interrupt.params);
             } else if (_CPU.isExecuting) { // If there are no interrupts then run one CPU cycle if there is anything being processed.
+                // Chat GPT 10/4/24 I asked how to make my CPU execution step follow the necessary logic to be single step. It suggested this, where I check if I am in singleStepMode, and if I am, it waits for a step.
+                // Once a step is had it executes, and resets the flags. The step only becomes true when I click the step button. Can toggle back and forth for the program. 
+                // If single-step mode is enabled, only proceed when _stepReady is true
+                 if (_isSingleStepMode) {
+                    if (!_stepReady) {
+                        return; // Do not proceed until step button is clicked
+                    }
+                    _stepReady = false; // Reset the step flag after executing one cycle
+                }
                 _CPU.cycle();
             } else {                       // If there are no interrupts and there is nothing being executed then just be idle.
                 this.krnTrace("Idle");
