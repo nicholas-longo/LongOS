@@ -50,10 +50,18 @@ module TSOS {
             _OsShell = new Shell();
             _OsShell.init();
 
+            // initialize single step buttons
+            this.initializeStepButtons();
+
             // Finally, initiate student testing protocol.
             if (_GLaDOS) {
                 _GLaDOS.afterStartup();
             }
+        }
+
+        public initializeStepButtons(): void {
+            const toggleButton = document.getElementById('toggleButton');
+            const stepButton = document.getElementById('stepButton');
         }
 
         public krnShutdown() {
@@ -84,6 +92,7 @@ module TSOS {
                This, on the other hand, is the clock pulse from the hardware / VM / host that tells the kernel
                that it has to look for interrupts and process them if it finds any.                          
             */
+
 
             // Check for an interrupt, if there are any. Page 560
             if (_KernelInterruptQueue.getSize() > 0) {

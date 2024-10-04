@@ -41,10 +41,16 @@ var TSOS;
             this.krnTrace("Creating and Launching the shell.");
             _OsShell = new TSOS.Shell();
             _OsShell.init();
+            // initialize single step buttons
+            this.initializeStepButtons();
             // Finally, initiate student testing protocol.
             if (_GLaDOS) {
                 _GLaDOS.afterStartup();
             }
+        }
+        initializeStepButtons() {
+            const toggleButton = document.getElementById('toggleButton');
+            const stepButton = document.getElementById('stepButton');
         }
         krnShutdown() {
             this.krnTrace("begin shutdown OS");

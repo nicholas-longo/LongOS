@@ -76,6 +76,10 @@ var _krnKeyboardDriver: TSOS.DeviceDriverKeyboard  = null;
 
 var _hardwareClockID: number = null;
 
+// values for dealing with single step mode
+let _isSingleStepMode: boolean = false; 
+let _stepReady: boolean = false; 
+
 // For testing (and enrichment)...
 var Glados: any = null;  // This is the function Glados() in glados-ip*.js http://alanclasses.github.io/TSOS/test/ .
 var _GLaDOS: any = null; // If the above is linked in, this is the instantiated instance of Glados.
