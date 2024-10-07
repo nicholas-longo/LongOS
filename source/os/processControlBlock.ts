@@ -60,6 +60,14 @@ module TSOS {
             this.Status = status;
         }
 
+        public updatePCBAfterDeallocated(): void {
+            this.location = "N/A";
+            this.segment = -1; // not available
+            // for project 3
+            // this.base = -1
+            // this.limit = -1
+        }
+
         public updateCPURegistersOnPCB(): void {
             this.tableRow.cells[0].innerHTML = Utils.hexLog(this.PID, 2, true);
             this.tableRow.cells[1].innerHTML = Utils.hexLog(this.priority, 2, true);

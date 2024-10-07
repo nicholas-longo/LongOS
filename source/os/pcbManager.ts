@@ -28,6 +28,13 @@ module TSOS {
             return this.pcbQueue.find(pcb => pcb.PID === pid);
         }
 
+        // Chat GPT 10/7/24
+        // I asked for a way to identify a pcb in a way that would be recognized by the memory manager in order for updating the PCB table during memory allocation, and it suggested to implement this helper
+        // function to find a pcb based on the segment number it is currently assigned
+        public findPCBBySegment(segment: number): ProcessControlBlock | undefined {
+            return this.pcbQueue.find(pcb => pcb.segment === segment);
+        }
+
         // update the status of a PCB
         public updatePCBStatus(pid: number, status: string): void {
             const pcb = this.findPCB(pid);
@@ -41,6 +48,16 @@ module TSOS {
                 } else {
                     pcb.updatePCBTable();
                 }
+            }
+        }
+
+        // when a process is deallocated from memory, this will fix the PCB table
+        public updatePCBAfterDeallocated(segment: number): void {
+            const pcb = this.findPCBBySegment(segment);
+            console.log(pcb)
+            if (pcb) {
+                pcb.updatePCBAfterDeallocated(); // this will make the location, segment, base, and limit all something that indicates it does not exist
+                pcb.updatePCBTable(); // reflect the changes
             }
         }
 

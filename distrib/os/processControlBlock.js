@@ -62,6 +62,13 @@ var TSOS;
         updateStatus(status) {
             this.Status = status;
         }
+        updatePCBAfterDeallocated() {
+            this.location = "N/A";
+            this.segment = -1; // not available
+            // for project 3
+            // this.base = -1
+            // this.limit = -1
+        }
         updateCPURegistersOnPCB() {
             this.tableRow.cells[0].innerHTML = TSOS.Utils.hexLog(this.PID, 2, true);
             this.tableRow.cells[1].innerHTML = TSOS.Utils.hexLog(this.priority, 2, true);

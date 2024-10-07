@@ -2,7 +2,6 @@ module TSOS {
 
     export class MemoryManager {
         private memoryAvailability: boolean[]
-        private segmentToUse: number; 
         
         constructor() {
             this.memoryAvailability = [] // this will need to be larger once I can hold more memory
@@ -25,12 +24,15 @@ module TSOS {
         }
 
         public allocateSegment(index: number): void {
-            this.segmentToUse = index;
             this.memoryAvailability[index] = false // segment now off limits
         }
 
-        public deallocateSegement(index: number) : void {
-            this.memoryAvailability[index] = true; // the memory at that segment is available again
+        public deallocateSegement(segment: number) : void {
+            this.memoryAvailability[segment] = true; // the memory at that segment is available again
+            const pcb = _PCBManager.findPCBBySegment(segment); // based on the passed in segment, update the PCB table
+            if (pcb) {
+                _PCBManager.updatePCBAfterDeallocated(segment); // clean up the PCB table
+            }
         }
 
     }
