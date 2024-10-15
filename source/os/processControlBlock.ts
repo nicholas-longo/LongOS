@@ -10,6 +10,8 @@ module TSOS {
             public priority: number = 0,
             public location: string = "",
             public segment: number = 0,
+            public base: number = 0, 
+            public limit: number = 0,
             public PC: number = 0,
             public acc: number = 0,
             public xReg: number = 0,
@@ -24,6 +26,8 @@ module TSOS {
             this.priority = 8; 
             this.location = "Memory";
             this.segment = 0; 
+            this.base = 0; 
+            this.limit = 0; 
             this.PC = 0;
             this.acc = 0;
             this.xReg = 0;
@@ -38,7 +42,7 @@ module TSOS {
                 // only create a new row if the PCB does not already exist 
                 let pcbTable = document.getElementById("pcbTable") as HTMLTableElement;
                 this.tableRow = pcbTable.insertRow();
-                for (let i = 0; i < 10; i++) {
+                for (let i = 0; i < 12; i++) {
                     this.tableRow.insertCell();
                 }
             }
@@ -48,12 +52,14 @@ module TSOS {
             this.tableRow.cells[1].innerHTML = Utils.hexLog(this.priority, 2, true);
             this.tableRow.cells[2].innerHTML = this.location;
             this.tableRow.cells[3].innerHTML = Utils.hexLog(this.segment, 2, true);
-            this.tableRow.cells[4].innerHTML = Utils.hexLog(this.PC, 2, true);
-            this.tableRow.cells[5].innerHTML = Utils.hexLog(this.acc, 2, true);
-            this.tableRow.cells[6].innerHTML = Utils.hexLog(this.xReg, 2, true);
-            this.tableRow.cells[7].innerHTML = Utils.hexLog(this.yReg, 2, true);
-            this.tableRow.cells[8].innerHTML = Utils.hexLog(this.zFlag, 2, true);
-            this.tableRow.cells[9].innerHTML = this.Status;
+            this.tableRow.cells[4].innerHTML = Utils.hexLog(this.base, 2, true);
+            this.tableRow.cells[5].innerHTML = Utils.hexLog(this.limit, 2, true);
+            this.tableRow.cells[6].innerHTML = Utils.hexLog(this.PC, 2, true);
+            this.tableRow.cells[7].innerHTML = Utils.hexLog(this.acc, 2, true);
+            this.tableRow.cells[8].innerHTML = Utils.hexLog(this.xReg, 2, true);
+            this.tableRow.cells[9].innerHTML = Utils.hexLog(this.yReg, 2, true);
+            this.tableRow.cells[10].innerHTML = Utils.hexLog(this.zFlag, 2, true);
+            this.tableRow.cells[11].innerHTML = this.Status;
         }
 
         public updateStatus(status: string): void {
@@ -77,6 +83,8 @@ module TSOS {
             this.tableRow.cells[1].innerHTML = Utils.hexLog(this.priority, 2, true);
             this.tableRow.cells[2].innerHTML = this.location;
             this.tableRow.cells[3].innerHTML = Utils.hexLog(this.segment, 2, true);
+            this.tableRow.cells[4].innerHTML = Utils.hexLog(this.base, 2, true);
+            this.tableRow.cells[5].innerHTML = Utils.hexLog(this.limit, 2, true);
             this.tableRow.cells[4].innerHTML = Utils.hexLog(_CPU.PC, 2, true);
             this.tableRow.cells[5].innerHTML = Utils.hexLog(_CPU.Acc, 2, true);
             this.tableRow.cells[6].innerHTML = Utils.hexLog(_CPU.Xreg, 2, true);

@@ -97,7 +97,7 @@ var TSOS;
             // add the necessary rows to the memory table, starting at 0x000 and counting up by 8 until 0x100 can be displayed
             let memTable = document.getElementById("memoryTable"); // this allows me to use insertRow()
             // change the mem table size later
-            for (let i = 0x000; i < 0x100; i += 8) {
+            for (let i = 0x000; i < 0x300; i += 8) {
                 // create the address columns
                 let row = memTable.insertRow();
                 let addressCell = row.insertCell();
