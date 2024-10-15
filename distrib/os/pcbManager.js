@@ -49,7 +49,7 @@ var TSOS;
         }
         updatePCBSegment(pid, segment) {
             const pcb = this.findPCB(pid);
-            pcb.updateSegemnt(segment); // the segment is obtained through the memory manager
+            pcb.updateSegmentBaseAndLimit(segment); // the segment is obtained through the memory manager
         }
         // when a process is deallocated from memory, this will fix the PCB table
         updatePCBAfterDeallocated(segment) {

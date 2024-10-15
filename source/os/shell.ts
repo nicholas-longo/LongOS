@@ -492,7 +492,7 @@ module TSOS {
 
             // create the pcb using the manager, set the status, and update the table
             const pcbEntry = _PCBManager.createPCB(8); // pass the priority of 8 as default for a program
-            pcbEntry.updateSegemnt(currentSegment);
+            pcbEntry.updateSegmentBaseAndLimit(currentSegment);
             pcbEntry.updatePCBTable();
 
             //show the process id and priority

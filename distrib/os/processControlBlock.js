@@ -73,12 +73,13 @@ var TSOS;
         updatePCBAfterDeallocated() {
             this.location = "N/A";
             this.segment = -1; // not available
-            // for project 3
-            // this.base = -1
-            // this.limit = -1
+            this.base = -1;
+            this.limit = -1;
         }
-        updateSegemnt(segment) {
+        updateSegmentBaseAndLimit(segment) {
             this.segment = segment;
+            this.base = segment * 256; // i thought this math to figure out the base and segment is pretty cool and avoids passing some parameters
+            this.limit = segment * 256 + 256;
         }
         updateCPURegistersOnPCB() {
             this.tableRow.cells[0].innerHTML = TSOS.Utils.hexLog(this.PID, 2, true);
@@ -87,12 +88,12 @@ var TSOS;
             this.tableRow.cells[3].innerHTML = TSOS.Utils.hexLog(this.segment, 2, true);
             this.tableRow.cells[4].innerHTML = TSOS.Utils.hexLog(this.base, 2, true);
             this.tableRow.cells[5].innerHTML = TSOS.Utils.hexLog(this.limit, 2, true);
-            this.tableRow.cells[4].innerHTML = TSOS.Utils.hexLog(_CPU.PC, 2, true);
-            this.tableRow.cells[5].innerHTML = TSOS.Utils.hexLog(_CPU.Acc, 2, true);
-            this.tableRow.cells[6].innerHTML = TSOS.Utils.hexLog(_CPU.Xreg, 2, true);
-            this.tableRow.cells[7].innerHTML = TSOS.Utils.hexLog(_CPU.Yreg, 2, true);
-            this.tableRow.cells[8].innerHTML = TSOS.Utils.hexLog(_CPU.Zflag, 2, true);
-            this.tableRow.cells[9].innerHTML = this.Status;
+            this.tableRow.cells[6].innerHTML = TSOS.Utils.hexLog(this.PC, 2, true);
+            this.tableRow.cells[7].innerHTML = TSOS.Utils.hexLog(this.acc, 2, true);
+            this.tableRow.cells[8].innerHTML = TSOS.Utils.hexLog(this.xReg, 2, true);
+            this.tableRow.cells[9].innerHTML = TSOS.Utils.hexLog(this.yReg, 2, true);
+            this.tableRow.cells[10].innerHTML = TSOS.Utils.hexLog(this.zFlag, 2, true);
+            this.tableRow.cells[11].innerHTML = this.Status;
         }
     }
     TSOS.ProcessControlBlock = ProcessControlBlock;
