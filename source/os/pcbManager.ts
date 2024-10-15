@@ -51,6 +51,11 @@ module TSOS {
             }
         }
 
+        public updatePCBSegment(pid: number, segment: number): void {
+            const pcb = this.findPCB(pid);
+            pcb.updateSegemnt(segment); // the segment is obtained through the memory manager
+        }
+
         // when a process is deallocated from memory, this will fix the PCB table
         public updatePCBAfterDeallocated(segment: number): void {
             const pcb = this.findPCBBySegment(segment);
