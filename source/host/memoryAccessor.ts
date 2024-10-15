@@ -72,9 +72,9 @@ module TSOS {
         }
 
         // for now just overwrite any exisitng program at 0
-        public flashMemory(program: Array<number>) {
-            _Memory.reset() // this is temporary because we only need to load one program at a time
-            const startingAddress: number = 0x000;
+        public flashMemory(program: Array<number>, segment: number) {
+            const base = segment * 0x100; 
+            const startingAddress: number = base;
             for (let i = 0; i < program.length; i ++) {
                 this.writeImmediate(startingAddress + i, program[i]) // address increments by 1 each time and is passed as the MAR, correct code is passed as the MDR
             }

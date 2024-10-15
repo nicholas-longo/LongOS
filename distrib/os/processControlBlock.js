@@ -78,8 +78,8 @@ var TSOS;
         }
         updateSegmentBaseAndLimit(segment) {
             this.segment = segment;
-            this.base = segment * 256; // i thought this math to figure out the base and segment is pretty cool and avoids passing some parameters
-            this.limit = segment * 256 + 256;
+            this.base = segment * 0x100; // i thought this math to figure out the base and segment is pretty cool and avoids passing some parameters
+            this.limit = segment * 0x100 + 0x100;
         }
         updateCPURegistersOnPCB() {
             this.tableRow.cells[0].innerHTML = TSOS.Utils.hexLog(this.PID, 2, true);
