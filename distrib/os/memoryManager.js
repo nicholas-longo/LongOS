@@ -2,21 +2,25 @@ var TSOS;
 (function (TSOS) {
     class MemoryManager {
         memoryAvailability;
+        mostRecentAssignedSegement;
         constructor() {
             this.memoryAvailability = []; // this will need to be larger once I can hold more memory
             this.init();
         }
         init() {
-            this.memoryAvailability.push(true); // adds a true value to the array. this means there is space available
+            this.memoryAvailability.push(true);
+            this.memoryAvailability.push(true);
+            this.memoryAvailability.push(true); // add three segments that can hold memory
         }
         isSpaceAvailable() {
             for (let i = 0; i < this.memoryAvailability.length; i++) {
                 if (this.memoryAvailability[i] === true) {
                     this.allocateSegment(i); // sets the segment to the first available spot
+                    this.mostRecentAssignedSegement = i;
                     return true;
                 }
-                return false; // nothing was availble
             }
+            return false; // nothing was availble
         }
         allocateSegment(index) {
             this.memoryAvailability[index] = false; // segment now off limits
@@ -27,6 +31,9 @@ var TSOS;
             if (pcb) {
                 _PCBManager.updatePCBAfterDeallocated(segment); // clean up the PCB table
             }
+        }
+        getMostRecentAssignedSegment() {
+            return this.mostRecentAssignedSegement;
         }
     }
     TSOS.MemoryManager = MemoryManager;

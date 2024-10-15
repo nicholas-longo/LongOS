@@ -69,6 +69,9 @@ var TSOS;
             // this.base = -1
             // this.limit = -1
         }
+        updateSegemnt(segment) {
+            this.segment = segment;
+        }
         updateCPURegistersOnPCB() {
             this.tableRow.cells[0].innerHTML = TSOS.Utils.hexLog(this.PID, 2, true);
             this.tableRow.cells[1].innerHTML = TSOS.Utils.hexLog(this.priority, 2, true);

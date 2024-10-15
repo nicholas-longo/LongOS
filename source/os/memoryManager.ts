@@ -1,7 +1,8 @@
 module TSOS {
 
     export class MemoryManager {
-        private memoryAvailability: boolean[]
+        private memoryAvailability: boolean[];
+        private mostRecentAssignedSegement: number;
         
         constructor() {
             this.memoryAvailability = [] // this will need to be larger once I can hold more memory
@@ -9,7 +10,9 @@ module TSOS {
         }
         
         public init(): void {
-            this.memoryAvailability.push(true); // adds a true value to the array. this means there is space available
+            this.memoryAvailability.push(true); 
+            this.memoryAvailability.push(true); 
+            this.memoryAvailability.push(true); // add three segments that can hold memory
         }
 
 
@@ -17,10 +20,11 @@ module TSOS {
             for (let i = 0; i < this.memoryAvailability.length; i ++) {
                 if(this.memoryAvailability[i] === true) {
                     this.allocateSegment(i); // sets the segment to the first available spot
+                    this.mostRecentAssignedSegement = i; 
                     return true
                 } 
-                    return false; // nothing was availble
             }
+            return false; // nothing was availble
         }
 
         public allocateSegment(index: number): void {
@@ -33,6 +37,10 @@ module TSOS {
             if (pcb) {
                 _PCBManager.updatePCBAfterDeallocated(segment); // clean up the PCB table
             }
+        }
+
+        public getMostRecentAssignedSegment(): number {
+            return this.mostRecentAssignedSegement; 
         }
 
     }

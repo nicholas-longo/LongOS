@@ -68,6 +68,10 @@ module TSOS {
             // this.limit = -1
         }
 
+        public updateSegemnt(segment: number): void {
+            this.segment = segment;  
+        }
+
         public updateCPURegistersOnPCB(): void {
             this.tableRow.cells[0].innerHTML = Utils.hexLog(this.PID, 2, true);
             this.tableRow.cells[1].innerHTML = Utils.hexLog(this.priority, 2, true);

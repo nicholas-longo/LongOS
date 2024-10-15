@@ -14,10 +14,9 @@ var TSOS;
             this.MDR = 0;
             this.init();
         }
-        // prob will change the number of bytes the memory array is
-        // initialize a blank memory array. the size will first be 256 bytes so it can store one program
+        // initialize a blank memory array. the size 768 bytes so it can store 3 256 byte programs
         init() {
-            for (let i = 0x00; i < 0x100; i += 0x01) {
+            for (let i = 0x00; i < 0x300; i += 0x01) {
                 this.memory[i] = 0x00;
             }
         }
