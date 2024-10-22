@@ -13,7 +13,7 @@ var TSOS;
         currentYPosition;
         buffer;
         commands = ["ver", "help", "shutdown", "cls", "man", "trace", "rot13",
-            "prompt", "date", "whereami", "rickroll", "status", "bsod", "load", "run"];
+            "prompt", "date", "whereami", "rickroll", "status", "bsod", "load", "run", "clearmem", "runall", "ps", "kill", "killall", "quantum"];
         commandHistoryArray;
         currentCommandHistoryIndex;
         constructor(currentFont = _DefaultFontFamily, currentFontSize = _DefaultFontSize, currentXPosition = 0, currentYPosition = _DefaultFontSize, buffer = "") {

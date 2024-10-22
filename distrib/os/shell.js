@@ -64,28 +64,26 @@ var TSOS;
             sc = new TSOS.ShellCommand(this.shellLoad, "load", "- Ensures that all code in User Program Input is valid.");
             this.commandList[this.commandList.length] = sc;
             //run 
-            sc = new TSOS.ShellCommand(this.shellRun, "run", "<PID> runs the code for the specified process ID.");
+            sc = new TSOS.ShellCommand(this.shellRun, "run", "<PID> - runs the code for the specified process ID.");
             this.commandList[this.commandList.length] = sc;
             // clearmem
-            sc = new TSOS.ShellCommand(this.clearmem, "clearmem", "Clear all memory segments");
+            sc = new TSOS.ShellCommand(this.clearmem, "clearmem", "- Clear all memory segments");
             this.commandList[this.commandList.length] = sc;
             // runall 
-            sc = new TSOS.ShellCommand(this.runall, "runall", "execute all programs at once");
+            sc = new TSOS.ShellCommand(this.runall, "runall", "- execute all programs at once");
             this.commandList[this.commandList.length] = sc;
             // ps 
-            sc = new TSOS.ShellCommand(this.ps, "ps", "display the PID and state of all processes");
+            sc = new TSOS.ShellCommand(this.ps, "ps", "- display the PID and state of all processes");
             this.commandList[this.commandList.length] = sc;
             // kill 
-            sc = new TSOS.ShellCommand(this.kill, "kill", "<PID> kills the specified process");
+            sc = new TSOS.ShellCommand(this.kill, "kill", "- <PID> kills the specified process");
             this.commandList[this.commandList.length] = sc;
             // killall 
-            sc = new TSOS.ShellCommand(this.killall, "killall", "kill all processes");
+            sc = new TSOS.ShellCommand(this.killall, "killall", "- kill all processes");
             this.commandList[this.commandList.length] = sc;
             // kill 
-            sc = new TSOS.ShellCommand(this.quantum, "quantum", "<int> let the user set the Round Robin quantum (measured in cpu cycles)");
+            sc = new TSOS.ShellCommand(this.quantum, "quantum", "<int> - let the user set the Round Robin quantum (measured in cpu cycles)");
             this.commandList[this.commandList.length] = sc;
-            // ps  - list the running processes and their IDs
-            // kill <id> - kills the specified process id.
             //update the date in the display bar every second
             //Assistance From Chat GPT 9/3/2024
             // Me: "Where can I put an interval in the shell.ts file so the time updates each second"
@@ -281,6 +279,24 @@ var TSOS;
                         break;
                     case "run":
                         _StdOut.putText("This will run the program stored in memory according to the given PID. You may use this one quite a bit.");
+                        break;
+                    case "clearmem":
+                        _StdOut.putText("Clears the memory. It is gone - trust me");
+                        break;
+                    case "runall":
+                        _StdOut.putText("RUN EVERYTHING AND I MEAN EVERYTHING");
+                        break;
+                    case "ps":
+                        _StdOut.putText("Displays a process and other useful fun stuff");
+                        break;
+                    case "kill":
+                        _StdOut.putText("Dont like a program. Kill it. But you can't bring it back to life, there is no alive command.");
+                        break;
+                    case "killall":
+                        _StdOut.putText("You are drunk with power. Please come back to your senses.");
+                        break;
+                    case "quantum":
+                        _StdOut.putText("Fancy computer stuff idk im not smart enough for all that");
                         break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");

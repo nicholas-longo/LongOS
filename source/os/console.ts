@@ -9,7 +9,7 @@ module TSOS {
 
     export class Console {
         private commands: string[] = ["ver", "help", "shutdown", "cls", "man", "trace", "rot13", 
-                                    "prompt", "date", "whereami", "rickroll", "status", "bsod", "load", "run"];
+                                    "prompt", "date", "whereami", "rickroll", "status", "bsod", "load", "run", "clearmem", "runall", "ps", "kill", "killall", "quantum"];
 
         private commandHistoryArray: string[]; 
         private currentCommandHistoryIndex: number;
