@@ -28,6 +28,8 @@ const SYSTEM_CALL_PRINT_STRING: number = 4;
 
 const INVALID_OP_CODE: number = 5; 
 
+const MEMORY_OUT_OF_BOUNDS_EXCEPTION: number = 6; 
+
 
 //
 // Global Variables

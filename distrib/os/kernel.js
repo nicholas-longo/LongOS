@@ -160,6 +160,12 @@ var TSOS;
                     _StdOut.advanceLine();
                     _StdOut.putPrompt();
                     break;
+                case MEMORY_OUT_OF_BOUNDS_EXCEPTION:
+                    this.krnTerminateProcess(params); // Handle process termination
+                    _StdOut.putText("Memory out of bounds exception. Process terminated.");
+                    _StdOut.advanceLine();
+                    _StdOut.putPrompt();
+                    break;
                 default:
                     this.krnTrapError("Invalid Interrupt Request. irq=" + irq + " params=[" + params + "]");
             }

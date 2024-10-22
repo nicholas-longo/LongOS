@@ -127,7 +127,7 @@ module TSOS {
 
                 // if none of the above op codes were used, then it is an invalid opcode and must end
                 default: 
-                    _KernelInterruptQueue.enqueue(new Interrupt(INVALID_OP_CODE, _PCBManager.getFirstReadyProcess().PID)); // terminate the process 
+                    _KernelInterruptQueue.enqueue(new Interrupt(INVALID_OP_CODE, _PCBManager.getFirstReadyProcess().PID)); // terminate the process and deal with invalid op 
                     break;
                     
 
@@ -146,6 +146,12 @@ module TSOS {
                     _MemoryAccessor.setMAR(this.PC);
                     _MemoryAccessor.read(); 
                     _MemoryAccessor.setHOB(_MemoryAccessor.getMDR());
+
+                    // if the high order byte is not 0, then it cannot fit in the current segment so there is an out of bounds exception
+                    if(_MemoryAccessor.getHOB() !== 0x00) {
+                        _KernelInterruptQueue.enqueue(new Interrupt(MEMORY_OUT_OF_BOUNDS_EXCEPTION, _PCBManager.getFirstReadyProcess().PID)); // terminate the process and deal with memory out of bounds
+                        break;
+                    }
     
                     //set the MAR using little endian
                     _MemoryAccessor.setMARFromLittleEndian(_MemoryAccessor.getHOB(), _MemoryAccessor.getLOB());
