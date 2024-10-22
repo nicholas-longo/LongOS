@@ -63,8 +63,26 @@ var TSOS;
             //load 
             sc = new TSOS.ShellCommand(this.shellLoad, "load", "- Ensures that all code in User Program Input is valid.");
             this.commandList[this.commandList.length] = sc;
-            //load 
+            //run 
             sc = new TSOS.ShellCommand(this.shellRun, "run", "<PID> runs the code for the specified process ID.");
+            this.commandList[this.commandList.length] = sc;
+            // clearmem
+            sc = new TSOS.ShellCommand(this.clearmem, "clearmem", "Clear all memory segments");
+            this.commandList[this.commandList.length] = sc;
+            // runall 
+            sc = new TSOS.ShellCommand(this.runall, "runall", "execute all programs at once");
+            this.commandList[this.commandList.length] = sc;
+            // ps 
+            sc = new TSOS.ShellCommand(this.ps, "ps", "display the PID and state of all processes");
+            this.commandList[this.commandList.length] = sc;
+            // kill 
+            sc = new TSOS.ShellCommand(this.kill, "kill", "<PID> kills the specified process");
+            this.commandList[this.commandList.length] = sc;
+            // killall 
+            sc = new TSOS.ShellCommand(this.killall, "killall", "kill all processes");
+            this.commandList[this.commandList.length] = sc;
+            // kill 
+            sc = new TSOS.ShellCommand(this.quantum, "quantum", "<int> let the user set the Round Robin quantum (measured in cpu cycles)");
             this.commandList[this.commandList.length] = sc;
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
@@ -448,6 +466,18 @@ var TSOS;
                     _StdOut.putText(`Process ID: ${PID} is already terminated.`);
                     break;
             }
+        }
+        clearmem() {
+        }
+        runall() {
+        }
+        ps(args) {
+        }
+        kill(args) {
+        }
+        killall() {
+        }
+        quantum(args) {
         }
     }
     TSOS.Shell = Shell;

@@ -109,11 +109,47 @@ module TSOS {
                 "- Ensures that all code in User Program Input is valid.");
             this.commandList[this.commandList.length] = sc;
 
-            //load 
+            //run 
             sc = new ShellCommand(this.shellRun,
                 "run",
                 "<PID> runs the code for the specified process ID.");
             this.commandList[this.commandList.length] = sc;
+
+            // clearmem
+            sc = new ShellCommand(this.clearmem,
+            "clearmem",
+            "Clear all memory segments");
+            this.commandList[this.commandList.length] = sc;
+
+            // runall 
+            sc = new ShellCommand(this.runall,
+            "runall",
+            "execute all programs at once");
+            this.commandList[this.commandList.length] = sc;
+
+             // ps 
+             sc = new ShellCommand(this.ps,
+                "ps",
+                "display the PID and state of all processes");
+                this.commandList[this.commandList.length] = sc;
+
+             // kill 
+             sc = new ShellCommand(this.kill,
+                "kill",
+                "<PID> kills the specified process");
+                this.commandList[this.commandList.length] = sc;
+            
+            // killall 
+            sc = new ShellCommand(this.killall,
+                "killall",
+                "kill all processes");
+                this.commandList[this.commandList.length] = sc;
+
+             // kill 
+             sc = new ShellCommand(this.quantum,
+                "quantum",
+                "<int> let the user set the Round Robin quantum (measured in cpu cycles)");
+                this.commandList[this.commandList.length] = sc;
 
             // ps  - list the running processes and their IDs
             // kill <id> - kills the specified process id.
@@ -531,6 +567,30 @@ module TSOS {
                     _StdOut.putText(`Process ID: ${PID} is already terminated.`)
                     break;
             }
+        }
+
+        public clearmem(): void {
+
+        }
+
+        public runall(): void {
+
+        }
+
+        public ps(args: string[]): void {
+
+        }
+
+        public kill(args: string[]): void {
+
+        }
+
+        public killall(): void {
+
+        }
+        
+        public quantum(args: string[]) {
+            
         }
 
 
