@@ -489,6 +489,18 @@ var TSOS;
         runall() {
         }
         ps() {
+            const pcbTable = document.getElementById("pcbTable");
+            if (pcbTable.rows.length <= 1) { // the column headers is the first row
+                _StdOut.putText("No processes available.");
+                return;
+            }
+            for (let i = 1; i < pcbTable.rows.length; i++) {
+                const row = pcbTable.rows[i];
+                const pid = row.cells[0].innerHTML; // PID is in the first cell
+                const status = row.cells[11].innerHTML; // status is in the last cell 
+                _StdOut.putText(`PID: ${pid}, Status: ${status}`);
+                _StdOut.advanceLine();
+            }
         }
         kill(args) {
         }
