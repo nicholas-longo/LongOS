@@ -215,6 +215,15 @@ var TSOS;
             _Kernel.krnShutdown(); // shutdown the OS if a BSOD is called
             this.krnShutdown();
         }
+        clearMemory() {
+            if (_CPU.isExecuting) {
+                _StdOut.putText("Cannot clear the memory as the CPU is executing");
+            }
+            else {
+                _MemoryManager.clearMemory();
+                _StdOut.putText("All memory segments cleared.");
+            }
+        }
     }
     TSOS.Kernel = Kernel;
 })(TSOS || (TSOS = {}));

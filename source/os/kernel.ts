@@ -249,5 +249,14 @@ module TSOS {
 
             this.krnShutdown();
         }
+
+        public clearMemory() {
+            if (_CPU.isExecuting) {
+                _StdOut.putText("Cannot clear the memory as the CPU is executing");
+            } else {
+                _MemoryManager.clearMemory(); 
+                _StdOut.putText("All memory segments cleared.");
+            }
+        }
     }
 }

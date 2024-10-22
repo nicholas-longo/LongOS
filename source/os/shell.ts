@@ -586,15 +586,14 @@ module TSOS {
         }
 
         public clearmem(): void {
-            _MemoryManager.clearMemory(); 
-            _StdOut.putText("All memory segments cleared.");
+            _Kernel.clearMemory();
         }
 
         public runall(): void {
 
         }
 
-        public ps(args: string[]): void {
+        public ps(): void {
 
         }
 
