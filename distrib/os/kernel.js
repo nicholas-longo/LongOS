@@ -154,6 +154,12 @@ var TSOS;
                     let characterAsByte = params[0];
                     _StdOut.putText(TSOS.Utils.byteToChar(characterAsByte));
                     break;
+                case INVALID_OP_CODE:
+                    this.krnTerminateProcess(params); // Handle process termination
+                    _StdOut.putText("Invalid OP Code. Process terminated.");
+                    _StdOut.advanceLine();
+                    _StdOut.putPrompt();
+                    break;
                 default:
                     this.krnTrapError("Invalid Interrupt Request. irq=" + irq + " params=[" + params + "]");
             }

@@ -124,6 +124,13 @@ module TSOS {
                         this.PC += 0x0001 // only jump one because the program is going to end and then fetch will deal with the program counter properly
                         break;
                     }
+
+                // if none of the above op codes were used, then it is an invalid opcode and must end
+                default: 
+                    _KernelInterruptQueue.enqueue(new Interrupt(INVALID_OP_CODE, _PCBManager.getFirstReadyProcess().PID)); // terminate the process 
+                    break;
+                    
+
             }
         }
 

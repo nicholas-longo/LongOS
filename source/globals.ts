@@ -26,6 +26,8 @@ const SYSTEM_CALL_PRINT_INT: number = 3;
 
 const SYSTEM_CALL_PRINT_STRING: number = 4; 
 
+const INVALID_OP_CODE: number = 5; 
+
 
 //
 // Global Variables

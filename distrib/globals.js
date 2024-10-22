@@ -19,6 +19,7 @@ const KEYBOARD_IRQ = 1;
 const SOFTWARE_INTERRUPT = 2;
 const SYSTEM_CALL_PRINT_INT = 3;
 const SYSTEM_CALL_PRINT_STRING = 4;
+const INVALID_OP_CODE = 5;
 //
 // Global Variables
 // TODO: Make a global object and use that instead of the "_" naming convention in the global namespace.
