@@ -20,7 +20,7 @@ module TSOS {
             for (let i = 0; i < this.memoryAvailability.length; i ++) {
                 if(this.memoryAvailability[i] === true) {
                     this.allocateSegment(i); // sets the segment to the first available spot
-                    this.mostRecentAssignedSegement = i; 
+                    _CurrentMemorySegment = i;  
                     return true
                 } 
             }
@@ -37,10 +37,6 @@ module TSOS {
             if (pcb) {
                 _PCBManager.updatePCBAfterDeallocated(segment); // clean up the PCB table
             }
-        }
-
-        public getMostRecentAssignedSegment(): number {
-            return this.mostRecentAssignedSegement; 
         }
 
     }

@@ -407,8 +407,7 @@ var TSOS;
                 _StdOut.putText("Failed to Load: No memory available");
                 return;
             }
-            const currentSegment = _MemoryManager.getMostRecentAssignedSegment();
-            // TODO use the current segment to determine where it gets loaded in memory
+            const currentSegment = _CurrentMemorySegment;
             // load the program into memory
             _MemoryAccessor.flashMemory(program, currentSegment);
             // create the pcb using the manager, set the status, and update the table

@@ -84,6 +84,9 @@ let _stepReady: boolean = false;
 var Glados: any = null;  // This is the function Glados() in glados-ip*.js http://alanclasses.github.io/TSOS/test/ .
 var _GLaDOS: any = null; // If the above is linked in, this is the instantiated instance of Glados.
 
+//Memory stuff
+let _CurrentMemorySegment: number; 
+
 var onDocumentLoad = function() {
 	TSOS.Control.hostInit();
 };

@@ -16,7 +16,7 @@ var TSOS;
             for (let i = 0; i < this.memoryAvailability.length; i++) {
                 if (this.memoryAvailability[i] === true) {
                     this.allocateSegment(i); // sets the segment to the first available spot
-                    this.mostRecentAssignedSegement = i;
+                    _CurrentMemorySegment = i;
                     return true;
                 }
             }
@@ -31,9 +31,6 @@ var TSOS;
             if (pcb) {
                 _PCBManager.updatePCBAfterDeallocated(segment); // clean up the PCB table
             }
-        }
-        getMostRecentAssignedSegment() {
-            return this.mostRecentAssignedSegement;
         }
     }
     TSOS.MemoryManager = MemoryManager;
