@@ -612,6 +612,34 @@ module TSOS {
         }
 
         public kill(args: string[]): void {
+            if (args.length <=0) { // make sure there is a PID given
+                _StdOut.putText("Usage: run <PID>  Please supply a PID.");
+                return; 
+            } 
+
+            const PID = parseInt(args[0]) // get the user inputted PID
+            const pcb = _PCBManager.findPCB(PID) // get the current pcb
+            if(!pcb) { // makes sure the pid provided is valid
+                _StdOut.putText(`The PID: ${PID} is not valid.`);
+                return;
+            }
+
+            const status = pcb.Status; 
+            switch(status) {
+                case("Resident"): 
+                    _StdOut.putText("Cannot kill Process with Process ID: ${PID}, it is not running.");
+                    break;
+                // only kill a process if it is ready or running
+                case("Ready"): 
+                case("Running"): 
+                    _StdOut.putText(`Killing Process with Process ID: ${PID}`);
+                    _Kernel.krnTerminateProcess(PID);
+                    break;
+                case("Terminated"): 
+                    _StdOut.putText(`Process ID: ${PID} is already terminated.`)
+                    break;
+            }
+
 
         }
 
