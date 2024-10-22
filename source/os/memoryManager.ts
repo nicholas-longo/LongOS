@@ -2,7 +2,6 @@ module TSOS {
 
     export class MemoryManager {
         private memoryAvailability: boolean[];
-        private mostRecentAssignedSegement: number;
         
         constructor() {
             this.memoryAvailability = [] // this will need to be larger once I can hold more memory
@@ -37,6 +36,17 @@ module TSOS {
             if (pcb) {
                 _PCBManager.updatePCBAfterDeallocated(segment); // clean up the PCB table
             }
+        }
+
+        // deallocates all segments and also wipes the memory array
+        public clearMemory(): void {
+            for (let i = 0; i < this.memoryAvailability.length; i ++) {
+                this.memoryAvailability[i] = true;
+            }
+
+            _Memory.reset(); // clear memory
+            Control.updateMemory(); // update memory table
+            _PCBManager.terminateAllPCBs(); // deal with the pcb table
         }
 
     }

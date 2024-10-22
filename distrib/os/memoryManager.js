@@ -2,7 +2,6 @@ var TSOS;
 (function (TSOS) {
     class MemoryManager {
         memoryAvailability;
-        mostRecentAssignedSegement;
         constructor() {
             this.memoryAvailability = []; // this will need to be larger once I can hold more memory
             this.init();
@@ -31,6 +30,15 @@ var TSOS;
             if (pcb) {
                 _PCBManager.updatePCBAfterDeallocated(segment); // clean up the PCB table
             }
+        }
+        // deallocates all segments and also wipes the memory array
+        clearMemory() {
+            for (let i = 0; i < this.memoryAvailability.length; i++) {
+                this.memoryAvailability[i] = true;
+            }
+            _Memory.reset(); // clear memory
+            TSOS.Control.updateMemory(); // update memory table
+            _PCBManager.terminateAllPCBs(); // deal with the pcb table
         }
     }
     TSOS.MemoryManager = MemoryManager;

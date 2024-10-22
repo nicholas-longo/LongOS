@@ -59,7 +59,6 @@ module TSOS {
         // when a process is deallocated from memory, this will fix the PCB table
         public updatePCBAfterDeallocated(segment: number): void {
             const pcb = this.findPCBBySegment(segment);
-            console.log(pcb)
             if (pcb) {
                 pcb.updatePCBAfterDeallocated(); // this will make the location, segment, base, and limit all something that indicates it does not exist
                 pcb.updatePCBTable(); // reflect the changes
@@ -110,6 +109,19 @@ module TSOS {
                 if (pcb) {
                     this.updatePCBStatus(pcb.PID, "Terminated");
                 }
+            }
+        }
+
+        // called if there is a clearmem
+        public terminateAllPCBs(): void {
+            while (this.pcbQueue.length > 0) {
+                const pcb = this.pcbQueue[0] // gets the next pcb to be removed
+                if (pcb) {
+                    this.updatePCBStatus(pcb.PID, "Terminated"); // change the status
+                    this.updatePCBAfterDeallocated(pcb.segment); // update the memory related columns
+                    pcb.updatePCBTable(); 
+                }
+                this.pcbQueue.shift(); // remove from the queue after the tables have been dealt with
             }
         }
 

@@ -484,6 +484,8 @@ var TSOS;
             }
         }
         clearmem() {
+            _MemoryManager.clearMemory();
+            _StdOut.putText("All memory segments cleared.");
         }
         runall() {
         }
