@@ -622,7 +622,7 @@ module TSOS {
             if(!pcb) { // makes sure the pid provided is valid
                 _StdOut.putText(`The PID: ${PID} is not valid.`);
                 return;
-            }
+            } 
 
             const status = pcb.Status; 
             switch(status) {
