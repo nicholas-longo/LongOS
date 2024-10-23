@@ -45,14 +45,14 @@ module TSOS {
         }
     
         // reads the memory location in the MAR and updates the MDR
-        public read(): void {
-            this.MDR = this.memory[this.MAR];
+        public read(baseAdjustment: number): void {
+            this.MDR = this.memory[this.MAR + baseAdjustment];
             
         }
     
         // write the contents of the MDR to memory at the location indicated by the MAR
-        public write(): void {
-            this.memory[this.MAR] = this.MDR;
+        public write(baseAdjustment: number = 0): void {
+            this.memory[this.MAR + baseAdjustment] = this.MDR;
         }
 
         //MAR, MDR, and memory array are all overwritten with 0's

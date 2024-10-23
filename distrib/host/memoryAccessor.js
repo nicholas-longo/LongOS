@@ -7,6 +7,9 @@ var TSOS;
         memory;
         HOB;
         LOB;
+        segmemt;
+        base;
+        limit;
         constructor(memory) {
             this.memory = memory;
         }
@@ -44,11 +47,16 @@ var TSOS;
         }
         // calls read() from memory
         read() {
-            _Memory.read();
+            const baseAdjustment = _PCBManager.getFirstReadyProcess().base;
+            _Memory.read(baseAdjustment);
         }
         //calls write() from memory
         write() {
-            _Memory.write();
+            let baseAdjustment = 0;
+            if (_PCBManager.pcbReadyQueue.length > 0) {
+                baseAdjustment = _PCBManager.getFirstReadyProcess().base;
+            }
+            _Memory.write(baseAdjustment);
         }
         // when called, it will add the entered address and value into the MAR and MDR
         // respectively, then it will write it to memory 

@@ -36,12 +36,12 @@ var TSOS;
             this.MDR = value;
         }
         // reads the memory location in the MAR and updates the MDR
-        read() {
-            this.MDR = this.memory[this.MAR];
+        read(baseAdjustment) {
+            this.MDR = this.memory[this.MAR + baseAdjustment];
         }
         // write the contents of the MDR to memory at the location indicated by the MAR
-        write() {
-            this.memory[this.MAR] = this.MDR;
+        write(baseAdjustment = 0) {
+            this.memory[this.MAR + baseAdjustment] = this.MDR;
         }
         //MAR, MDR, and memory array are all overwritten with 0's
         reset() {

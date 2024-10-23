@@ -7,6 +7,11 @@ module TSOS {
         private memory: Memory; 
         private HOB: number;
         private LOB: number;
+        private segmemt: number; 
+        private base: number; 
+        private limit: number; 
+
+
         constructor(memory: Memory) {
             this.memory = memory
         }
@@ -55,12 +60,17 @@ module TSOS {
 
          // calls read() from memory
         public read(): void {
-            _Memory.read();
+            const baseAdjustment = _PCBManager.getFirstReadyProcess().base
+            _Memory.read(baseAdjustment);
         }
 
         //calls write() from memory
         public write(): void {
-            _Memory.write();
+            let baseAdjustment = 0; 
+            if (_PCBManager.pcbReadyQueue.length > 0) {
+                baseAdjustment = _PCBManager.getFirstReadyProcess().base
+             }
+            _Memory.write(baseAdjustment); 
         }
 
         // when called, it will add the entered address and value into the MAR and MDR
