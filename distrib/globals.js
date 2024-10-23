@@ -34,6 +34,8 @@ var _MemoryAccessor;
 var _MemoryManager = null;
 var _ProcessControlBlock = null; // MAY NEED TO CHANGE
 var _PCBManager = null;
+var _CPUScheduler = null;
+var _CPUDispatcher = null;
 var _OSclock = 0; // Page 23.
 var _Mode = 0; // (currently unused)  0 = Kernel Mode, 1 = User Mode.  See page 21.
 var _Canvas; // Initialized in Control.hostInit().
