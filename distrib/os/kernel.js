@@ -166,6 +166,12 @@ var TSOS;
                     _StdOut.advanceLine();
                     _StdOut.putPrompt();
                     break;
+                case MEMORY_ACCESS_VIOLATION:
+                    this.krnTerminateProcess(params); // Handle process termination
+                    _StdOut.putText("Memory access violation. Process terminated.");
+                    _StdOut.advanceLine();
+                    _StdOut.putPrompt();
+                    break;
                 default:
                     this.krnTrapError("Invalid Interrupt Request. irq=" + irq + " params=[" + params + "]");
             }
