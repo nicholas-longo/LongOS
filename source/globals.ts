@@ -32,6 +32,8 @@ const MEMORY_OUT_OF_BOUNDS_EXCEPTION: number = 6;
 
 const MEMORY_ACCESS_VIOLATION: number = 7; 
 
+const DISPATCHER_RUN_HEAD: number = 8;
+
 
 //
 // Global Variables

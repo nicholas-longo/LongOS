@@ -22,6 +22,7 @@ const SYSTEM_CALL_PRINT_STRING = 4;
 const INVALID_OP_CODE = 5;
 const MEMORY_OUT_OF_BOUNDS_EXCEPTION = 6;
 const MEMORY_ACCESS_VIOLATION = 7;
+const DISPATCHER_RUN_HEAD = 8;
 //
 // Global Variables
 // TODO: Make a global object and use that instead of the "_" naming convention in the global namespace.

@@ -470,9 +470,6 @@ var TSOS;
             switch (status) {
                 case ("Resident"):
                     _PCBManager.updatePCBStatus(PID, "Ready"); // change pcb status. this also puts it into the ready queue because the updatePCBStatus will do that if the status is "Ready"
-                    _CPU.isExecuting = true; // CHANGE FOR PROJECT 3. IT WILL NEED TO USE THE SCHEDULER
-                    _PCBManager.updatePCBStatus(PID, "Running"); // this will need to be changed for project 3 when the scheduler is implemented
-                    _StdOut.putText(`Executing process ${PID}`);
                     break;
                 case ("Ready"):
                 case ("Running"):

@@ -3,6 +3,11 @@ var TSOS;
     class Dispatcher {
         constructor() {
         }
+        runScheduledProcess(pid) {
+            _PCBManager.updatePCBStatus(pid, "Running");
+            _CPU.isExecuting = true;
+            _StdOut.putText(`Executing process ${pid}`);
+        }
     }
     TSOS.Dispatcher = Dispatcher;
 })(TSOS || (TSOS = {}));

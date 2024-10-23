@@ -99,6 +99,11 @@ var TSOS;
                 var interrupt = _KernelInterruptQueue.dequeue();
                 this.krnInterruptHandler(interrupt.irq, interrupt.params);
             }
+            else if (!_CPU.isExecuting && _PCBManager.pcbReadyQueue.length > 0) { // inspiration from Josh Seligman's jOSh. I used it to see how to get the scheduler involved when a process is ready
+                // if the cpu is off but the ready queue has an item, start scheduling
+                _CPUScheduler.scheduleFirstProcess();
+                this.krnTrace("Scheduling first process.");
+            }
             else if (_CPU.isExecuting) { // If there are no interrupts then run one CPU cycle if there is anything being processed.
                 // Chat GPT 10/4/24 I asked how to make my CPU execution step follow the necessary logic to be single step. It suggested this, where I check if I am in singleStepMode, and if I am, it waits for a step.
                 // Once a step is had it executes, and resets the flags. The step only becomes true when I click the step button. Can toggle back and forth for the program. 
@@ -173,6 +178,10 @@ var TSOS;
                     _StdOut.putText("Memory access violation. Process terminated.");
                     _StdOut.advanceLine();
                     _StdOut.putPrompt();
+                    break;
+                case DISPATCHER_RUN_HEAD:
+                    this.krnTrace("Dispatcher called.");
+                    _CPUDispatcher.runScheduledProcess(params);
                     break;
                 default:
                     this.krnTrapError("Invalid Interrupt Request. irq=" + irq + " params=[" + params + "]");
