@@ -486,6 +486,7 @@ var TSOS;
         clearmem() {
             _Kernel.clearMemory();
         }
+        // sets all of the processes in the pcbQueue to ready, and populates the ready queue
         runall() {
         }
         ps() {
@@ -532,6 +533,17 @@ var TSOS;
         killall() {
         }
         quantum(args) {
+            if (args.length <= 0) {
+                _StdOut.putText("Usage: quantum <int> Please supply an int.");
+                return;
+            }
+            const quantum = parseInt(args[0]);
+            if (quantum <= 0) {
+                _StdOut.putText("Quantum cannot be 0 or negative. Please supply a different value.");
+                return;
+            }
+            _CPUScheduler.setQuantum(quantum);
+            _StdOut.putText(`Quantum value set to ${quantum}.`);
         }
     }
     TSOS.Shell = Shell;
