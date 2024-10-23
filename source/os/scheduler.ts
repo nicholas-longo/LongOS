@@ -8,6 +8,12 @@ module TSOS {
 
         public setQuantum(quantum: number): void {
             this.quantum = quantum;
+            this.updateQuantumLabel(); 
+        }
+
+        public updateQuantumLabel(): void {
+            const quantumLabel = document.getElementById("quantumValue");
+            quantumLabel.innerText = this.quantum.toString(); 
         }
     }
 

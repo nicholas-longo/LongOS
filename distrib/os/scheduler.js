@@ -6,6 +6,11 @@ var TSOS;
         }
         setQuantum(quantum) {
             this.quantum = quantum;
+            this.updateQuantumLabel();
+        }
+        updateQuantumLabel() {
+            const quantumLabel = document.getElementById("quantumValue");
+            quantumLabel.innerText = this.quantum.toString();
         }
     }
     TSOS.Scheduler = Scheduler;
