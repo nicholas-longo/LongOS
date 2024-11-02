@@ -173,12 +173,6 @@ var TSOS;
                     _StdOut.advanceLine();
                     _StdOut.putPrompt();
                     break;
-                case MEMORY_ACCESS_VIOLATION:
-                    this.krnTerminateProcess(params); // Handle process termination
-                    _StdOut.putText("Memory access violation. Process terminated.");
-                    _StdOut.advanceLine();
-                    _StdOut.putPrompt();
-                    break;
                 case DISPATCHER_RUN_HEAD:
                     this.krnTrace("Dispatcher called.");
                     _CPUDispatcher.runScheduledProcess(params);

@@ -17,6 +17,10 @@ var TSOS;
             return this.HOB;
         }
         setHOB(value) {
+            // if the high order byte is not 0, then it cannot fit in the current segment so there is an out of bounds exception
+            if (value !== 0x00) {
+                _KernelInterruptQueue.enqueue(new TSOS.Interrupt(MEMORY_OUT_OF_BOUNDS_EXCEPTION, _PCBManager.getFirstReadyProcess().PID)); // terminate the process and deal with memory out of bounds
+            }
             this.HOB = value;
         }
         getLOB() {
