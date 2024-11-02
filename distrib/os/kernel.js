@@ -101,7 +101,7 @@ var TSOS;
             }
             else if (!_CPU.isExecuting && _PCBManager.pcbReadyQueue.length > 0) { // inspiration from Josh Seligman's jOSh. I used it to see how to get the scheduler involved when a process is ready
                 // if the cpu is off but the ready queue has an item, start scheduling
-                _CPUScheduler.scheduleFirstProcess();
+                _CPUScheduler.scheduleHeadProcess();
                 this.krnTrace("Scheduling first process.");
             }
             else if (_CPU.isExecuting) { // If there are no interrupts then run one CPU cycle if there is anything being processed.
@@ -174,7 +174,7 @@ var TSOS;
                     _StdOut.putPrompt();
                     break;
                 case DISPATCHER_RUN_HEAD:
-                    this.krnTrace("Dispatcher called.");
+                    this.krnTrace("Dispatcher called. Starting execution of the head process in the ready queue.");
                     _CPUDispatcher.runScheduledProcess(params);
                     break;
                 default:
@@ -183,11 +183,14 @@ var TSOS;
         }
         krnTerminateProcess(pid) {
             // Terminate the process
+            this.krnTrace(`Process ${pid} terminated.`);
             _MemoryManager.deallocateSegement(_PCBManager.getPCBSegment(pid)); // Deallocate memory. call before the PID gets removed and becomes invalid
             _PCBManager.updatePCBStatus(pid, "Terminated"); // this will also write the current cpu registers into the pcb table
             _PCBManager.terminatePCB(pid); // Remove from both queues
             _CPU.init(); // turn the cpu off when the process is terminated and reset the registers
             TSOS.Control.updateCPUTable(); // clear the rows after a process is done THIS WILL CHANGE FOR PROJECT 3
+            // call the scheduler to envoke another scheduling event
+            _CPUScheduler.scheduleNextProcessAfterTermination();
         }
         krnTimerISR() {
             // The built-in TIMER (not clock) Interrupt Service Routine (as opposed to an ISR coming from a device driver). {

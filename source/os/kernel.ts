@@ -122,7 +122,7 @@ module TSOS {
                 this.krnInterruptHandler(interrupt.irq, interrupt.params);
             } else if (!_CPU.isExecuting && _PCBManager.pcbReadyQueue.length > 0) { // inspiration from Josh Seligman's jOSh. I used it to see how to get the scheduler involved when a process is ready
                 // if the cpu is off but the ready queue has an item, start scheduling
-                _CPUScheduler.scheduleFirstProcess();
+                _CPUScheduler.scheduleHeadProcess();
                 this.krnTrace("Scheduling first process.");
             } else if (_CPU.isExecuting) { // If there are no interrupts then run one CPU cycle if there is anything being processed.
                 // Chat GPT 10/4/24 I asked how to make my CPU execution step follow the necessary logic to be single step. It suggested this, where I check if I am in singleStepMode, and if I am, it waits for a step.
@@ -197,7 +197,7 @@ module TSOS {
                     _StdOut.putPrompt();
                     break;
                 case DISPATCHER_RUN_HEAD:
-                    this.krnTrace("Dispatcher called.")
+                    this.krnTrace("Dispatcher called. Starting execution of the head process in the ready queue.")
                     _CPUDispatcher.runScheduledProcess(params);
                     break;
                 default:
@@ -207,12 +207,17 @@ module TSOS {
 
         public krnTerminateProcess(pid: number): void {
             // Terminate the process
+            this.krnTrace(`Process ${pid} terminated.`)
             _MemoryManager.deallocateSegement(_PCBManager.getPCBSegment(pid));  // Deallocate memory. call before the PID gets removed and becomes invalid
             _PCBManager.updatePCBStatus(pid, "Terminated"); // this will also write the current cpu registers into the pcb table
             _PCBManager.terminatePCB(pid);  // Remove from both queues
         
             _CPU.init(); // turn the cpu off when the process is terminated and reset the registers
             Control.updateCPUTable(); // clear the rows after a process is done THIS WILL CHANGE FOR PROJECT 3
+
+            // call the scheduler to envoke another scheduling event
+            _CPUScheduler.scheduleNextProcessAfterTermination(); 
+
         }
 
         public krnTimerISR() {
