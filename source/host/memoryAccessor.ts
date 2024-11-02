@@ -96,6 +96,12 @@ module TSOS {
             for (let i = 0; i < program.length; i ++) {
                 this.writeImmediate(startingAddress + i, program[i]) // address increments by 1 each time and is passed as the MAR, correct code is passed as the MDR
             }
+
+            // fill the rest of the memory segment with 0's when the program is loaded in
+            for (let i = program.length; i < 0x100; i ++) {
+                this.writeImmediate(base + i, 0);
+            }
+
             Control.updateMemory(); 
         }
 
