@@ -260,13 +260,6 @@ module TSOS {
                 //increment a byte in memory
                 case(0xEE):
                     _MemoryAccessor.setMDR(this.Acc); 
-                    
-                    // if the program tries to increment a byte over two bytes than an out of bounds exception needs to be thrown
-                    if(_MemoryAccessor.getMDR() >= 0x100) {
-                        _KernelInterruptQueue.enqueue(new Interrupt(MEMORY_OUT_OF_BOUNDS_EXCEPTION, _PCBManager.getFirstReadyProcess().PID));
-                        break;
-                    }
-
                     _MemoryAccessor.write(); // replace the original value in memory with the new incremented value
                     break;
             }

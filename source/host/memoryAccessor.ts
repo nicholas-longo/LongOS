@@ -59,6 +59,10 @@ module TSOS {
 
         // calls the setMDR from memory
         public setMDR(value: number): void {
+            // if the program tries to increment a byte over two bytes than an out of bounds exception needs to be thrown
+            if(value >= 0x100) {
+                _KernelInterruptQueue.enqueue(new Interrupt(MEMORY_OUT_OF_BOUNDS_EXCEPTION, _PCBManager.getFirstReadyProcess().PID));
+            }
             _Memory.setMDR(value);
         }
 

@@ -47,6 +47,10 @@ var TSOS;
         }
         // calls the setMDR from memory
         setMDR(value) {
+            // if the program tries to increment a byte over two bytes than an out of bounds exception needs to be thrown
+            if (value >= 0x100) {
+                _KernelInterruptQueue.enqueue(new TSOS.Interrupt(MEMORY_OUT_OF_BOUNDS_EXCEPTION, _PCBManager.getFirstReadyProcess().PID));
+            }
             _Memory.setMDR(value);
         }
         // calls read() from memory
