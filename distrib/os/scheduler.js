@@ -1,7 +1,6 @@
 var TSOS;
 (function (TSOS) {
     class Scheduler {
-        quantum = 6;
         constructor() {
         }
         scheduleHeadProcess() {
@@ -16,12 +15,12 @@ var TSOS;
             }
         }
         setQuantum(quantum) {
-            this.quantum = quantum;
+            _Quantum = quantum;
             this.updateQuantumLabel();
         }
         updateQuantumLabel() {
             const quantumLabel = document.getElementById("quantumValue");
-            quantumLabel.innerText = this.quantum.toString();
+            quantumLabel.innerText = _Quantum.toString();
         }
     }
     TSOS.Scheduler = Scheduler;

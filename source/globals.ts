@@ -97,7 +97,8 @@ var _GLaDOS: any = null; // If the above is linked in, this is the instantiated 
 //Memory stuff
 let _CurrentMemorySegment: number; 
 
-//Used to keep track of the current quantum count
+//Used to keep track of the current quantum and its count
+let _Quantum: number; 
 let _CurrentQuantumCount: number
 
 var onDocumentLoad = function() {

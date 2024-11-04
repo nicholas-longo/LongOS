@@ -135,6 +135,9 @@ module TSOS {
                     _stepReady = false; // Reset the step flag after executing one cycle
                 }
                 _CPU.cycle();
+                
+                // _CurrentQuantumCount ++; 
+                // if (_CurrentQuantumCount >= )
             } else {                       // If there are no interrupts and there is nothing being executed then just be idle.
                 this.krnTrace("Idle");
             }

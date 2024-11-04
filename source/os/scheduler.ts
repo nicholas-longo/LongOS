@@ -1,7 +1,6 @@
 module TSOS {
 
     export class Scheduler {        
-        private quantum: number = 6
         
         constructor() {
         }
@@ -20,13 +19,13 @@ module TSOS {
         }
 
         public setQuantum(quantum: number): void {
-            this.quantum = quantum;
+            _Quantum = quantum;
             this.updateQuantumLabel(); 
         }
 
         public updateQuantumLabel(): void {
             const quantumLabel = document.getElementById("quantumValue");
-            quantumLabel.innerText = this.quantum.toString(); 
+            quantumLabel.innerText = _Quantum.toString(); 
         }
     }
 
