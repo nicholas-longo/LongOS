@@ -7,6 +7,12 @@ var TSOS;
             _PCBManager.updatePCBStatus(pid, "Running");
             _CPU.isExecuting = true;
         }
+        // save the state of the pcb
+        saveCurrentProcess(pid) {
+        }
+        // remove it from the front of the readyQueue, move it to the back of the ready Queue
+        contextSwitch(pid) {
+        }
     }
     TSOS.Dispatcher = Dispatcher;
 })(TSOS || (TSOS = {}));

@@ -34,6 +34,10 @@ const MEMORY_ACCESS_VIOLATION: number = 7;
 
 const DISPATCHER_RUN_HEAD: number = 8;
 
+const DISPATCHER_SAVE_PROCESS: number = 9;
+
+const DISPATCHER_MOVE_PROCESS: number = 10; 
+
 
 //
 // Global Variables

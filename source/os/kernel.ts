@@ -211,6 +211,15 @@ module TSOS {
                     this.krnTrace("Dispatcher called. Starting execution of the head process in the ready queue.")
                     _CPUDispatcher.runScheduledProcess(params);
                     break;
+                case DISPATCHER_SAVE_PROCESS:
+                    this.krnTrace("Dispatcher called. Saving state of the current process.");
+                    _CPUDispatcher.saveCurrentProcess(params);
+                    break; 
+                case DISPATCHER_MOVE_PROCESS:
+                    this.krnTrace("Dispatcher called. Moving head of ready queue to back.");
+                    _CPUDispatcher.contextSwitch(params);
+                    break; 
+
                 default:
                     this.krnTrapError("Invalid Interrupt Request. irq=" + irq + " params=[" + params + "]");
             }
