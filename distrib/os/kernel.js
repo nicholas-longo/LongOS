@@ -151,9 +151,10 @@ var TSOS;
                     break;
                 case SOFTWARE_INTERRUPT:
                     this.krnTerminateProcess(params); // Handle process termination
-                    _StdOut.advanceLine(); // consider changing this when you have multiple programs running at once PROJECT 3
+                    _StdOut.advanceLine(); // when a process is done, advance the line
                     _StdOut.putPrompt();
                     break;
+                // TODO: deal with tracking ATT and AWT
                 case SYSTEM_CALL_PRINT_INT:
                     _StdOut.putText(params[0].toString()); // Print the Integer in the Y Register
                     break;
