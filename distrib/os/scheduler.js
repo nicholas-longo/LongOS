@@ -14,6 +14,9 @@ var TSOS;
                 this.scheduleHeadProcess();
             }
         }
+        scheduleAfterQuantumExpired() {
+            console.log(" i think i need to start working on this algorithm now");
+        }
         setQuantum(quantum) {
             _Quantum = quantum;
             this.updateQuantumLabel();

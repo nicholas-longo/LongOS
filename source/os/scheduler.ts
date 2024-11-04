@@ -18,6 +18,10 @@ module TSOS {
             }
         }
 
+        public scheduleAfterQuantumExpired(): void {
+            console.log(" i think i need to start working on this algorithm now")
+        }
+
         public setQuantum(quantum: number): void {
             _Quantum = quantum;
             this.updateQuantumLabel(); 

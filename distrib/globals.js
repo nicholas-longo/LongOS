@@ -70,8 +70,8 @@ var _GLaDOS = null; // If the above is linked in, this is the instantiated insta
 //Memory stuff
 let _CurrentMemorySegment;
 //Used to keep track of the current quantum and its count
-let _Quantum;
-let _CurrentQuantumCount;
+let _Quantum = 6;
+let _CurrentQuantumCount = 0;
 var onDocumentLoad = function () {
     TSOS.Control.hostInit();
 };

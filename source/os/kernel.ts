@@ -136,8 +136,15 @@ module TSOS {
                 }
                 _CPU.cycle();
                 
-                // _CurrentQuantumCount ++; 
-                // if (_CurrentQuantumCount >= )
+                _CurrentQuantumCount ++; // increase the quantum after each cycle
+                this.updateCurrentQuantumCount(); // update the screen of the current quantum count
+                
+                if (_CurrentQuantumCount >= _Quantum) { // when the quantum expires, reset the quantum count and call scheduling
+                    _CurrentQuantumCount = 0; 
+                    _CPUScheduler.scheduleAfterQuantumExpired();
+                }
+
+
             } else {                       // If there are no interrupts and there is nothing being executed then just be idle.
                 this.krnTrace("Idle");
             }
@@ -288,6 +295,13 @@ module TSOS {
                 _MemoryManager.clearMemory(); 
                 _StdOut.putText("All memory segments cleared.");
             }
+        }
+
+        // update the display of the current quantum count\
+        // it is in the kernel for now until I find a better home for it
+        public updateCurrentQuantumCount(): void {
+            let currentQuantumCount = document.getElementById("currentQuantumCount");
+            currentQuantumCount.innerText = _CurrentQuantumCount.toString();
         }
     }
 }
