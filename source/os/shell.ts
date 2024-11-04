@@ -637,6 +637,7 @@ module TSOS {
                 case("Ready"): 
                 case("Running"): 
                     _StdOut.putText(`Killing Process with Process ID: ${PID}`);
+                    _StdOut.advanceLine(); 
                     _Kernel.krnTerminateProcess(PID);
                     break;
                 case("Terminated"): 
@@ -648,7 +649,17 @@ module TSOS {
         }
 
         public killall(): void {
+            const pcbReadyQueue = [..._PCBManager.getReadyPCBs()];
 
+            if (pcbReadyQueue.length === 0 ) {
+                _StdOut.putText(`No ready processes to kill.`)
+                return;
+            }
+
+            for (let i = 0; i < pcbReadyQueue.length; i ++) {
+                const PIDAsString = pcbReadyQueue[i].PID.toString();
+                _OsShell.kill([PIDAsString])
+            }
         }
         
         public quantum(args: string[]) {

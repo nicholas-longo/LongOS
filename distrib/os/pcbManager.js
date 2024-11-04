@@ -72,6 +72,9 @@ var TSOS;
         getPCBs() {
             return this.pcbQueue;
         }
+        getReadyPCBs() {
+            return this.pcbReadyQueue;
+        }
         getFirstReadyProcess() {
             return this.pcbReadyQueue[0];
         }

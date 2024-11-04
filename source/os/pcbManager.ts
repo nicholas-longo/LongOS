@@ -82,6 +82,10 @@ module TSOS {
             return this.pcbQueue;
         }
 
+        public getReadyPCBs(): ProcessControlBlock[] {
+            return this.pcbReadyQueue;
+        }
+
         public getFirstReadyProcess(): ProcessControlBlock | undefined {
             return this.pcbReadyQueue[0]; 
         }
