@@ -25,6 +25,11 @@ var TSOS;
             const quantumLabel = document.getElementById("quantumValue");
             quantumLabel.innerText = _Quantum.toString();
         }
+        // update the display of the current quantum count
+        updateCurrentQuantumCount() {
+            let currentQuantumCount = document.getElementById("currentQuantumCount");
+            currentQuantumCount.innerText = _CurrentQuantumCount.toString();
+        }
     }
     TSOS.Scheduler = Scheduler;
 })(TSOS || (TSOS = {}));

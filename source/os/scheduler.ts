@@ -31,6 +31,12 @@ module TSOS {
             const quantumLabel = document.getElementById("quantumValue");
             quantumLabel.innerText = _Quantum.toString(); 
         }
+
+        // update the display of the current quantum count
+        public updateCurrentQuantumCount(): void {
+            let currentQuantumCount = document.getElementById("currentQuantumCount");
+            currentQuantumCount.innerText = _CurrentQuantumCount.toString();
+        }
     }
 
 }

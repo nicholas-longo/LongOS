@@ -116,7 +116,7 @@ var TSOS;
                 }
                 _CPU.cycle();
                 _CurrentQuantumCount++; // increase the quantum after each cycle
-                this.updateCurrentQuantumCount(); // update the screen of the current quantum count
+                _CPUScheduler.updateCurrentQuantumCount(); // update the screen of the current quantum count
                 if (_CurrentQuantumCount >= _Quantum) { // when the quantum expires, reset the quantum count and call scheduling
                     _CurrentQuantumCount = 0;
                     _CPUScheduler.scheduleAfterQuantumExpired();
@@ -196,6 +196,8 @@ var TSOS;
             _PCBManager.terminatePCB(pid); // Remove from both queues
             _CPU.init(); // turn the cpu off when the process is terminated and reset the registers
             TSOS.Control.updateCPUTable(); // clear the rows after a process is done THIS WILL CHANGE FOR PROJECT 3
+            _CurrentQuantumCount = 0; // reset the quantum count; 
+            _CPUScheduler.updateCurrentQuantumCount();
             // call the scheduler to envoke another scheduling event
             _CPUScheduler.scheduleNextProcessAfterTermination();
         }
@@ -256,12 +258,6 @@ var TSOS;
                 _MemoryManager.clearMemory();
                 _StdOut.putText("All memory segments cleared.");
             }
-        }
-        // update the display of the current quantum count\
-        // it is in the kernel for now until I find a better home for it
-        updateCurrentQuantumCount() {
-            let currentQuantumCount = document.getElementById("currentQuantumCount");
-            currentQuantumCount.innerText = _CurrentQuantumCount.toString();
         }
     }
     TSOS.Kernel = Kernel;

@@ -137,7 +137,7 @@ module TSOS {
                 _CPU.cycle();
                 
                 _CurrentQuantumCount ++; // increase the quantum after each cycle
-                this.updateCurrentQuantumCount(); // update the screen of the current quantum count
+                _CPUScheduler.updateCurrentQuantumCount(); // update the screen of the current quantum count
                 
                 if (_CurrentQuantumCount >= _Quantum) { // when the quantum expires, reset the quantum count and call scheduling
                     _CurrentQuantumCount = 0; 
@@ -226,6 +226,9 @@ module TSOS {
             _CPU.init(); // turn the cpu off when the process is terminated and reset the registers
             Control.updateCPUTable(); // clear the rows after a process is done THIS WILL CHANGE FOR PROJECT 3
 
+            _CurrentQuantumCount = 0; // reset the quantum count; 
+            _CPUScheduler.updateCurrentQuantumCount(); 
+
             // call the scheduler to envoke another scheduling event
             _CPUScheduler.scheduleNextProcessAfterTermination(); 
 
@@ -297,11 +300,6 @@ module TSOS {
             }
         }
 
-        // update the display of the current quantum count\
-        // it is in the kernel for now until I find a better home for it
-        public updateCurrentQuantumCount(): void {
-            let currentQuantumCount = document.getElementById("currentQuantumCount");
-            currentQuantumCount.innerText = _CurrentQuantumCount.toString();
-        }
+        
     }
 }
