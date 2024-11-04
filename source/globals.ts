@@ -97,6 +97,9 @@ var _GLaDOS: any = null; // If the above is linked in, this is the instantiated 
 //Memory stuff
 let _CurrentMemorySegment: number; 
 
+//Used to keep track of the current quantum count
+let _CurrentQuantumCount: number
+
 var onDocumentLoad = function() {
 	TSOS.Control.hostInit();
 };

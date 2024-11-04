@@ -69,6 +69,8 @@ var Glados = null; // This is the function Glados() in glados-ip*.js http://alan
 var _GLaDOS = null; // If the above is linked in, this is the instantiated instance of Glados.
 //Memory stuff
 let _CurrentMemorySegment;
+//Used to keep track of the current quantum count
+let _CurrentQuantumCount;
 var onDocumentLoad = function () {
     TSOS.Control.hostInit();
 };

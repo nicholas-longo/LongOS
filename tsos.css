@@ -125,3 +125,7 @@ h3 {
   display: block;
   margin-bottom: 8px;
 }
+
+#quantumValue {
+  margin-right: 20px; 
+}

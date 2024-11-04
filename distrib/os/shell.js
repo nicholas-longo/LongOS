@@ -460,7 +460,6 @@ var TSOS;
                 _StdOut.putText("Usage: run <PID>  Please supply a PID.");
                 return;
             }
-            console.log(args[0]);
             const PID = parseInt(args[0]); // get the user inputted PID
             const pcb = _PCBManager.findPCB(PID); // get the current pcb
             if (!pcb) { // makes sure the pid provided is valid
