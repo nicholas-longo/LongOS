@@ -460,6 +460,7 @@ var TSOS;
                 _StdOut.putText("Usage: run <PID>  Please supply a PID.");
                 return;
             }
+            console.log(args[0]);
             const PID = parseInt(args[0]); // get the user inputted PID
             const pcb = _PCBManager.findPCB(PID); // get the current pcb
             if (!pcb) { // makes sure the pid provided is valid
@@ -485,6 +486,11 @@ var TSOS;
         }
         // sets all of the processes in the pcbQueue to ready, and populates the ready queue
         runall() {
+            const pcbQueue = _PCBManager.getPCBs();
+            for (let i = 0; i < pcbQueue.length; i++) {
+                const PIDAsString = pcbQueue[i].PID.toString();
+                _OsShell.shellRun([PIDAsString]);
+            }
         }
         ps() {
             const pcbTable = document.getElementById("pcbTable");
