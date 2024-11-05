@@ -190,7 +190,7 @@ var TSOS;
                     break;
                 case DISPATCHER_MOVE_PROCESS:
                     this.krnTrace("Dispatcher called. Moving head of ready queue to back.");
-                    _CPUDispatcher.contextSwitch(params);
+                    _CPUDispatcher.contextSwitch();
                     break;
                 default:
                     this.krnTrapError("Invalid Interrupt Request. irq=" + irq + " params=[" + params + "]");
