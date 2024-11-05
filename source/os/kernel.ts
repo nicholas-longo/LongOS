@@ -243,6 +243,24 @@ module TSOS {
 
         }
 
+        public krnTerminateAllProcesses(pidList: number []): void {
+            // same logic as the terminate process just do it all at once here with for loop
+            for (let i = 0; i < pidList.length; i ++) {
+                this.krnTrace(`Process ${pidList[i]} terminated.`)
+                _MemoryManager.deallocateSegement(_PCBManager.getPCBSegment(pidList[i]));  // Deallocate memory. call before the PID gets removed and becomes invalid
+                _PCBManager.updatePCBStatus(pidList[i], "Terminated"); // this will also write the current cpu registers into the pcb table
+                _PCBManager.terminatePCB(pidList[i]);  // Remove from both queues
+            }
+        
+            _CPU.init(); // turn the cpu off when the process is terminated and reset the registers
+            Control.updateCPUTable(); 
+
+            _CurrentQuantumCount = 0; // reset the quantum count; 
+            _CPUScheduler.updateCurrentQuantumCount(); 
+
+            // no need to call a scheduling event because all of the processes were killed
+        }
+
         public krnTimerISR() {
             // The built-in TIMER (not clock) Interrupt Service Routine (as opposed to an ISR coming from a device driver). {
             // Check multiprogramming parameters and enforce quanta here. Call the scheduler / context switch here if necessary.

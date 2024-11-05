@@ -649,17 +649,29 @@ module TSOS {
         }
 
         public killall(): void {
-            const pcbReadyQueue = [..._PCBManager.getReadyPCBs()];
+            const pcbReadyQueue = _PCBManager.getReadyPCBs();
+            let PIDSToKill: number[]  = []
 
             if (pcbReadyQueue.length === 0 ) {
                 _StdOut.putText(`No ready processes to kill.`)
                 return;
             }
 
+            // add to PID array to be killed 
             for (let i = 0; i < pcbReadyQueue.length; i ++) {
-                const PIDAsString = pcbReadyQueue[i].PID.toString();
-                _OsShell.kill([PIDAsString])
+                const PID = pcbReadyQueue[i].PID;
+                PIDSToKill.push(PID)
             }
+
+            // print what processes are being killed to console
+            for (let i = 0; i < pcbReadyQueue.length; i ++) {
+                _StdOut.putText(`Killing Process with Process ID: ${PIDSToKill[i]}`)
+                _StdOut.advanceLine();
+            }
+
+            // kill every process in the array
+            _Kernel.krnTerminateAllProcesses(PIDSToKill);
+
         }
         
         public quantum(args: string[]) {
