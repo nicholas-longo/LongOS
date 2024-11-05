@@ -23,9 +23,17 @@ module TSOS {
             const prevHeadPCB = _PCBManager.pcbReadyQueue.shift(); // get the head PCB
             _PCBManager.pcbReadyQueue.push(prevHeadPCB); // move it to the back of the ready queue
             
-            const newHeadPCB = _PCBManager.pcbReadyQueue[0]; 
-            _CPU.PC
-            _CPU.Acc
+            const newHeadPCB = _PCBManager.pcbReadyQueue[0]; // get the new head
+            
+            // update the necessary CPU registers 
+            _CPU.PC = newHeadPCB.PC
+            _CPU.IR = newHeadPCB.IR
+            _CPU.Acc = newHeadPCB.acc
+            _CPU.Xreg = newHeadPCB.xReg
+            _CPU.Yreg = newHeadPCB.yReg
+            _CPU.Zflag = newHeadPCB.zFlag
+
+            Control.updateCPUTable(); // update the CPU table
             
         }
     }

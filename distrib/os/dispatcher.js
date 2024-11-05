@@ -17,9 +17,15 @@ var TSOS;
         contextSwitch() {
             const prevHeadPCB = _PCBManager.pcbReadyQueue.shift(); // get the head PCB
             _PCBManager.pcbReadyQueue.push(prevHeadPCB); // move it to the back of the ready queue
-            const newHeadPCB = _PCBManager.pcbReadyQueue[0];
-            _CPU.PC;
-            _CPU.Acc;
+            const newHeadPCB = _PCBManager.pcbReadyQueue[0]; // get the new head
+            // update the necessary CPU registers 
+            _CPU.PC = newHeadPCB.PC;
+            _CPU.IR = newHeadPCB.IR;
+            _CPU.Acc = newHeadPCB.acc;
+            _CPU.Xreg = newHeadPCB.xReg;
+            _CPU.Yreg = newHeadPCB.yReg;
+            _CPU.Zflag = newHeadPCB.zFlag;
+            TSOS.Control.updateCPUTable(); // update the CPU table
         }
     }
     TSOS.Dispatcher = Dispatcher;
@@ -28,5 +34,4 @@ var TSOS;
 // pcb.updateStatus("Ready");
 // pcb.updateCPURegistersOnPCB(); // called because it does not wipe out the values of the cpu registers on the pcb. it updates the entire table
 // find out where to put that code
-// TODO add the IR to the PCB table so all of this can work
 //# sourceMappingURL=dispatcher.js.map
