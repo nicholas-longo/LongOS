@@ -13,6 +13,7 @@ var TSOS;
             const pcb = _PCBManager.getFirstReadyProcess();
             pcb.updateCPURegistersOnPCB(); // when the quantum expires, must update the pcb with current cpu registers
             _KernelInterruptQueue.enqueue(new TSOS.Interrupt(DISPATCHER_SAVE_PROCESS, _PCBManager.getFirstReadyProcess().PID));
+            _KernelInterruptQueue.enqueue(new TSOS.Interrupt(DISPATCHER_MOVE_PROCESS, [0])); // the param does not matter for this call
             _KernelInterruptQueue.enqueue(new TSOS.Interrupt(DISPATCHER_RUN_HEAD, _PCBManager.getFirstReadyProcess().PID));
         }
         // function to be called that deals when a process in the ready queue is terminated and context needs to change

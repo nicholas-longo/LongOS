@@ -18,6 +18,7 @@ module TSOS {
             pcb.updateCPURegistersOnPCB(); // when the quantum expires, must update the pcb with current cpu registers
  
             _KernelInterruptQueue.enqueue(new Interrupt(DISPATCHER_SAVE_PROCESS, _PCBManager.getFirstReadyProcess().PID));
+            _KernelInterruptQueue.enqueue(new Interrupt(DISPATCHER_MOVE_PROCESS, [0])); // the param does not matter for this call
             _KernelInterruptQueue.enqueue(new Interrupt(DISPATCHER_RUN_HEAD, _PCBManager.getFirstReadyProcess().PID));
         }
         

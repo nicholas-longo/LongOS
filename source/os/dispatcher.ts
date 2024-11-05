@@ -20,7 +20,10 @@ module TSOS {
         
         // remove it from the front of the readyQueue, move it to the back of the ready Queue. load the cpu with the current values of the new pcb
         public contextSwitch(): void {
-
+            const prevHeadPCB = _PCBManager.pcbReadyQueue.shift(); // get the head PCB
+            _PCBManager.pcbReadyQueue.push(prevHeadPCB); // move it to the back of the ready queue
+            
+            
         }
     }
 
