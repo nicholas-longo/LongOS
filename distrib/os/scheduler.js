@@ -10,6 +10,8 @@ var TSOS;
         // call dispatcher to save current process state and move the process to the back of the queue
         // then call the dispatcher to run the head of the queue
         scheduleAfterQuantumExpired() {
+            const pcb = _PCBManager.getFirstReadyProcess();
+            pcb.updateCPURegistersOnPCB(); // when the quantum expires, must update the pcb with current cpu registers
             _KernelInterruptQueue.enqueue(new TSOS.Interrupt(DISPATCHER_SAVE_PROCESS, _PCBManager.getFirstReadyProcess().PID));
             _KernelInterruptQueue.enqueue(new TSOS.Interrupt(DISPATCHER_RUN_HEAD, _PCBManager.getFirstReadyProcess().PID));
         }
