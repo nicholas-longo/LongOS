@@ -82,6 +82,11 @@ var TSOS;
             this.limit = segment * 0x100 + 0x100;
         }
         updateCPURegistersOnPCB() {
+            this.PC = _CPU.PC;
+            this.acc = _CPU.Acc;
+            this.xReg = _CPU.Xreg;
+            this.yReg = _CPU.Yreg;
+            this.zFlag = _CPU.Zflag;
             this.tableRow.cells[0].innerHTML = TSOS.Utils.hexLog(this.PID, 2, true);
             this.tableRow.cells[1].innerHTML = TSOS.Utils.hexLog(this.priority, 2, true);
             this.tableRow.cells[2].innerHTML = this.location;
