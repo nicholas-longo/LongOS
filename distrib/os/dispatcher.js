@@ -5,14 +5,16 @@ var TSOS;
         }
         PCBDictionary = {};
         runScheduledProcess(pid) {
-            _PCBManager.updatePCBStatus(pid, "Running");
+            const pcb = _PCBManager.findPCB(pid);
+            pcb.updateStatus("Running");
+            // Update the PCB table for the new process
+            pcb.updatePCBTable();
             _CPU.isExecuting = true;
-            console.log(_PCBManager.pcbReadyQueue[0]);
         }
         // save the state of the pcb
         saveCurrentProcess(pid) {
             const pcb = _PCBManager.findPCB(pid);
-            this.PCBDictionary[pid] = pcb;
+            this.PCBDictionary[pid] = pcb; // add or update the dictionary entry for a specific PID; 
         }
         // remove it from the front of the readyQueue, move it to the back of the ready Queue. load the cpu with the current values of the new pcb
         contextSwitch() {
@@ -44,9 +46,4 @@ var TSOS;
     }
     TSOS.Dispatcher = Dispatcher;
 })(TSOS || (TSOS = {}));
-// TODO fix how the display always says running
-// pcb.updateStatus("Ready");
-// pcb.updateCPURegistersOnPCB(); // called because it does not wipe out the values of the cpu registers on the pcb. it updates the entire table
-// find out where to put that code
-// twos data is getting loaded into 1 after 0 gets terminated
 //# sourceMappingURL=dispatcher.js.map

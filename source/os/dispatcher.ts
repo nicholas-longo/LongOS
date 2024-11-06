@@ -7,16 +7,21 @@ module TSOS {
         private PCBDictionary: { [pid: number]: TSOS.ProcessControlBlock } = {};
 
         public runScheduledProcess(pid: number): void {
-            _PCBManager.updatePCBStatus(pid, "Running");
+            
+            const pcb = _PCBManager.findPCB(pid);
+            pcb.updateStatus("Running");
+
+            // Update the PCB table for the new process
+            pcb.updatePCBTable();
+           
             _CPU.isExecuting = true;
 
-            console.log(_PCBManager.pcbReadyQueue[0]);
         }
 
         // save the state of the pcb
         public saveCurrentProcess(pid: number): void {
             const pcb = _PCBManager.findPCB(pid);
-            this.PCBDictionary[pid] = pcb; 
+            this.PCBDictionary[pid] = pcb; // add or update the dictionary entry for a specific PID; 
             
         }
         
@@ -60,11 +65,3 @@ module TSOS {
 
 }
 
-// TODO fix how the display always says running
-// pcb.updateStatus("Ready");
-// pcb.updateCPURegistersOnPCB(); // called because it does not wipe out the values of the cpu registers on the pcb. it updates the entire table
-
-// find out where to put that code
-
-
-// twos data is getting loaded into 1 after 0 gets terminated
