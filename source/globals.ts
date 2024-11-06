@@ -38,6 +38,8 @@ const DISPATCHER_SAVE_PROCESS: number = 9;
 
 const DISPATCHER_MOVE_PROCESS: number = 10; 
 
+const DISPATCHER_LOAD_REGISTERS_AFTER_TERMINATION: number = 11; 
+
 
 //
 // Global Variables

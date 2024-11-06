@@ -192,6 +192,10 @@ var TSOS;
                     this.krnTrace("Dispatcher called. Moving head of ready queue to back.");
                     _CPUDispatcher.contextSwitch();
                     break;
+                case DISPATCHER_LOAD_REGISTERS_AFTER_TERMINATION:
+                    this.krnTrace("Dispatcher called. Loading CPU with the correct registers.");
+                    _CPUDispatcher.loadRegistersAfterTermination();
+                    break;
                 default:
                     this.krnTrapError("Invalid Interrupt Request. irq=" + irq + " params=[" + params + "]");
             }
@@ -202,8 +206,9 @@ var TSOS;
             _MemoryManager.deallocateSegement(_PCBManager.getPCBSegment(pid)); // Deallocate memory. call before the PID gets removed and becomes invalid
             _PCBManager.updatePCBStatus(pid, "Terminated"); // this will also write the current cpu registers into the pcb table
             _PCBManager.terminatePCB(pid); // Remove from both queues
-            _CPU.init(); // turn the cpu off when the process is terminated and reset the registers
-            TSOS.Control.updateCPUTable(); // clear the rows after a process is done THIS WILL CHANGE FOR PROJECT 3
+            // clear the registers, update the cpu, and update the CPU table
+            _CPU.init();
+            TSOS.Control.updateCPUTable();
             _CurrentQuantumCount = 0; // reset the quantum count; 
             _CPUScheduler.updateCurrentQuantumCount();
             // call the scheduler to envoke another scheduling event

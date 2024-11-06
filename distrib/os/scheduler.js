@@ -12,16 +12,21 @@ var TSOS;
         scheduleAfterQuantumExpired() {
             const pcb = _PCBManager.getFirstReadyProcess();
             pcb.updateCPURegistersOnPCB(); // when the quantum expires, must update the pcb with current cpu registers
-            _KernelInterruptQueue.enqueue(new TSOS.Interrupt(DISPATCHER_SAVE_PROCESS, _PCBManager.getFirstReadyProcess().PID));
+            _KernelInterruptQueue.enqueue(new TSOS.Interrupt(DISPATCHER_SAVE_PROCESS, pcb.PID));
             _KernelInterruptQueue.enqueue(new TSOS.Interrupt(DISPATCHER_MOVE_PROCESS, [0])); // the param does not matter for this call
-            _KernelInterruptQueue.enqueue(new TSOS.Interrupt(DISPATCHER_RUN_HEAD, _PCBManager.getFirstReadyProcess().PID));
+            _KernelInterruptQueue.enqueue(new TSOS.Interrupt(DISPATCHER_RUN_HEAD, pcb.PID));
         }
         // function to be called that deals when a process in the ready queue is terminated and context needs to change
         scheduleNextProcessAfterTermination() {
             // if there is another process in the ready queue when one is terminated, schedule it
             if (_PCBManager.pcbReadyQueue.length > 0) {
+                this.loadRegistersAfterPCBTerminated();
                 this.scheduleHeadProcess();
             }
+        }
+        // since the cpu registers will erase after a process is terminated, this will allow me to quickly update them to allow the programs to work correctly together
+        loadRegistersAfterPCBTerminated() {
+            _KernelInterruptQueue.enqueue(new TSOS.Interrupt(DISPATCHER_LOAD_REGISTERS_AFTER_TERMINATION, [0]));
         }
         setQuantum(quantum) {
             _Quantum = quantum;
