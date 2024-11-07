@@ -4,16 +4,18 @@ var TSOS;
         constructor() {
         }
         PCBDictionary = {};
+        currentPCB;
         runScheduledProcess(pid) {
             const pcb = _PCBManager.findPCB(pid);
+            this.currentPCB = pcb;
             pcb.updateStatus("Running");
-            // Update the PCB table for the new process
             pcb.updatePCBTable();
             _CPU.isExecuting = true;
         }
         // save the state of the pcb
         saveCurrentProcess(pid) {
             const pcb = _PCBManager.findPCB(pid);
+            pcb.updatePCBTable();
             this.PCBDictionary[pid] = pcb; // add or update the dictionary entry for a specific PID; 
         }
         // remove it from the front of the readyQueue, move it to the back of the ready Queue. load the cpu with the current values of the new pcb
@@ -35,7 +37,6 @@ var TSOS;
         // take the head process and make sure the cpu starts off with those registers
         loadRegistersAfterTermination() {
             const pcb = _PCBManager.pcbReadyQueue[0];
-            console.log(pcb.PID);
             _CPU.PC = pcb.PC;
             _CPU.IR = pcb.IR;
             _CPU.Acc = pcb.acc;

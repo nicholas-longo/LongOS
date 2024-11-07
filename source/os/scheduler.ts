@@ -14,12 +14,25 @@ module TSOS {
         // call dispatcher to save current process state and move the process to the back of the queue
         // then call the dispatcher to run the head of the queue
         public scheduleAfterQuantumExpired(): void {
-            const pcb = _PCBManager.getFirstReadyProcess()
-            pcb.updateCPURegistersOnPCB(); // when the quantum expires, must update the pcb with current cpu registers
+            const oldPCB = _PCBManager.getFirstReadyProcess()
+            
+            if(_PCBManager.pcbReadyQueue.length > 1) { // only update the status of the pcb to ready if there is more than one PCB, let it stay running if there is only one
+                oldPCB.updateStatus("Ready");
+                oldPCB.updatePCBTable();
+                oldPCB.updateCPURegistersOnPCB(); // when the quantum expires, must update the pcb with current cpu registers 
+            }
+
+            _KernelInterruptQueue.enqueue(new Interrupt(DISPATCHER_SAVE_PROCESS, oldPCB.PID)); // save state of old PCB
+            _KernelInterruptQueue.enqueue(new Interrupt(DISPATCHER_MOVE_PROCESS, [0])); // the param does not matter for this call. Deals with the context switch to the new PCB
+            
+            
+            let newPCB = oldPCB; // this is the value of the pcb to run next if there are more than two items in the pcb ready queue
+            
+            if(_PCBManager.pcbReadyQueue.length > 1) {
+                newPCB = _PCBManager.pcbReadyQueue[1]; // if there is just one item keep it as the old pcb 
+            }
  
-            _KernelInterruptQueue.enqueue(new Interrupt(DISPATCHER_SAVE_PROCESS, pcb.PID));
-            _KernelInterruptQueue.enqueue(new Interrupt(DISPATCHER_MOVE_PROCESS, [0])); // the param does not matter for this call
-            _KernelInterruptQueue.enqueue(new Interrupt(DISPATCHER_RUN_HEAD, pcb.PID));
+            _KernelInterruptQueue.enqueue(new Interrupt(DISPATCHER_RUN_HEAD, newPCB.PID)); // run the new PCB which is either the one after the old one, or if there was just one process than just run the old one
         }
         
         // function to be called that deals when a process in the ready queue is terminated and context needs to change
