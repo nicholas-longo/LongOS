@@ -19,9 +19,10 @@ module TSOS {
             if(_PCBManager.pcbReadyQueue.length > 1) { // only update the status of the pcb to ready if there is more than one PCB, let it stay running if there is only one
                 oldPCB.updateStatus("Ready");
                 oldPCB.updatePCBTable();
-                oldPCB.updateCPURegistersOnPCB(); // when the quantum expires, must update the pcb with current cpu registers 
             }
-
+            // this needs to be kept separate, only the status should be updated conditionally
+            oldPCB.updateCPURegistersOnPCB(); // when the quantum expires, must update the pcb with current cpu registers 
+            
             _KernelInterruptQueue.enqueue(new Interrupt(DISPATCHER_SAVE_PROCESS, oldPCB.PID)); // save state of old PCB
             _KernelInterruptQueue.enqueue(new Interrupt(DISPATCHER_MOVE_PROCESS, [0])); // the param does not matter for this call. Deals with the context switch to the new PCB
             
