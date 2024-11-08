@@ -209,6 +209,7 @@ var TSOS;
         }
         krnTerminateProcess(pid) {
             // Terminate the process
+            const pcb = _PCBManager.findPCB(pid);
             this.krnTrace(`Process ${pid} terminated.`);
             _MemoryManager.deallocateSegement(_PCBManager.getPCBSegment(pid)); // Deallocate memory. call before the PID gets removed and becomes invalid
             _PCBManager.updatePCBStatus(pid, "Terminated"); // this will also write the current cpu registers into the pcb table
@@ -219,6 +220,10 @@ var TSOS;
             _CurrentQuantumCount = 0; // reset the quantum count; 
             _CPUScheduler.updateCurrentQuantumCount();
             // print the turnaround time and wait time for the process
+            _StdOut.advanceLine();
+            _StdOut.putText(`Process ${pid} turnaround time: ${pcb.turnAroundTime}`);
+            _StdOut.advanceLine();
+            _StdOut.putText(`Process ${pid} wait time: ${pcb.waitTime}`);
             // call the scheduler to envoke another scheduling event
             _CPUScheduler.scheduleNextProcessAfterTermination();
         }
