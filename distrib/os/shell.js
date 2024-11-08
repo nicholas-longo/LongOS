@@ -502,7 +502,7 @@ var TSOS;
             for (let i = 1; i < pcbTable.rows.length; i++) {
                 const row = pcbTable.rows[i];
                 const pid = row.cells[0].innerHTML; // PID is in the first cell
-                const status = row.cells[11].innerHTML; // status is in the last cell 
+                const status = row.cells[12].innerHTML; // status is in the last cell 
                 _StdOut.putText(`PID: ${pid}, Status: ${status}`);
                 _StdOut.advanceLine();
             }

@@ -183,6 +183,7 @@ var TSOS;
                     break;
                 case MEMORY_OUT_OF_BOUNDS_EXCEPTION:
                     this.krnTerminateProcess(params); // Handle process termination
+                    _StdOut.advanceLine();
                     _StdOut.putText("Memory out of bounds exception. Process terminated.");
                     _StdOut.advanceLine();
                     _StdOut.putPrompt();
@@ -230,10 +231,16 @@ var TSOS;
         krnTerminateAllProcesses(pidList) {
             // same logic as the terminate process just do it all at once here with for loop
             for (let i = 0; i < pidList.length; i++) {
+                let pcb = _PCBManager.findPCB(pidList[i]);
                 this.krnTrace(`Process ${pidList[i]} terminated.`);
                 _MemoryManager.deallocateSegement(_PCBManager.getPCBSegment(pidList[i])); // Deallocate memory. call before the PID gets removed and becomes invalid
                 _PCBManager.updatePCBStatus(pidList[i], "Terminated"); // this will also write the current cpu registers into the pcb table
                 _PCBManager.terminatePCB(pidList[i]); // Remove from both queues
+                // print the turnaround and wait times for all of the pcbs that were killed
+                _StdOut.advanceLine();
+                _StdOut.putText(`Process ${pidList[i]} turnaround time: ${pcb.turnAroundTime}`);
+                _StdOut.advanceLine();
+                _StdOut.putText(`Process ${pidList[i]} wait time: ${pcb.waitTime}`);
             }
             _CPU.init(); // turn the cpu off when the process is terminated and reset the registers
             TSOS.Control.updateCPUTable();
