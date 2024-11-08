@@ -115,7 +115,14 @@ var TSOS;
                     _stepReady = false; // Reset the step flag after executing one cycle
                 }
                 _CPU.cycle();
-                _CurrentQuantumCount++; // increase the quantum after each cycle
+                // loop through everything in the ready queue, if it has that status "ready" add 1 to the wait time. add 1 to the turnaround time as long as it is in the ready queue
+                for (let process of _PCBManager.pcbReadyQueue) {
+                    if (process.Status === "Ready") {
+                        process.waitTime++;
+                    }
+                    process.turnAroundTime++;
+                }
+                _CurrentQuantumCount++; // increase the quantum value after each cycle
                 _CPUScheduler.updateCurrentQuantumCount(); // update the screen of the current quantum count
                 if (_CurrentQuantumCount >= _Quantum) { // when the quantum expires, reset the quantum count and call scheduling
                     _CurrentQuantumCount = 0;
@@ -211,6 +218,7 @@ var TSOS;
             TSOS.Control.updateCPUTable();
             _CurrentQuantumCount = 0; // reset the quantum count; 
             _CPUScheduler.updateCurrentQuantumCount();
+            // print the turnaround time and wait time for the process
             // call the scheduler to envoke another scheduling event
             _CPUScheduler.scheduleNextProcessAfterTermination();
         }

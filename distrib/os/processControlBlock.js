@@ -14,10 +14,12 @@ var TSOS;
         yReg;
         zFlag;
         Status;
+        turnAroundTime;
+        waitTime;
         // chatGPT 9/24 helped me refactor this in a way so a row is not created during the shellRun
         // by having a tableRow, pcbs can be kept track of and dealt with as necessary
         tableRow = null;
-        constructor(PID = 0, priority = 0, location = "", segment = 0, base = 0, limit = 0, PC = 0, IR = 0, acc = 0, xReg = 0, yReg = 0, zFlag = 0, Status = "") {
+        constructor(PID = 0, priority = 0, location = "", segment = 0, base = 0, limit = 0, PC = 0, IR = 0, acc = 0, xReg = 0, yReg = 0, zFlag = 0, Status = "", turnAroundTime = 0, waitTime = 0) {
             this.PID = PID;
             this.priority = priority;
             this.location = location;
@@ -31,6 +33,8 @@ var TSOS;
             this.yReg = yReg;
             this.zFlag = zFlag;
             this.Status = Status;
+            this.turnAroundTime = turnAroundTime;
+            this.waitTime = waitTime;
         }
         init(pid) {
             this.PID = pid;
@@ -46,6 +50,8 @@ var TSOS;
             this.yReg = 0;
             this.zFlag = 0;
             this.Status = "Resident";
+            this.turnAroundTime = 0;
+            this.waitTime = 0;
         }
         updatePCBTable() {
             if (!this.tableRow) {

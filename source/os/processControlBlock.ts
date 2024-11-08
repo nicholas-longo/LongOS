@@ -18,7 +18,9 @@ module TSOS {
             public xReg: number = 0,
             public yReg: number = 0,
             public zFlag: number = 0,
-            public Status: string = "") {
+            public Status: string = "",
+            public turnAroundTime: number = 0,
+            public waitTime: number = 0) {
                     
         }
         
@@ -36,6 +38,8 @@ module TSOS {
             this.yReg = 0;
             this.zFlag = 0;
             this.Status = "Resident";
+            this.turnAroundTime = 0; 
+            this.waitTime = 0; 
         }
 
 
