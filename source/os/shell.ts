@@ -590,10 +590,20 @@ module TSOS {
 
         // sets all of the processes in the pcbQueue to ready, and populates the ready queue
         public runall(): void {
-            const pcbQueue = _PCBManager.getPCBs()
+            const pcbQueue = _PCBManager.getPCBs();
+            let residentPCBs = [];
+            
             for (let i = 0; i < pcbQueue.length; i ++) {
                 const PIDAsString = pcbQueue[i].PID.toString();
-                _OsShell.shellRun([PIDAsString])
+                if(pcbQueue[i].Status === "Resident") { // only pass if the program is resident 
+                    residentPCBs.push(pcbQueue[i]);
+                    _OsShell.shellRun([PIDAsString])
+                }
+            }
+
+            if (residentPCBs.length === 0 ) {
+                _StdOut.putText(`No resident processes to run.`)
+                return;
             }
         }
 
