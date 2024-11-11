@@ -205,6 +205,7 @@ module TSOS {
                     break; 
                 case INVALID_OP_CODE:
                     this.krnTerminateProcess(params);  // Handle process termination
+                    _StdOut.advanceLine();
                     _StdOut.putText("Invalid OP Code. Process terminated."); 
                     _StdOut.advanceLine();
                     _StdOut.putPrompt();
