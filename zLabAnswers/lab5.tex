@@ -1,0 +1,179 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% CMPT 424
+% Some Semester
+% Lab/Assignment/Project X
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Short Sectioned Assignment
+% LaTeX Template
+% Version 1.0 (5/5/12)
+%
+% This template has been downloaded from: http://www.LaTeXTemplates.com
+% Original author: % Frits Wenneker (http://www.howtotex.com)
+% License: CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+% Modified by Alan G. Labouseur  - alan@labouseur.com
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[letterpaper, 10pt,DIV=13]{scrartcl} 
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm,xfrac} % Math packages
+\usepackage{sectsty} % Allows customizing section commands
+\usepackage{graphicx}
+\usepackage[lined,linesnumbered,commentsnumbered]{algorithm2e}
+\usepackage{listings}
+\usepackage{parskip}
+\usepackage{lastpage}
+
+\allsectionsfont{\normalfont\scshape} % Make all section titles in default font and small caps.
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{page \thepage\ of \pageref{LastPage}} % Page numbering for right footer
+
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs.
+
+\binoppenalty=3000
+\relpenalty=3000
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+   \normalfont \normalsize 
+   \textsc{CMPT 424 - Fall 2024 - Dr. Labouseur} \\[10pt] % Header stuff.
+   \horrule{0.5pt} \\[0.25cm] 	% Top horizontal rule
+   \huge iProject 3  \\     	    % Assignment title
+   \horrule{0.5pt} \\[0.25cm] 	% Bottom horizontal rule
+}
+
+\author{Nicholas Longo \\ \normalsize nicholas.longo2@marist.edu}
+
+\date{\normalsize\today} 	% Today's date.
+
+\begin{document}
+\maketitle % Print the title
+
+%----------------------------------------------------------------------------------------
+%   start PROBLEM ONE
+%----------------------------------------------------------------------------------------
+\section{Lab 5}
+
+\subsection{Consider the following set of processes, with the length of the CPU burst given in milliseconds}
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Process} & \textbf{Burst Time (ms)} & \textbf{Priority} \\
+        \hline
+        P1 & 10 & 3 \\
+        \hline
+        P2 & 1 & 1 \\
+        \hline
+        P3 & 2 & 3 \\
+        \hline
+        P4 & 1 & 4 \\
+        \hline
+        P5 & 5 & 2 \\
+        \hline
+    \end{tabular}
+    \caption{Processes with CPU Burst Time and Priority}
+    \label{tab:processes}
+\end{table}
+
+The processes arrived in the order P1, P2, P3, P4, P5 all at time 0. 
+
+\subsection{Draw four Gantt charts that illustrate the execution of these processes using the following scheduling algorithms: FCFS, SJF, nonpreemptive priority (a smaller priority number implies a higher priority) and RR (quantum 1)}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{l|ccccccccccccccccccc}
+         & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 \\
+        \hline
+        \textbf{FCFS} & P1 & P1 & P1 & P1 & P1 & P1 & P1 & P1 & P1 & P1 & P2 & P3 & P3 & P4 & P5 & P5 & P5 & P5 & P5 \\
+        \textbf{SJF} & P2 & P4 & P3 & P3 & P5 & P5 & P5 & P5 & P5 & P1 & P1 & P1 & P1 & P1 & P1 & P1 & P1 & P1 & P1 \\
+        \textbf{NPPQ} & P2 & P5 & P5 & P5 & P5 & P5 & P3 & P3 & P1 & P1 & P1 & P1 & P1 & P1 & P1 & P1 & P1 & P1 & P4 \\
+        \textbf{RR Q1} & P1 & P2 & P3 & P4 & P5 & P1 & P3 & P5 & P1 & P5 & P1 & P5 & P1 & P5 & P1 & P1 & P1 & P1 & P1 \\
+    \end{tabular}
+    \caption{Gantt charts for different scheduling algorithms}
+    \label{tab:gantt_charts}
+\end{table}
+
+\subsection{What is the turnaround time of each process for each of the scheduling algorithms in part a?}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{Process} & \textbf{FCFS} & \textbf{SJF} & \textbf{NPPQ} & \textbf{RR} \\
+        \hline
+        P1 & 10 & 19 & 18 & 19 \\
+        \hline
+        P2 & 11 & 1 & 1 & 2 \\
+        \hline
+        P3 & 13 & 4 & 8 & 6 \\
+        \hline
+        P4 & 14 & 2 & 19 & 4 \\
+        \hline
+        P5 & 19 & 9 & 6 & 14 \\
+        \hline
+    \end{tabular}
+    \caption{Turnaround time of each process for each scheduling algorithm}
+    \label{tab:turnaround_time}
+\end{table}
+
+\subsection{What is the waiting time of each process for each of these scheduling algorithms?}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{Process} & \textbf{FCFS} & \textbf{SJF} & \textbf{NPPQ} & \textbf{RR} \\
+        \hline
+        P1 & 0 & 9 & 7 & 9 \\
+        \hline
+        P2 & 10 & 0 & 0 & 1 \\
+        \hline
+        P3 & 11 & 2 & 6 & 5 \\
+        \hline
+        P4 & 13 & 1 & 18 & 3 \\
+        \hline
+        P5 & 14 & 4 & 1 & 8 \\
+        \hline
+    \end{tabular}
+    \caption{Waiting time of each process for each scheduling algorithm}
+    \label{tab:waiting_time}
+\end{table}
+
+\subsection{Which of the algorithms results in the minimum average waiting time (over all processes)?}
+SJF resulted in the minimum average waiting time. FCFS had 9.6, SJF had 3.2, NPPQ had 6.4, RR had 5.2
+
+
+
+
+
+\end{document}
