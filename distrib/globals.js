@@ -63,6 +63,7 @@ var _OsShell;
 var _SarcasticMode = false;
 // Global Device Driver Objects - page 12
 var _krnKeyboardDriver = null;
+var _krnDiskSystemDeviceDriver = null;
 var _hardwareClockID = null;
 // values for dealing with single step mode
 let _isSingleStepMode = false;
