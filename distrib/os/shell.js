@@ -81,8 +81,32 @@ var TSOS;
             // killall 
             sc = new TSOS.ShellCommand(this.killall, "killall", "- kill all processes");
             this.commandList[this.commandList.length] = sc;
-            // kill 
+            // quantum  
             sc = new TSOS.ShellCommand(this.quantum, "quantum", "<int> - let the user set the Round Robin quantum (measured in cpu cycles)");
+            this.commandList[this.commandList.length] = sc;
+            // format 
+            sc = new TSOS.ShellCommand(this.format, "format", "- initialize all blocks in all sectors in all tracks");
+            this.commandList[this.commandList.length] = sc;
+            // create  
+            sc = new TSOS.ShellCommand(this.createFile, "create", "<filename> - create the file 'filename'");
+            this.commandList[this.commandList.length] = sc;
+            // read  
+            sc = new TSOS.ShellCommand(this.readFile, "read", "<filename> - read and display the contents of 'filename'");
+            this.commandList[this.commandList.length] = sc;
+            // write  
+            sc = new TSOS.ShellCommand(this.writeFile, "write", "<filename> \"data\"- write the data inside the quotes (but not the quotes themselves) to 'filename'");
+            this.commandList[this.commandList.length] = sc;
+            // delete  
+            sc = new TSOS.ShellCommand(this.deleteFile, "delete", "<filename> - removes 'filename' from storage");
+            this.commandList[this.commandList.length] = sc;
+            // copy  
+            sc = new TSOS.ShellCommand(this.copyFile, "copy", "<existing filename> <new filename> - copies the contents from an existing file into a new file");
+            this.commandList[this.commandList.length] = sc;
+            // rename  
+            sc = new TSOS.ShellCommand(this.renameFile, "rename", "<existing filename> <new filename> - renames the existing file name to the new file name");
+            this.commandList[this.commandList.length] = sc;
+            // format 
+            sc = new TSOS.ShellCommand(this.ls, "ls", "- list the files currently stored on disk");
             this.commandList[this.commandList.length] = sc;
             //update the date in the display bar every second
             //Assistance From Chat GPT 9/3/2024
@@ -297,6 +321,30 @@ var TSOS;
                         break;
                     case "quantum":
                         _StdOut.putText("Fancy computer stuff idk im not smart enough for all that");
+                        break;
+                    case "format":
+                        _StdOut.putText("Make the disky worky");
+                        break;
+                    case "create":
+                        _StdOut.putText("Makes a file. It's getting serious now. ");
+                        break;
+                    case "read":
+                        _StdOut.putText("That file you made, yeah baby you can read it too.");
+                        break;
+                    case "write":
+                        _StdOut.putText("If you thought reading a file is super exciting, you will want to sit down for this...");
+                        break;
+                    case "delete":
+                        _StdOut.putText("NO NO NO DON'T DELETE THE FILE");
+                        break;
+                    case "copy":
+                        _StdOut.putText("If you love a file so much, why don't you just make another one??");
+                        break;
+                    case "rename":
+                        _StdOut.putText("Got tired of the same old file name, change it. This one is not that exciting.");
+                        break;
+                    case "ls":
+                        _StdOut.putText("List all those files that you worked so hard to make");
                         break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
@@ -575,6 +623,30 @@ var TSOS;
             }
             _CPUScheduler.setQuantum(quantum);
             _StdOut.putText(`Quantum value set to ${quantum}.`);
+        }
+        format() {
+            _StdOut.putText('format');
+        }
+        createFile(args) {
+            _StdOut.putText('create');
+        }
+        readFile(args) {
+            _StdOut.putText('read');
+        }
+        writeFile(args) {
+            _StdOut.putText('write');
+        }
+        deleteFile(args) {
+            _StdOut.putText('delete');
+        }
+        copyFile(args) {
+            _StdOut.putText('copy');
+        }
+        renameFile(args) {
+            _StdOut.putText('rename');
+        }
+        ls() {
+            _StdOut.putText('ls');
         }
     }
     TSOS.Shell = Shell;
