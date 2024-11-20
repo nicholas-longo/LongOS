@@ -776,7 +776,7 @@ module TSOS {
         public format() {
             // only format the disk if it has not been formatted already
             if(!_DiskFormatted) {
-                _Kernel.formatDisk(); 
+                _Kernel.krnFormatDisk(); 
                 _StdOut.putText("Disk successfully formatted.")
             } else {
                 _StdOut.putText("Cannot format disk because it is already formatted.")
@@ -804,7 +804,7 @@ module TSOS {
                 return;
             }
 
-            _StdOut.putText('hi');
+            _Kernel.krnCreateFile(args[0]);
         }
 
         public readFile(args: string[]) {

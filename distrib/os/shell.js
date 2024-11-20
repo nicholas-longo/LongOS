@@ -627,7 +627,7 @@ var TSOS;
         format() {
             // only format the disk if it has not been formatted already
             if (!_DiskFormatted) {
-                _Kernel.formatDisk();
+                _Kernel.krnFormatDisk();
                 _StdOut.putText("Disk successfully formatted.");
             }
             else {
@@ -650,7 +650,7 @@ var TSOS;
                 _StdOut.putText(`File names cannot exceed ${MAX_FILE_NAME_LENGTH} characters. Please select a different name.`);
                 return;
             }
-            _StdOut.putText('hi');
+            _Kernel.krnCreateFile(args[0]);
         }
         readFile(args) {
             _StdOut.putText('read');

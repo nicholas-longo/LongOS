@@ -30,6 +30,15 @@
             _DiskFormatted = true; 
         }
 
+        // return a value to the kernel based on if successful or went wrong
+        public createFile(filename: string): number {
+            if(!_DiskFormatted) {
+                return 1; 
+            }
+
+            return 0;
+        }
+
         public updateDiskTable(): void {
             let diskTable = document.getElementById("diskTable") as HTMLTableElement; 
             diskTable.innerHTML = ""; // make the format table message go away

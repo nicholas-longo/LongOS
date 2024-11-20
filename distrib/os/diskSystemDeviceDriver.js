@@ -26,6 +26,13 @@ var TSOS;
             this.updateDiskTable();
             _DiskFormatted = true;
         }
+        // return a value to the kernel based on if successful or went wrong
+        createFile(filename) {
+            if (!_DiskFormatted) {
+                return 1;
+            }
+            return 0;
+        }
         updateDiskTable() {
             let diskTable = document.getElementById("diskTable");
             diskTable.innerHTML = ""; // make the format table message go away

@@ -308,11 +308,33 @@ var TSOS;
                 _StdOut.putText("All memory segments cleared.");
             }
         }
-        formatDisk() {
+        krnFormatDisk() {
             this.krnTrace("Formatting the disk.");
             // call the disk device driver to format the disk properly
             _krnDiskSystemDeviceDriver.formatDisk();
             this.krnTrace("Disk formatted sucessfully.");
+        }
+        krnCreateFile(filename) {
+            this.krnTrace("Attempting to create file.");
+            const result = _krnDiskSystemDeviceDriver.createFile(filename);
+            // 11/20/24 Inspireation from Josh Seligman's jOSh on the idea of passing a value from the disk device driver to the kernel and having it print different results according to what happened
+            switch (result) {
+                case (0):
+                    _StdOut.putText(`File ${filename} created successfully.`);
+                    break;
+                case (1):
+                    _StdOut.putText(`Disk is not formatted. File creation failed.`);
+                    break;
+                case (2):
+                    _StdOut.putText(`File with name ${filename} already exists. File creation failed.`);
+                    break;
+            }
+            if (result === 0) {
+                this.krnTrace(`Successfully created file with name ${filename}.`);
+            }
+            else {
+                this.krnTrace(`Error when attempting to create file with name ${filename}.`);
+            }
         }
     }
     TSOS.Kernel = Kernel;
