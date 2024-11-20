@@ -129,3 +129,25 @@ h3 {
 #quantumValue {
   margin-right: 20px; 
 }
+
+#footerText {
+  margin-top: 100px
+}
+
+#divDisk {
+  width: 600px; 
+  margin: 20px auto; 
+  overflow: auto; 
+  text-align: left; 
+}
+
+#diskTable {
+  width: 100%; 
+  border-collapse: collapse; 
+}
+
+#diskTable th, #diskTable td {
+  border: 1px solid #000; 
+  padding: 8px; 
+  text-align: center;
+}
