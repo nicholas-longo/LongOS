@@ -774,6 +774,7 @@ module TSOS {
         }
 
         public format() {
+            _Kernel.formatDisk(); 
             _StdOut.putText('format');
         }
         

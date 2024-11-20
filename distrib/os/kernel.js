@@ -308,6 +308,10 @@ var TSOS;
                 _StdOut.putText("All memory segments cleared.");
             }
         }
+        formatDisk() {
+            // pretty much gonna be called from the shell and then call the function in the diskDriver to get everything formatted
+            _krnDiskSystemDeviceDriver.formatDisk();
+        }
     }
     TSOS.Kernel = Kernel;
 })(TSOS || (TSOS = {}));

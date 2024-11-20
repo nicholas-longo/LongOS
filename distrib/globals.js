@@ -76,6 +76,13 @@ let _CurrentMemorySegment;
 //Used to keep track of the current quantum and its count
 let _Quantum = 6;
 let _CurrentQuantumCount = 0;
+// used to check if the disk is formatted and ready to be used
+let _DiskFormatted = false;
+const NUM_TRACKS = 4;
+const NUM_SECTORS = 8;
+const NUM_BLOCKS = 8;
+// first digit is used for the in use, the next 3 are used to get the next link. The remaining 60 is for our data, which will consist of 2 hex digits each, meaning there will be 120 hex digits in a full block
+const BLOCK_SIZE = 64;
 var onDocumentLoad = function () {
     TSOS.Control.hostInit();
 };

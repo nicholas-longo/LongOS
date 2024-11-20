@@ -361,6 +361,11 @@ module TSOS {
             }
         }
 
+        public formatDisk(){
+            // pretty much gonna be called from the shell and then call the function in the diskDriver to get everything formatted
+            _krnDiskSystemDeviceDriver.formatDisk(); 
+        }
+
         
     }
 }

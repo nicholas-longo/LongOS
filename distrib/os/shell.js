@@ -625,6 +625,7 @@ var TSOS;
             _StdOut.putText(`Quantum value set to ${quantum}.`);
         }
         format() {
+            _Kernel.formatDisk();
             _StdOut.putText('format');
         }
         createFile(args) {
