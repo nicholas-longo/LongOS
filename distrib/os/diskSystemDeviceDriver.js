@@ -41,6 +41,25 @@ var TSOS;
                     cell.textContent = header;
                     cell.style.fontWeight = "bold";
                 });
+                // populate the tables based on the data in the session storage (at this point it should all be 0's)
+                for (let t = 0; t < NUM_TRACKS; t++) {
+                    for (let s = 0; s < NUM_SECTORS; s++) {
+                        for (let b = 0; b < NUM_BLOCKS; b++) {
+                            const key = `${t}${s}${b}`;
+                            const value = sessionStorage.getItem(key); // this should always just be '0---' + '0'.repeat((BLOCK_SIZE - 4) * 2);
+                            // obtain the in use character, and next characters
+                            const inUse = value.substring(0, 1); // just the first character
+                            const next = value.substring(1, 4); // the next three characters
+                            const data = value.substring(4); // everything left over is data
+                            //populate each row
+                            const row = diskTable.insertRow();
+                            row.insertCell().textContent = key;
+                            row.insertCell().textContent = inUse;
+                            row.insertCell().textContent = next;
+                            row.insertCell().textContent = data;
+                        }
+                    }
+                }
             }
         }
     }

@@ -135,10 +135,13 @@ h3 {
 }
 
 #divDisk {
-  width: 600px; 
-  margin: 20px auto; 
-  overflow: auto; 
-  text-align: left; 
+  width: 80%; 
+  height: 300px; /* Match the scrolling behavior of the memory table */
+  overflow-y: auto; /* Allow scrolling when content exceeds height */
+  overflow-x: hidden; /* Avoid horizontal scrolling if the content overflows */
+  border: none; 
+  margin-left: 200px;
+  margin-bottom: 20px; /* Add spacing below the disk table */
 }
 
 #diskTable {
