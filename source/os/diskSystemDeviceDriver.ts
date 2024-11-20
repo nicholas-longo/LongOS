@@ -31,14 +31,11 @@
         }
 
         public updateDiskTable(): void {
-            if(_DiskFormatted) { // regular table update
-
-                
-            } else { // disk is not formatted so need to create the intial state.
+            let diskTable = document.getElementById("diskTable") as HTMLTableElement; 
+            diskTable.innerHTML = ""; // make the format table message go away
+            
+            if(!_DiskFormatted) { // put the headers in if this is the first time being formatted
                 // the top columns will need to be created, and each row needs to be populated according to the session storage
-                let diskTable = document.getElementById("diskTable") as HTMLTableElement; 
-                diskTable.innerHTML = ""; // make the format table message go away
-
                 // chatGPT 11/20/24 I asked it to help me delete the old table and put a new one in with the proper headings when format is called for the first time
                 const headerRow = diskTable.insertRow();
                 const headers = ["TSB", "In Use", "Next TSB", "Data"];
@@ -48,6 +45,7 @@
                     cell.style.fontWeight = "bold";
                 });
 
+            }   // disk formatted and headers in place, so just update the table according to the session storage
                 // populate the tables based on the data in the session storage (at this point it should all be 0's)
                 for (let t = 0; t < NUM_TRACKS; t ++) {
                     for (let s = 0; s < NUM_SECTORS; s ++){
@@ -71,7 +69,7 @@
                 }
 
 
-            }
+            
         }
 
     
