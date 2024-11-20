@@ -635,7 +635,22 @@ var TSOS;
             }
         }
         createFile(args) {
-            _StdOut.putText('create');
+            // TODO change the file name length in global to account for the date and time and stuff for extra points
+            if (args.length <= 0) {
+                _StdOut.putText("Usage: create <filename> Please supply a filename.");
+                return;
+            }
+            // do not let names start with a $ 
+            if (args[0].substring(0, 1) === "$") {
+                _StdOut.putText("File names starting with '$' are reserved for swap files. Please enter a different name.");
+                return;
+            }
+            // do not let file names exceed the max name length
+            if (args[0].length > MAX_FILE_NAME_LENGTH) {
+                _StdOut.putText(`File names cannot exceed ${MAX_FILE_NAME_LENGTH} characters. Please select a different name.`);
+                return;
+            }
+            _StdOut.putText('hi');
         }
         readFile(args) {
             _StdOut.putText('read');

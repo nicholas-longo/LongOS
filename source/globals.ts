@@ -116,6 +116,7 @@ const NUM_SECTORS = 8;
 const NUM_BLOCKS = 8; 
 // first digit is used for the in use, the next 3 are used to get the next link. The remaining 60 is for our data, which will consist of 2 hex digits each, meaning there will be 120 hex digits in a full block
 const BLOCK_SIZE = 64;
+const MAX_FILE_NAME_LENGTH = 60; 
 
 
 var onDocumentLoad = function() {
