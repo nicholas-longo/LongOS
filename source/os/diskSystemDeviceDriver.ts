@@ -33,6 +33,7 @@
         public updateDiskTable(): void {
             if(_DiskFormatted) { // regular table update
 
+                
             } else { // disk is not formatted so need to create the intial state.
                 // the top columns will need to be created, and each row needs to be populated according to the session storage
                 let diskTable = document.getElementById("diskTable") as HTMLTableElement; 

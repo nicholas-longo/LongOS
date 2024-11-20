@@ -625,8 +625,14 @@ var TSOS;
             _StdOut.putText(`Quantum value set to ${quantum}.`);
         }
         format() {
-            _Kernel.formatDisk();
-            _StdOut.putText('format');
+            // only format the disk if it has not been formatted already
+            if (!_DiskFormatted) {
+                _Kernel.formatDisk();
+                _StdOut.putText("Disk successfully formatted.");
+            }
+            else {
+                _StdOut.putText("Cannot format disk because it is already formatted.");
+            }
         }
         createFile(args) {
             _StdOut.putText('create');

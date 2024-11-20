@@ -309,8 +309,10 @@ var TSOS;
             }
         }
         formatDisk() {
-            // pretty much gonna be called from the shell and then call the function in the diskDriver to get everything formatted
+            this.krnTrace("Formatting the disk.");
+            // call the disk device driver to format the disk properly
             _krnDiskSystemDeviceDriver.formatDisk();
+            this.krnTrace("Disk formatted sucessfully.");
         }
     }
     TSOS.Kernel = Kernel;
