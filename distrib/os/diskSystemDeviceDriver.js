@@ -27,9 +27,25 @@ var TSOS;
             _DiskFormatted = true;
         }
         // return a value to the kernel based on if successful or went wrong
-        createFile(filename) {
+        // 0 okay
+        // 1 disk not formatted
+        // 2 file name existed
+        // 3 no available directory block
+        // 4 no available data block
+        createFile(fileName) {
             if (!_DiskFormatted) {
                 return 1;
+            }
+            if (this.getTSBFromFileName(fileName) !== "") { // if a TSB already exists return an error
+                return 2;
+            }
+            const availableDirectoryTSB = this.getFirstAvailableDirectoryBlock();
+            const availableDataTSB = this.getFirstAvailableDataBlock();
+            if (availableDirectoryTSB === "") {
+                return 3;
+            }
+            if (availableDataTSB === "") {
+                return 4;
             }
             return 0;
         }
@@ -66,6 +82,18 @@ var TSOS;
                     }
                 }
             }
+        }
+        getFirstAvailableDirectoryBlock() {
+            // loop through the session storage for directories (only ones that start with 0), check the first bit. if there is a 0 available return its TSB string. if loop ends, return "";
+            return "";
+        }
+        getFirstAvailableDataBlock() {
+            // loop through the session storage for data (only ones that start with 1 and on), check the first bit. if there is a 0 available return its TSB string. if loop ends, return "";
+            return "";
+        }
+        getTSBFromFileName(fileName) {
+            // convert the filename to hex. loop through each of the directories and get the substring(4). if a match, return the key from the session storage where that value matched
+            return "";
         }
     }
     TSOS.DiskSystemDeviceDriver = DiskSystemDeviceDriver;
