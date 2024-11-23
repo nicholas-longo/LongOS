@@ -56,22 +56,28 @@
                 return 4; 
             }
 
-            // no errors, populate the directory with the name, make the in use bit 1, add the data block as the nextTSB, and return 0 for no errors 
             // TODO add the date and time the file was created 
 
             // convert the file name to hex 
             const fileNameAsHex = Utils.charactersToHexString(fileName);
-
             
+            // get the data that is going to need to be added, its length, and how many 0's to add to the end
+            const headerAndNameOfDirectoryString = `1${availableDataTSB}${fileNameAsHex}`; // 1 for in use, availableDataTSB is the next link, fileNameAsHex is the file name written out in hex
+            const lengthOfHeader = headerAndNameOfDirectoryString.length - 4; // -4 is to not include the in use bit and next TSB
+            const zeroesNeeded = MAX_DATA_SIZE * 2 - lengthOfHeader; 
+
+            // set the session storage with the new data
+            const directoryString = headerAndNameOfDirectoryString + '0'.repeat(zeroesNeeded); 
+            sessionStorage.setItem(availableDirectoryTSB, directoryString); 
+
+            // wipe out data in the data block, and set the in use bit to 1
+            sessionStorage.setItem(availableDataTSB, '1---' + '0'.repeat((BLOCK_SIZE - 4) *2))
+
+            // update the display
+            this.updateDiskTable(); 
             
-            
-
-
-
-
-
-
-            return 0;
+            // no errors
+            return 0; 
         }
 
         public updateDiskTable(): void {
