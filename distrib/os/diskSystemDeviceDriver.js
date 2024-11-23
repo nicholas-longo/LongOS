@@ -85,11 +85,34 @@ var TSOS;
         }
         getFirstAvailableDirectoryBlock() {
             // loop through the session storage for directories (only ones that start with 0), check the first bit. if there is a 0 available return its TSB string. if loop ends, return "";
-            return "";
+            let value = "";
+            for (let s = 0; s < NUM_SECTORS; s++) {
+                for (let b = 1; b < NUM_BLOCKS; b++) {
+                    // TSB 000 is reserved for the MBR so make the block start at 1 
+                    value = sessionStorage.getItem(`0${s}${b}`);
+                    if (value.substring(0, 1) === "0") { // if the first character is a 0, that means it is not in use and its value should be returned
+                        console.log(`0${s}${b}`);
+                        return `0${s}${b}`; // return the TSB of the first available block
+                    }
+                }
+            }
+            return ""; // return empty if there is no available directory block
         }
         getFirstAvailableDataBlock() {
             // loop through the session storage for data (only ones that start with 1 and on), check the first bit. if there is a 0 available return its TSB string. if loop ends, return "";
-            return "";
+            let value = "";
+            for (let t = 1; t < NUM_TRACKS; t++) { // start t on track one because track 0 is for directories
+                for (let s = 0; s < NUM_SECTORS; s++) {
+                    for (let b = 0; b < NUM_BLOCKS; b++) {
+                        value = sessionStorage.getItem(`${t}${s}${b}`);
+                        if (value.substring(0, 1) === "0") {
+                            console.log(`${t}${s}${b}`);
+                            return `${t}${s}${b}`; // return the TSB of the first available block
+                        }
+                    }
+                }
+            }
+            return ""; // return empty if there is no available
         }
         getTSBFromFileName(fileName) {
             // convert the filename to hex. loop through each of the directories and get the substring(4). if a match, return the key from the session storage where that value matched
