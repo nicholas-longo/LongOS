@@ -88,6 +88,15 @@ var TSOS;
         static charToByte(charValue) {
             return Utils.CHAR_TO_BYTE_MAP[charValue];
         }
+        static charactersToHexString(characters) {
+            let hexString = "";
+            let hex = 0;
+            for (let i = 0; i < characters.length; i++) {
+                hex = Utils.charToByte(characters[i]);
+                hexString += Utils.hexLog(hex, 0, true); // take the hex character from the string, pass it into hex log which will turn it into a string. no added 0's in front of it and no padding
+            }
+            return hexString;
+        }
     }
     TSOS.Utils = Utils;
 })(TSOS || (TSOS = {}));

@@ -47,6 +47,10 @@ var TSOS;
             if (availableDataTSB === "") {
                 return 4;
             }
+            // no errors, populate the directory with the name, make the in use bit 1, add the data block as the nextTSB, and return 0 for no errors 
+            // TODO add the date and time the file was created 
+            // convert the file name to hex 
+            const fileNameAsHex = TSOS.Utils.charactersToHexString(fileName);
             return 0;
         }
         updateDiskTable() {

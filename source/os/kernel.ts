@@ -382,6 +382,12 @@ module TSOS {
                 case(2):
                     _StdOut.putText(`File with name ${filename} already exists. File creation failed.`)
                     break;
+                case(3):
+                    _StdOut.putText(`No directory blocks are available. File creation failed.`)
+                    break;
+                case(4):
+                    _StdOut.putText(`Not enough data blocks are available. File creation failed.`)
+                    break;
             }
 
             if(result === 0) {

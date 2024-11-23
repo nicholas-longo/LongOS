@@ -36,7 +36,7 @@
         // 2 file name existed
         // 3 no available directory block
         // 4 no available data block
-        public createFile(fileName: String): number {
+        public createFile(fileName: string): number {
             if(!_DiskFormatted) {
                 return 1; 
             }
@@ -45,8 +45,8 @@
                 return 2; 
             }
 
-            const availableDirectoryTSB: String = this.getFirstAvailableDirectoryBlock(); 
-            const availableDataTSB: String = this.getFirstAvailableDataBlock(); 
+            const availableDirectoryTSB: string = this.getFirstAvailableDirectoryBlock(); 
+            const availableDataTSB: string = this.getFirstAvailableDataBlock(); 
 
             if(availableDirectoryTSB === "") {
                 return 3;
@@ -55,6 +55,16 @@
             if(availableDataTSB === "") {
                 return 4; 
             }
+
+            // no errors, populate the directory with the name, make the in use bit 1, add the data block as the nextTSB, and return 0 for no errors 
+            // TODO add the date and time the file was created 
+
+            // convert the file name to hex 
+            const fileNameAsHex = Utils.charactersToHexString(fileName);
+
+            
+            
+            
 
 
 
@@ -103,7 +113,7 @@
                 }
         }
 
-        public getFirstAvailableDirectoryBlock(): String {
+        public getFirstAvailableDirectoryBlock(): string {
             // loop through the session storage for directories (only ones that start with 0), check the first bit. if there is a 0 available return its TSB string. if loop ends, return "";
             let value = "";
             for (let s = 0; s < NUM_SECTORS; s ++) {
@@ -119,7 +129,7 @@
             return ""; // return empty if there is no available directory block
         }
 
-        public getFirstAvailableDataBlock(): String {
+        public getFirstAvailableDataBlock(): string {
             // loop through the session storage for data (only ones that start with 1 and on), check the first bit. if there is a 0 available return its TSB string. if loop ends, return "";
             let value = ""; 
             for (let t = 1; t < NUM_TRACKS; t ++) { // start t on track one because track 0 is for directories
@@ -137,7 +147,7 @@
             return ""; // return empty if there is no available
         }
 
-        public getTSBFromFileName(fileName: String): String {
+        public getTSBFromFileName(fileName: string): string {
             // convert the filename to hex. loop through each of the directories and get the substring(4). if a match, return the key from the session storage where that value matched
             return "";
         }
