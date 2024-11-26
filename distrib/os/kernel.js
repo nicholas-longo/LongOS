@@ -342,6 +342,8 @@ var TSOS;
                 this.krnTrace(`Error when attempting to create file with name ${filename}.`);
             }
         }
+        krnWriteFile(filename) {
+        }
     }
     TSOS.Kernel = Kernel;
 })(TSOS || (TSOS = {}));

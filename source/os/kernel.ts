@@ -397,6 +397,10 @@ module TSOS {
             }
         }
 
+        public krnWriteFile(filename: string) {
+            
+        }
+
         
     }
 }
