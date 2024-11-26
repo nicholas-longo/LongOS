@@ -80,6 +80,34 @@
             return 0; 
         }
 
+        // return a value to the kernel based on if successful or went wrong
+        // 0 okay
+        // 1 disk not formatted
+        // 2 file name not found
+        // 3 not enough data blocks to fit the contents
+        public writeFile(fileName: string, contents: string) {
+            if(!_DiskFormatted) {
+                return 1; 
+            }
+
+            if(this.getTSBFromFileName(fileName) === "") { // if TSB does not exist, return an error
+                return 2; 
+            }
+
+
+            const contentsAsHexString = Utils.charactersToHexString(contents); // contents formatted as hex
+            const contentLength = contentsAsHexString.length; // length of the hex string
+            const numberOfAvailableDataBlocks = this.getNumberOfAvailableDataBlocks(); // number of available data blocks
+            
+            if(contentLength / MAX_DATA_SIZE > numberOfAvailableDataBlocks) {
+                return 3; 
+            }
+
+
+            return 0; 
+
+        }
+
         public updateDiskTable(): void {
             let diskTable = document.getElementById("diskTable") as HTMLTableElement; 
             diskTable.innerHTML = ""; // make the format table message go away
@@ -156,6 +184,10 @@
         public getTSBFromFileName(fileName: string): string {
             // convert the filename to hex. loop through each of the directories and get the substring(4). if a match, return the key from the session storage where that value matched
             return "";
+        }
+
+        public getNumberOfAvailableDataBlocks(): number {
+            return 0; 
         }
 
     

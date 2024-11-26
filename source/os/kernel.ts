@@ -398,7 +398,29 @@ module TSOS {
         }
 
         public krnWriteFile(filename: string, contents: string) {
-            
+            this.krnTrace(`Attempting to write to file ${filename}.`);
+            const result = _krnDiskSystemDeviceDriver.writeFile(filename, contents);
+
+            switch(result) {
+                case(0):
+                    _StdOut.putText(`File ${filename} created successfully.`);
+                    break;
+                case(1):
+                    _StdOut.putText(`Disk is not formatted. File write failed.`);
+                    break;
+                case(2):
+                    _StdOut.putText(`File with name ${filename} does not exist. File write failed.`)
+                    break;
+                case(3):
+                    _StdOut.putText(`Insufficient amount of data blocks are available. File write failed.`)
+                    break;
+            }
+
+            if(result === 0) {
+                this.krnTrace(`Successfully wrote to file with name ${filename}.`)
+            } else {
+                this.krnTrace(`Error when attempting to write to file with name ${filename}.`)
+            }
         }
 
         
