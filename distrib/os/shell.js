@@ -656,7 +656,27 @@ var TSOS;
             _StdOut.putText('read');
         }
         writeFile(args) {
-            _StdOut.putText('write');
+            // file name not supplied
+            if (args.length <= 0) {
+                _StdOut.putText("Usage: write <filename> \"data\". Please supply a filename and its contents within quotes.");
+                return;
+            }
+            // contents not provided
+            if (args.length === 1) {
+                _StdOut.putText("Usage: write <filename> \"data\". Please supply contents of the file within the quotes.");
+                return;
+            }
+            // remove the filename from the args 
+            let fileName = args.shift();
+            // turn the rest of contents into a string
+            let contents = args.join(" ");
+            // if the contents do not start and end with a quote
+            if (contents.charAt(0) !== '"' || contents.charAt(contents.length - 1) !== '"') {
+                _StdOut.putText("Content needs to be written between \" marks.");
+                return;
+            }
+            const trimmedContents = contents.substring(1, contents.length - 1);
+            _Kernel.krnWriteFile(fileName, trimmedContents);
         }
         deleteFile(args) {
             _StdOut.putText('delete');
