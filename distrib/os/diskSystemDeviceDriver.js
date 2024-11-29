@@ -170,7 +170,21 @@ var TSOS;
             return ""; // no match
         }
         getNumberOfAvailableDataBlocks() {
-            return 0;
+            // loop through all data blocks and count each that has the in use bit as 0 (the first bit)
+            let count = 0;
+            let value = "";
+            for (let t = 1; t < NUM_TRACKS; t++) { // do not count the directory
+                for (let s = 0; s < NUM_SECTORS; s++) {
+                    for (let b = 0; b < NUM_BLOCKS; b++) {
+                        value = sessionStorage.getItem(`${t}${s}${b}`);
+                        if (value.charAt(0) === "0") {
+                            count++;
+                        }
+                    }
+                }
+            }
+            console.log(count);
+            return count;
         }
     }
     TSOS.DiskSystemDeviceDriver = DiskSystemDeviceDriver;

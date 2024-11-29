@@ -347,7 +347,7 @@ var TSOS;
             const result = _krnDiskSystemDeviceDriver.writeFile(filename, contents);
             switch (result) {
                 case (0):
-                    _StdOut.putText(`File ${filename} created successfully.`);
+                    _StdOut.putText(`File ${filename} written to successfully.`);
                     break;
                 case (1):
                     _StdOut.putText(`Disk is not formatted. File write failed.`);
