@@ -102,7 +102,47 @@
                 return 3; 
             }
 
+            // if it gets here it means the file is already created and there is enough data for the contents 
 
+            // get the tsb from the file name
+            let currentDirectoryTSB = this.getTSBFromFileName(fileName);
+            let currentDataTSB = sessionStorage.getItem(currentDirectoryTSB).substring(1,4);
+
+            // make all of the original data blocks not be in use
+            while (currentDataTSB !== "---") {
+                const currentData = sessionStorage.getItem(currentDataTSB);
+                if (!currentData) {
+                    break; 
+                }
+
+                sessionStorage.setItem(currentDataTSB, `0${currentData.substring(1)}`); // set the in use bit to 0 and clear the links
+                currentDataTSB = currentData.substring(1, 4); // set the currentTSB to the next link  
+                
+            }
+
+            // fill the appropriate amount of data blocks with the data that write is trying to use
+            let dataBlockTSB = this.getFirstAvailableDataBlock(); 
+            let content = contentsAsHexString;
+            while (true) {
+                if (content.length <= MAX_DATA_SIZE * 2) {
+                    const zeroesNeeded = MAX_DATA_SIZE * 2 - content.length; 
+                    sessionStorage.setItem(dataBlockTSB, `1---${content + '0'.repeat(zeroesNeeded)}`) // no links needed, fill leftover space with 0
+                    break; // this means all of content has been written
+                } else {
+                    // fit the MAX_DATA_SIZE amount of charaters to the dataBlockTSB, 
+                    let chunkOfContents = content.substring(0, MAX_DATA_SIZE*2);
+                    let nextDataBlockTSB = this.getFirstAvailableDataBlock();
+                    sessionStorage.setItem(dataBlockTSB, `1${nextDataBlockTSB}${chunkOfContents}`)
+                    
+                    // trim content to account for part of its data being gone
+                    content = content.substring(MAX_DATA_SIZE*2);
+                    // set to the available data block
+                    dataBlockTSB = nextDataBlockTSB;
+                }
+                
+            }
+
+            this.updateDiskTable();
             return 0; 
 
         }
@@ -193,13 +233,15 @@
                         if (zeroIndex !== -1) {
                             valueTrimmed = valueTrimmed.substring(0, zeroIndex); // trim the end if the file name is not max length
                         } 
-
+                        
                         if (fileNameAsHex === valueTrimmed) {
                             return `${t}${s}${b}` // the file name matched an existing tsb
                         }
                     }
                 }
             }
+            console.log(fileNameAsHex)
+            console.log(valueTrimmed)
             return ""; // no match
         }
 
@@ -217,7 +259,6 @@
                     }
                 }
             }
-            console.log(count);
             return count;
         }
 
