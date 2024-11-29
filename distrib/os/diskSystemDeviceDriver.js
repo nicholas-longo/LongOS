@@ -118,6 +118,9 @@ var TSOS;
             this.updateDiskTable();
             return 0;
         }
+        readFile(fileName) {
+            return 0;
+        }
         updateDiskTable() {
             let diskTable = document.getElementById("diskTable");
             diskTable.innerHTML = ""; // make the format table message go away

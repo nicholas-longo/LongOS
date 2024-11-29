@@ -653,7 +653,12 @@ var TSOS;
             _Kernel.krnCreateFile(args[0]);
         }
         readFile(args) {
-            _StdOut.putText('read');
+            // file name not supplied
+            if (args.length <= 0) {
+                _StdOut.putText("Usage: read <filename>. Please supply a filename.");
+                return;
+            }
+            _Kernel.krnReadFile(args[0]);
         }
         writeFile(args) {
             // file name not supplied

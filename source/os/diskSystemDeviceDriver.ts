@@ -147,6 +147,11 @@
 
         }
 
+
+        public readFile(fileName: string): number {
+            return 0;
+        }
+
         public updateDiskTable(): void {
             let diskTable = document.getElementById("diskTable") as HTMLTableElement; 
             diskTable.innerHTML = ""; // make the format table message go away

@@ -366,6 +366,27 @@ var TSOS;
                 this.krnTrace(`Error when attempting to write to file with name ${filename}.`);
             }
         }
+        krnReadFile(fileName) {
+            this.krnTrace(`Attempting to read file with name${fileName}.`);
+            const result = _krnDiskSystemDeviceDriver.readFile(fileName);
+            switch (result) {
+                case (0):
+                    _StdOut.putText(`File ${fileName} read successfully.`);
+                    break;
+                case (1):
+                    _StdOut.putText(`Disk is not formatted. File read failed.`);
+                    break;
+                case (2):
+                    _StdOut.putText(`File with name ${fileName} does not exist. File read failed.`);
+                    break;
+            }
+            if (result === 0) {
+                this.krnTrace(`Successfully wrote to file with name ${fileName}.`);
+            }
+            else {
+                this.krnTrace(`Error when attempting to write to file with name ${fileName}.`);
+            }
+        }
     }
     TSOS.Kernel = Kernel;
 })(TSOS || (TSOS = {}));
