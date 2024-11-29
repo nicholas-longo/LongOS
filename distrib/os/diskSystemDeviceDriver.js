@@ -119,6 +119,15 @@ var TSOS;
             return 0;
         }
         readFile(fileName) {
+            if (!_DiskFormatted) {
+                return 1;
+            }
+            if (this.getTSBFromFileName(fileName) === "") { // if TSB does not exist, return an error
+                return 2;
+            }
+            const tsb = this.getTSBFromFileName(fileName);
+            const data = this.getAllDataAsOneString(tsb);
+            //console.log(data);
             return 0;
         }
         updateDiskTable() {
@@ -186,7 +195,7 @@ var TSOS;
         }
         getTSBFromFileName(fileName) {
             const fileNameAsHex = TSOS.Utils.charactersToHexString(fileName);
-            let zeroIndex = 0; // the first 0 in the string (where the fileName ends)
+            let end = fileNameAsHex.length; // the first 0 in the string (where the fileName ends)
             let value = ""; // used to keep track of the data at a particular block
             let valueTrimmed = ""; // cutting off the 0's of the string if needed
             for (let t = 0; t < 1; t++) {
@@ -194,18 +203,13 @@ var TSOS;
                     for (let b = 0; b < NUM_BLOCKS; b++) {
                         value = sessionStorage.getItem(`${t}${s}${b}`);
                         valueTrimmed = value.substring(4); // no header
-                        zeroIndex = valueTrimmed.indexOf("0"); // get the end of the file name (file names will never contain the string 0)
-                        if (zeroIndex !== -1) {
-                            valueTrimmed = valueTrimmed.substring(0, zeroIndex); // trim the end if the file name is not max length
-                        }
+                        valueTrimmed = valueTrimmed.substring(0, end); // trim the end if the file name is not max length
                         if (fileNameAsHex === valueTrimmed) {
                             return `${t}${s}${b}`; // the file name matched an existing tsb
                         }
                     }
                 }
             }
-            console.log(fileNameAsHex);
-            console.log(valueTrimmed);
             return ""; // no match
         }
         getNumberOfAvailableDataBlocks() {
@@ -223,6 +227,24 @@ var TSOS;
                 }
             }
             return count;
+        }
+        getAllDataAsOneString(tsb) {
+            let hexString = "";
+            let dataTSB = sessionStorage.getItem(tsb).substring(1, 4); // get the first tsb of the data block from the directory block
+            // make all of the original data blocks not be in use
+            while (dataTSB !== "---") {
+                const currentData = sessionStorage.getItem(dataTSB);
+                if (!currentData) {
+                    break;
+                }
+                console.log("ran");
+                hexString += currentData.substring(4); // set the in use bit to 0 and clear the links
+                dataTSB = currentData.substring(1, 4); // set the currentTSB to the next link  
+            }
+            //const zeroIndex = hexString.indexOf('0'); 
+            //console.log(hexString.substring(0, zeroIndex))
+            console.log(hexString);
+            return hexString; // trim off the end of the data with 0's
         }
     }
     TSOS.DiskSystemDeviceDriver = DiskSystemDeviceDriver;
