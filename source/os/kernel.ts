@@ -429,7 +429,7 @@ module TSOS {
 
             switch(result) {
                 case(0):
-                    _StdOut.putText(`File ${fileName} read successfully.`);
+                    _StdOut.putText(READ_DATA);
                     break;
                 case(1):
                     _StdOut.putText(`Disk is not formatted. File read failed.`);

@@ -130,12 +130,13 @@
                     break; // this means all of content has been written
                 } else {
                     // fit the MAX_DATA_SIZE amount of charaters to the dataBlockTSB, 
-                    let chunkOfContents = content.substring(0, MAX_DATA_SIZE*2);
+                    let chunkOfContents = content.substring(0, MAX_DATA_SIZE * 2);
+                    sessionStorage.setItem(dataBlockTSB, `1---${chunkOfContents}`) // make it unavailable before you get the next link so you do not overwrite it
                     let nextDataBlockTSB = this.getFirstAvailableDataBlock();
                     sessionStorage.setItem(dataBlockTSB, `1${nextDataBlockTSB}${chunkOfContents}`)
                     
                     // trim content to account for part of its data being gone
-                    content = content.substring(MAX_DATA_SIZE*2);
+                    content = content.substring(MAX_DATA_SIZE * 2);
                     // set to the available data block
                     dataBlockTSB = nextDataBlockTSB;
                 }
@@ -148,6 +149,10 @@
         }
 
 
+        // return a value to the kernel based on if successful or went wrong
+        // 0 okay
+        // 1 disk not formatted
+        // 2 file name not found
         public readFile(fileName: string): number {
             if(!_DiskFormatted) {
                 return 1; 
@@ -157,14 +162,11 @@
                 return 2; 
             }
             
-            const tsb = this.getTSBFromFileName(fileName);
-            const data = this.getAllDataAsOneString(tsb);
-            
-            const text = Utils.hexStringToCharacters(data);
+            const tsb = this.getTSBFromFileName(fileName); 
+            const data = this.getAllDataAsOneString(tsb); // this is all stores as one hex string
+            const text = Utils.hexStringToCharacters(data); // convert it to characters
 
-            console.log(text);
-
-            
+            READ_DATA = text; // set the global variable for the kernel to read
             return 0;
         }
 
