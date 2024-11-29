@@ -127,7 +127,8 @@ var TSOS;
             }
             const tsb = this.getTSBFromFileName(fileName);
             const data = this.getAllDataAsOneString(tsb);
-            //console.log(data);
+            const text = TSOS.Utils.hexStringToCharacters(data);
+            console.log(text);
             return 0;
         }
         updateDiskTable() {
@@ -237,7 +238,6 @@ var TSOS;
                 if (!currentData) {
                     break;
                 }
-                console.log("ran");
                 hexString += currentData.substring(4); // set the in use bit to 0 and clear the links
                 dataTSB = currentData.substring(1, 4); // set the currentTSB to the next link  
             }
@@ -248,7 +248,6 @@ var TSOS;
             while (hexString.length >= 2 && hexString.slice(-2) === "00") {
                 hexString = hexString.substring(0, hexString.length - 2); // Remove the last two characters
             }
-            console.log(hexString);
             return hexString;
         }
     }

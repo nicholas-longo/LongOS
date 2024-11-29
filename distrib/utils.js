@@ -97,6 +97,15 @@ var TSOS;
             }
             return hexString;
         }
+        static hexStringToCharacters(hexString) {
+            let character = "";
+            let characters = "";
+            for (let i = 0; i < hexString.length - 1; i += 2) {
+                character = Utils.byteToChar(parseInt(hexString.substring(i, i + 2), 16)); // parse each two number string as hex
+                characters += character;
+            }
+            return characters;
+        }
     }
     TSOS.Utils = Utils;
 })(TSOS || (TSOS = {}));

@@ -159,7 +159,12 @@
             
             const tsb = this.getTSBFromFileName(fileName);
             const data = this.getAllDataAsOneString(tsb);
-            //console.log(data);
+            
+            const text = Utils.hexStringToCharacters(data);
+
+            console.log(text);
+
+            
             return 0;
         }
 
@@ -282,7 +287,6 @@
                 if (!currentData) {
                     break; 
                 }
-                console.log("ran")
                 hexString += currentData.substring(4); // set the in use bit to 0 and clear the links
                 dataTSB = currentData.substring(1, 4); // set the currentTSB to the next link  
             }
