@@ -285,12 +285,17 @@
                 console.log("ran")
                 hexString += currentData.substring(4); // set the in use bit to 0 and clear the links
                 dataTSB = currentData.substring(1, 4); // set the currentTSB to the next link  
-                
             }
-            //const zeroIndex = hexString.indexOf('0'); 
-            //console.log(hexString.substring(0, zeroIndex))
-            console.log(hexString);
-            return hexString; // trim off the end of the data with 0's
+
+            // remove the trailing 0's 
+            // i asked chat GPT 11/29/24 an effective way to deal with the 0's at the end. i thought since i know an even amount needs to come off, this would be okay
+            // for example if the last character was represnted as 70, I do not want that coming off
+            // but if it was 7000, i know that 00 means it is over. it needs iterate in chunks of 2 to solve this issue
+            while (hexString.length >= 2 && hexString.slice(-2) === "00") {
+                hexString = hexString.substring(0, hexString.length - 2); // Remove the last two characters
+            }
+
+            return hexString; 
 
         }
 
