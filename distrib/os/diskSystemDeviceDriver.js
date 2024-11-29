@@ -126,7 +126,6 @@ var TSOS;
                     // TSB 000 is reserved for the MBR so make the block start at 1 
                     value = sessionStorage.getItem(`0${s}${b}`);
                     if (value.substring(0, 1) === "0") { // if the first character is a 0, that means it is not in use and its value should be returned
-                        console.log(`0${s}${b}`);
                         return `0${s}${b}`; // return the TSB of the first available block
                     }
                 }
@@ -141,7 +140,6 @@ var TSOS;
                     for (let b = 0; b < NUM_BLOCKS; b++) {
                         value = sessionStorage.getItem(`${t}${s}${b}`);
                         if (value.substring(0, 1) === "0") {
-                            console.log(`${t}${s}${b}`);
                             return `${t}${s}${b}`; // return the TSB of the first available block
                         }
                     }
@@ -150,8 +148,26 @@ var TSOS;
             return ""; // return empty if there is no available
         }
         getTSBFromFileName(fileName) {
-            // convert the filename to hex. loop through each of the directories and get the substring(4). if a match, return the key from the session storage where that value matched
-            return "";
+            const fileNameAsHex = TSOS.Utils.charactersToHexString(fileName);
+            let zeroIndex = 0; // the first 0 in the string (where the fileName ends)
+            let value = ""; // used to keep track of the data at a particular block
+            let valueTrimmed = ""; // cutting off the 0's of the string if needed
+            for (let t = 0; t < 1; t++) {
+                for (let s = 0; s < NUM_SECTORS; s++) {
+                    for (let b = 0; b < NUM_BLOCKS; b++) {
+                        value = sessionStorage.getItem(`${t}${s}${b}`);
+                        valueTrimmed = value.substring(4); // no header
+                        zeroIndex = valueTrimmed.indexOf("0"); // get the end of the file name (file names will never contain the string 0)
+                        if (zeroIndex !== -1) {
+                            valueTrimmed = valueTrimmed.substring(0, zeroIndex); // trim the end if the file name is not max length
+                        }
+                        if (fileNameAsHex === valueTrimmed) {
+                            return `${t}${s}${b}`; // the file name matched an existing tsb
+                        }
+                    }
+                }
+            }
+            return ""; // no match
         }
         getNumberOfAvailableDataBlocks() {
             return 0;
