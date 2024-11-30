@@ -170,6 +170,22 @@
             return 0;
         }
 
+        // return a value to the kernel based on if successful or went wrong
+        // 0 okay
+        // 1 disk not formatted 
+        // 2 no files created
+        public ls(): number {
+            if(!_DiskFormatted) {
+                return 1; 
+            }
+
+            // loop through the directories, get the file name of each file and convert it to a string, store it to an array
+            // if the array is empty at the end of the loop, return 2 (no files currently exist)
+            // otherwise join the array on " " and save it to a global variable
+            
+            return 0;
+        }
+
         public updateDiskTable(): void {
             let diskTable = document.getElementById("diskTable") as HTMLTableElement; 
             diskTable.innerHTML = ""; // make the format table message go away

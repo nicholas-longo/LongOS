@@ -86,6 +86,7 @@ const BLOCK_SIZE = 64;
 const MAX_FILE_NAME_LENGTH = 60;
 const MAX_DATA_SIZE = 60;
 let READ_DATA = "";
+let FILES_ON_DISK = "";
 var onDocumentLoad = function () {
     TSOS.Control.hostInit();
 };

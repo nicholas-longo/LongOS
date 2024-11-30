@@ -102,23 +102,18 @@ var TSOS;
                 if (content.length <= MAX_DATA_SIZE * 2) {
                     const zeroesNeeded = MAX_DATA_SIZE * 2 - content.length;
                     sessionStorage.setItem(dataBlockTSB, `1---${content + '0'.repeat(zeroesNeeded)}`); // no links needed, fill leftover space with 0
-                    console.log(content);
                     break; // this means all of content has been written
                 }
                 else {
                     // fit the MAX_DATA_SIZE amount of charaters to the dataBlockTSB, 
                     let chunkOfContents = content.substring(0, MAX_DATA_SIZE * 2);
-                    console.log(chunkOfContents);
-                    sessionStorage.setItem(dataBlockTSB, `1---${chunkOfContents}`);
+                    sessionStorage.setItem(dataBlockTSB, `1---${chunkOfContents}`); // make it unavailable before you get the next link so you do not overwrite it
                     let nextDataBlockTSB = this.getFirstAvailableDataBlock();
                     sessionStorage.setItem(dataBlockTSB, `1${nextDataBlockTSB}${chunkOfContents}`);
-                    console.log(dataBlockTSB);
-                    console.log(nextDataBlockTSB);
                     // trim content to account for part of its data being gone
                     content = content.substring(MAX_DATA_SIZE * 2);
                     // set to the available data block
                     dataBlockTSB = nextDataBlockTSB;
-                    console.log(dataBlockTSB + " final");
                 }
             }
             this.updateDiskTable();
@@ -139,6 +134,19 @@ var TSOS;
             const data = this.getAllDataAsOneString(tsb); // this is all stores as one hex string
             const text = TSOS.Utils.hexStringToCharacters(data); // convert it to characters
             READ_DATA = text; // set the global variable for the kernel to read
+            return 0;
+        }
+        // return a value to the kernel based on if successful or went wrong
+        // 0 okay
+        // 1 disk not formatted 
+        // 2 no files created
+        ls() {
+            if (!_DiskFormatted) {
+                return 1;
+            }
+            // loop through the directories, get the file name of each file and convert it to a string, store it to an array
+            // if the array is empty at the end of the loop, return 2 (no files currently exist)
+            // otherwise join the array on " " and save it to a global variable
             return 0;
         }
         updateDiskTable() {

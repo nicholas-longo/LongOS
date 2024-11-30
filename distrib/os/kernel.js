@@ -387,6 +387,21 @@ var TSOS;
                 this.krnTrace(`Error when attempting to write to file with name ${fileName}.`);
             }
         }
+        krnLS() {
+            this.krnTrace(`Attempting to list all files.`);
+            const result = _krnDiskSystemDeviceDriver.ls();
+            switch (result) {
+                case (0):
+                    _StdOut.putText(FILES_ON_DISK);
+                    break;
+                case (1):
+                    _StdOut.putText(`Disk is not formatted. Cannot list files.`);
+                    break;
+                case (2):
+                    _StdOut.putText(`There are no files currently stored on disk.`);
+                    break;
+            }
+        }
     }
     TSOS.Kernel = Kernel;
 })(TSOS || (TSOS = {}));
