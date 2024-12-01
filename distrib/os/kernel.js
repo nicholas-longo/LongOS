@@ -401,6 +401,36 @@ var TSOS;
                     _StdOut.putText(`There are no files currently stored on disk.`);
                     break;
             }
+            if (result === 0) {
+                this.krnTrace(`Listed files stored on disk.`);
+            }
+            else {
+                this.krnTrace(`Error when attempting to list files on disk.`);
+            }
+        }
+        krnRenameFile(originalFileName, newFileName) {
+            this.krnTrace(`Attempting to rename ${originalFileName} to ${newFileName}.`);
+            const result = _krnDiskSystemDeviceDriver.renameFile(originalFileName, newFileName);
+            switch (result) {
+                case (0):
+                    _StdOut.putText(`${originalFileName} successefully renamed to ${newFileName}`);
+                    break;
+                case (1):
+                    _StdOut.putText(`Disk is not formatted. Cannot rename files.`);
+                    break;
+                case (2):
+                    _StdOut.putText(`Cannot rename ${originalFileName} because there is no file with that name on disk. Rename failed.`);
+                    break;
+                case (3):
+                    _StdOut.putText(`Cannot rename ${originalFileName} to ${newFileName} because that name already exists on disk. Rename failed.`);
+                    break;
+            }
+            if (result === 0) {
+                this.krnTrace(`${originalFileName} successefully renamed to ${newFileName}`);
+            }
+            else {
+                this.krnTrace(`Error when attempting to rename ${originalFileName}.`);
+            }
         }
     }
     TSOS.Kernel = Kernel;

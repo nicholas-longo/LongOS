@@ -172,6 +172,14 @@ var TSOS;
             console.log(FILES_ON_DISK);
             return 0;
         }
+        // return a value to the kernel based on if successful or went wrong
+        // 0 okay
+        // 1 disk not formatted 
+        // 2 original file name does not exist
+        // 3 new file name already exists 
+        renameFile(originalFileName, newFileName) {
+            return 0;
+        }
         updateDiskTable() {
             let diskTable = document.getElementById("diskTable");
             diskTable.innerHTML = ""; // make the format table message go away

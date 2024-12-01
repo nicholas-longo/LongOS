@@ -214,6 +214,15 @@
             return 0;
         }
 
+        // return a value to the kernel based on if successful or went wrong
+        // 0 okay
+        // 1 disk not formatted 
+        // 2 original file name does not exist
+        // 3 new file name already exists 
+        public renameFile(originalFileName: string, newFileName: string): number {
+            return 0;
+        }
+
         public updateDiskTable(): void {
             let diskTable = document.getElementById("diskTable") as HTMLTableElement; 
             diskTable.innerHTML = ""; // make the format table message go away

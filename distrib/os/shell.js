@@ -690,7 +690,23 @@ var TSOS;
             _StdOut.putText('copy');
         }
         renameFile(args) {
-            _StdOut.putText('rename');
+            // original file and new file name name not supplied
+            if (args.length <= 0) {
+                _StdOut.putText("Usage: rename <current filename> <new file name>. Please supply a current file name and new file name.");
+                return;
+            }
+            // new file name not supplied
+            if (args.length === 1) {
+                _StdOut.putText("Usage: rename <current filename> <new file name>. Please supply a new file name.");
+                return;
+            }
+            let originalFileName = args[0];
+            let newFileName = args[1];
+            if (originalFileName === newFileName) {
+                _StdOut.putText("Cannot rename file to previous name, pick a different name.");
+                return;
+            }
+            _Kernel.krnRenameFile(originalFileName, newFileName);
         }
         ls() {
             _Kernel.krnLS();
