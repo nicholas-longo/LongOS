@@ -147,6 +147,29 @@ var TSOS;
             // loop through the directories, get the file name of each file and convert it to a string, store it to an array
             // if the array is empty at the end of the loop, return 2 (no files currently exist)
             // otherwise join the array on " " and save it to a global variable
+            let files = [];
+            let value = "";
+            for (let s = 0; s < NUM_SECTORS; s++) {
+                for (let b = 1; b < NUM_BLOCKS; b++) {
+                    // TSB 000 is reserved for the MBR so make the block start at 1 
+                    value = sessionStorage.getItem(`0${s}${b}`);
+                    if (value.substring(0, 1) === "1") { // if the first character is a 0, that means it is not in use and its value should be returned
+                        let hexString = value.substring(4); // remove the header
+                        while (hexString.length >= 2 && hexString.slice(-2) === "00") {
+                            hexString = hexString.substring(0, hexString.length - 2); // Remove the last two characters
+                        }
+                        let fileName = TSOS.Utils.hexStringToCharacters(hexString); // convert the hex to a string
+                        files.push(fileName); // add it to the files array
+                    }
+                }
+            }
+            // there were no files on disk
+            if (files.length === 0) {
+                return 2;
+            }
+            console.log(files);
+            FILES_ON_DISK = files.join(" ");
+            console.log(FILES_ON_DISK);
             return 0;
         }
         updateDiskTable() {

@@ -693,7 +693,7 @@ var TSOS;
             _StdOut.putText('rename');
         }
         ls() {
-            _StdOut.putText('ls');
+            _Kernel.krnLS();
         }
     }
     TSOS.Shell = Shell;

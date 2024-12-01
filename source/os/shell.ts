@@ -863,7 +863,7 @@ module TSOS {
 
 
         public ls() {
-            _StdOut.putText('ls');
+            _Kernel.krnLS();
         }
 
 
