@@ -207,9 +207,7 @@
                 return 2;
             }
 
-            console.log(files);
             FILES_ON_DISK = files.join(" "); 
-            console.log(FILES_ON_DISK);
  
             return 0;
         }
@@ -220,7 +218,31 @@
         // 2 original file name does not exist
         // 3 new file name already exists 
         public renameFile(originalFileName: string, newFileName: string): number {
-            return 0;
+            if(!_DiskFormatted) {
+                return 1; 
+            }
+
+            const tsb = this.getTSBFromFileName(originalFileName);
+
+            if(tsb === "") { // if original file name does not exist
+                return 2; 
+            }
+
+            if(this.getTSBFromFileName(newFileName) !== "") { // if new file name already exists
+                return 3; 
+            }
+
+            let newFileNameAsHex = Utils.charactersToHexString(newFileName) // get the new file name as hex
+            let value = sessionStorage.getItem(tsb); // the previous directory block
+            let header = value.substring(0, 4); // preserve the header
+            const zeroesNeeded = MAX_DATA_SIZE * 2 - newFileNameAsHex.length; // how many 0's to fill
+            let updatedDirectoryBlock = header + newFileNameAsHex + "0".repeat(zeroesNeeded); 
+            sessionStorage.setItem(tsb, updatedDirectoryBlock);
+            
+            this.updateDiskTable(); 
+
+            return 0; 
+
         }
 
         public updateDiskTable(): void {
