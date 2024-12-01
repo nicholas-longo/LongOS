@@ -195,6 +195,26 @@ var TSOS;
             this.updateDiskTable();
             return 0;
         }
+        // return a value to the kernel based on if successful or went wrong
+        // 0 okay
+        // 1 disk not formatted 
+        // 2 file does not exist
+        deleteFile(fileName) {
+            if (!_DiskFormatted) {
+                return 1;
+            }
+            const tsb = this.getTSBFromFileName(fileName);
+            if (tsb === "") { // if TSB does not exist, return an error
+                return 2;
+            }
+            // loop through each of the data blocks and set their in use to 0
+            // make the directory no longer be in use
+            let value = sessionStorage.getItem(tsb);
+            value = "0" + value.substring(1); //update the in use bit to 0
+            sessionStorage.setItem(tsb, value);
+            this.updateDiskTable();
+            return 0;
+        }
         updateDiskTable() {
             let diskTable = document.getElementById("diskTable");
             diskTable.innerHTML = ""; // make the format table message go away
@@ -302,7 +322,7 @@ var TSOS;
                 if (!currentData) {
                     break;
                 }
-                hexString += currentData.substring(4); // set the in use bit to 0 and clear the links
+                hexString += currentData.substring(4);
                 dataTSB = currentData.substring(1, 4); // set the currentTSB to the next link  
             }
             // remove the trailing 0's 

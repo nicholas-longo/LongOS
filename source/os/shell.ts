@@ -850,7 +850,12 @@ module TSOS {
         }
 
         public deleteFile(args: string[]) {
-            _StdOut.putText('delete');
+            if (args.length <= 0) {
+                _StdOut.putText("Usage: delete <filename>. Please supply a file name.");
+                return; 
+            }
+
+            _Kernel.krnDeleteFile(args[0]);
         }
 
         public copyFile(args: string[]) {
@@ -858,10 +863,10 @@ module TSOS {
         }
 
         public renameFile(args: string[]) {
-           // original file and new file name name not supplied
-           if (args.length <= 0) {
-            _StdOut.putText("Usage: rename <current filename> <new file name>. Please supply a current file name and new file name.");
-            return; 
+            // original file and new file name name not supplied
+            if (args.length <= 0) {
+                _StdOut.putText("Usage: rename <current filename> <new file name>. Please supply a current file name and new file name.");
+                return; 
             }
 
             // new file name not supplied

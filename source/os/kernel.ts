@@ -497,6 +497,30 @@ module TSOS {
 
         }
 
+        public krnDeleteFile(fileName: string) {
+            this.krnTrace(`Attempting to delete ${fileName}.`);
+            const result = _krnDiskSystemDeviceDriver.deleteFile(fileName);
+
+            switch(result) {
+                case(0):
+                    _StdOut.putText(`Successfully deleted file with name ${fileName}.`);
+                    break;
+                case(1):
+                    _StdOut.putText(`Disk is not formatted. Cannot delete file.`);
+                    break;
+                case(2):
+                    _StdOut.putText(`Cannot delete ${fileName} because that file does not exist. File deletion failed.`)
+                    break;
+            }
+
+            if(result === 0) {
+                this.krnTrace(`${fileName} successfully deleted.`)
+            } else {
+                this.krnTrace(`Error when attempting to delete ${fileName}.`)
+            }
+
+        }
+
         
     }
 }

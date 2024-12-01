@@ -684,7 +684,11 @@ var TSOS;
             _Kernel.krnWriteFile(fileName, trimmedContents);
         }
         deleteFile(args) {
-            _StdOut.putText('delete');
+            if (args.length <= 0) {
+                _StdOut.putText("Usage: delete <filename>. Please supply a file name.");
+                return;
+            }
+            _Kernel.krnDeleteFile(args[0]);
         }
         copyFile(args) {
             _StdOut.putText('copy');
