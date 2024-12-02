@@ -85,7 +85,7 @@
         // 1 disk not formatted
         // 2 file name not found
         // 3 not enough data blocks to fit the contents
-        public writeFile(fileName: string, contents: string) {
+        public writeFile(fileName: string, contents: string, inHex: boolean = false) {
             if(!_DiskFormatted) {
                 return 1; 
             }
@@ -94,9 +94,13 @@
                 return 2; 
             }
 
-            const contentsAsHexString = Utils.charactersToHexString(contents); // contents formatted as hex
+            let contentsAsHexString = contents; 
+            if (!inHex) {
+                contentsAsHexString = Utils.charactersToHexString(contents); // if not passed in hex, convert
+            }
             const contentLength = contentsAsHexString.length; // length of the hex string
             const numberOfAvailableDataBlocks = this.getNumberOfAvailableDataBlocks(); // number of available data blocks
+            
             
             if(contentLength / MAX_DATA_SIZE > numberOfAvailableDataBlocks) {
                 return 3; 
@@ -329,6 +333,8 @@
             return 0; 
         }
 
+        
+
         // return a value to the kernel based on if successful or went wrong
         // 0 okay
         // 1 disk not formatted 
@@ -339,7 +345,6 @@
                 return 1; 
             }
 
-
             // create the file with the name 
             const swapFileName = "$" + PID; 
             const createFileResult = this.createFile(swapFileName);
@@ -348,14 +353,18 @@
                 return 2; 
             }
 
-
-
             // write to the file with the 0's added
-            const header = sessionStorage.getItem(this.getTSBFromFileName(swapFileName)).substring(0,4); // in use bit and tsb of newly created swap file
             const zeroesNeeded = MAX_DATA_SIZE * 2 - contentForSwapFile.length; // how many 0's to fill
-            let program = header + contentForSwapFile + "0".repeat(zeroesNeeded); 
+            let program = contentForSwapFile + "0".repeat(zeroesNeeded); 
 
-            console.log(program)
+            console.log(program);
+
+            const writeResult = this.writeFile(swapFileName, program, true); // pass true because it is already in hex
+
+            if(writeResult !== 0) {
+                return 3; 
+            }
+
             return 0; 
         }
 

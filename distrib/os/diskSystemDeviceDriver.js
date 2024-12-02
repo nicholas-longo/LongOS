@@ -69,14 +69,17 @@ var TSOS;
         // 1 disk not formatted
         // 2 file name not found
         // 3 not enough data blocks to fit the contents
-        writeFile(fileName, contents) {
+        writeFile(fileName, contents, inHex = false) {
             if (!_DiskFormatted) {
                 return 1;
             }
             if (this.getTSBFromFileName(fileName) === "") { // if TSB does not exist, return an error
                 return 2;
             }
-            const contentsAsHexString = TSOS.Utils.charactersToHexString(contents); // contents formatted as hex
+            let contentsAsHexString = contents;
+            if (!inHex) {
+                contentsAsHexString = TSOS.Utils.charactersToHexString(contents); // if not passed in hex, convert
+            }
             const contentLength = contentsAsHexString.length; // length of the hex string
             const numberOfAvailableDataBlocks = this.getNumberOfAvailableDataBlocks(); // number of available data blocks
             if (contentLength / MAX_DATA_SIZE > numberOfAvailableDataBlocks) {
@@ -276,10 +279,13 @@ var TSOS;
                 return 2;
             }
             // write to the file with the 0's added
-            const header = sessionStorage.getItem(this.getTSBFromFileName(swapFileName)).substring(0, 4); // in use bit and tsb of newly created swap file
             const zeroesNeeded = MAX_DATA_SIZE * 2 - contentForSwapFile.length; // how many 0's to fill
-            let program = header + contentForSwapFile + "0".repeat(zeroesNeeded);
+            let program = contentForSwapFile + "0".repeat(zeroesNeeded);
             console.log(program);
+            const writeResult = this.writeFile(swapFileName, program, true); // pass true because it is already in hex
+            if (writeResult !== 0) {
+                return 3;
+            }
             return 0;
         }
         updateDiskTable() {
