@@ -231,7 +231,8 @@ var TSOS;
         // 1 disk not formatted 
         // 2 original file name does not exist
         // 3 new file name already exists 
-        // 4 not enough space available to write
+        // 4 create failed
+        // 5 write failed
         copyFile(originalFileName, newFileName) {
             if (!_DiskFormatted) {
                 return 1;
@@ -243,17 +244,20 @@ var TSOS;
             if (this.getTSBFromFileName(newFileName) !== "") { // if new file name already exists
                 return 3;
             }
-            // get the contents of the file
+            // get the contents of the file. read will always work here
             this.readFile(originalFileName);
             const originalFileContents = READ_DATA;
-            // make sure there is enough space before calling write
-            const contentsAsHexString = TSOS.Utils.charactersToHexString(originalFileContents); // contents formatted as hex
-            const contentLength = contentsAsHexString.length; // length of the hex string
-            const numberOfAvailableDataBlocks = this.getNumberOfAvailableDataBlocks(); // number of available data blocks
-            if (contentLength / MAX_DATA_SIZE > numberOfAvailableDataBlocks) {
+            // create the new file 
+            const createResult = this.createFile(newFileName);
+            if (createResult !== 0) {
+                console.log(this.createFile(newFileName));
                 return 4;
             }
-            this.writeFile(newFileName, originalFileContents);
+            const writeResult = this.writeFile(newFileName, originalFileContents);
+            if (writeResult !== 0) {
+                console.log(this.writeFile(newFileName, originalFileContents));
+                return 5;
+            }
             return 0;
         }
         updateDiskTable() {

@@ -538,6 +538,12 @@ module TSOS {
                 case(3):
                     _StdOut.putText(`Cannot copy ${oldFileName} to ${newFileName} because that name already exists on disk. Copy failed.`)
                     break;
+                case(4):
+                    _StdOut.putText(`Cannot copy ${oldFileName} to ${newFileName} due to an internal issue with creating the new file. Copy failed.`)
+                    break;
+                case(5):
+                    _StdOut.putText(`Cannot copy ${oldFileName} to ${newFileName} due to an internal issue with writing to the new file. Copy failed.`)
+                    break;
 
             }
 
