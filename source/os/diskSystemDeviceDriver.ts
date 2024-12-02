@@ -329,6 +329,12 @@
             return 0; 
         }
 
+
+        public createSwapFile() {
+            console.log("ran")
+            return 0; 
+        }
+
         public updateDiskTable(): void {
             let diskTable = document.getElementById("diskTable") as HTMLTableElement; 
             diskTable.innerHTML = ""; // make the format table message go away
@@ -463,6 +469,8 @@
             return hexString; 
 
         }
+
+       
 
     
         

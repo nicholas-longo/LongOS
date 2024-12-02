@@ -602,24 +602,39 @@ module TSOS {
                 program.push(value) 
             }
             
-            // use the memory manager to make sure space is not filled up
-            if (!_MemoryManager.isSpaceAvailable()){
-                _StdOut.putText("Failed to Load: No memory available")
+            const isMemoryAvailble = _MemoryManager.isSpaceAvailable();
+            const isSwapSpaceAvailable = _Swapper.isSwapSpaceAvailable();
+            // use the memory manager and swapper to make sure there is space for a program
+            if (!isMemoryAvailble && !isSwapSpaceAvailable){
+                _StdOut.putText("Failed to Load: No memory segments or swap files available.")
                 return;
             } 
 
-            const currentSegment = _CurrentMemorySegment;
+            // handle loading in a memory segment
+            if(isMemoryAvailble) {
+                const currentSegment = _CurrentMemorySegment;
+    
+                // load the program into memory
+                _MemoryAccessor.flashMemory(program, currentSegment)
+    
+                // create the pcb using the manager, set the status, and update the table
+                const pcbEntry = _PCBManager.createPCB(8); // pass the priority of 8 as default for a program
+                pcbEntry.updateSegmentBaseAndLimit(currentSegment);
+                pcbEntry.updatePCBTable();
+                _StdOut.putText(`Process ID: ${pcbEntry.PID} Priority: ${pcbEntry.priority}`);
+                return; 
+            } 
+            
+            // handle loading onto disk
+            if(isSwapSpaceAvailable) { // called explictly because an else would not work because this function makes sure the disk is formatted.
+                const pcbEntry = _PCBManager.createPCB(8);
+                pcbEntry.updatePCBForSwapFile(); 
+                pcbEntry.updatePCBTable();
+                _StdOut.putText(`Process ID: ${pcbEntry.PID} Priority: ${pcbEntry.priority}`);
+                return; 
+            }
 
-            // load the program into memory
-            _MemoryAccessor.flashMemory(program, currentSegment)
-
-            // create the pcb using the manager, set the status, and update the table
-            const pcbEntry = _PCBManager.createPCB(8); // pass the priority of 8 as default for a program
-            pcbEntry.updateSegmentBaseAndLimit(currentSegment);
-            pcbEntry.updatePCBTable();
-
-            //show the process id and priority
-            _StdOut.putText(`Process ID: ${pcbEntry.PID} Priority: ${pcbEntry.priority}`);
+            console.log(_PCBManager.pcbQueue);
         }
 
         // shell run 
@@ -940,7 +955,7 @@ module TSOS {
             
         }
 
-
+        
         public ls() {
             _Kernel.krnLS();
         }

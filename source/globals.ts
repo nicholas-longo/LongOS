@@ -122,6 +122,7 @@ const MAX_DATA_SIZE = 60;
 
 let READ_DATA = "";
 let FILES_ON_DISK = "";
+let NUMBER_OF_BLOCKS_FOR_SWAP_FILE = 5; 
 
 
 var onDocumentLoad = function() {

@@ -80,6 +80,13 @@ module TSOS {
             this.limit = -1;
         }
 
+        public updatePCBForSwapFile(): void {
+            this.location = "Disk";
+            this.segment = -1; // not available
+            this.base = -1;
+            this.limit = -1;
+        }
+
         public updateSegmentBaseAndLimit(segment: number): void {
             this.segment = segment;  
             this.base = segment * 0x100; // i thought this math to figure out the base and segment is pretty cool and avoids passing some parameters

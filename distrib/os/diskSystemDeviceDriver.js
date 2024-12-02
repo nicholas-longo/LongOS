@@ -260,6 +260,10 @@ var TSOS;
             }
             return 0;
         }
+        createSwapFile() {
+            console.log("ran");
+            return 0;
+        }
         updateDiskTable() {
             let diskTable = document.getElementById("diskTable");
             diskTable.innerHTML = ""; // make the format table message go away
