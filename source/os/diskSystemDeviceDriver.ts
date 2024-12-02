@@ -98,11 +98,11 @@
             if (!inHex) {
                 contentsAsHexString = Utils.charactersToHexString(contents); // if not passed in hex, convert
             }
+
             const contentLength = contentsAsHexString.length; // length of the hex string
             const numberOfAvailableDataBlocks = this.getNumberOfAvailableDataBlocks(); // number of available data blocks
-            
-            
-            if(contentLength / MAX_DATA_SIZE > numberOfAvailableDataBlocks) {
+            // incorrectylt saying there is not space, there is enough for one more block
+            if(contentLength / MAX_DATA_SIZE > (numberOfAvailableDataBlocks + 1)) { // +1 because it needs to count itself
                 return 3; 
             }
 
@@ -357,7 +357,7 @@
             }
 
             // write to the file with the 0's added
-            const zeroesNeeded = 5 * MAX_DATA_SIZE * 2 - contentForSwapFile.length; // 5 for the amount of blocks, MAX_DATA_SIZE * 2 for the individual block - length to ensure no overfill
+            const zeroesNeeded = 5 * MAX_DATA_SIZE * 2 - contentForSwapFile.length; // 5 for the amount of blocks, MAX_DATA_SIZE * 2 for the individual block - length to not get extra 0's
             let program = contentForSwapFile + "0".repeat(zeroesNeeded); 
             
 
@@ -367,7 +367,7 @@
             if(writeResult !== 0) {
                 return 3; 
             }
-            
+
             return 0; 
         }
 
@@ -414,8 +414,10 @@
             // loop through the session storage for directories (only ones that start with 0), check the first bit. if there is a 0 available return its TSB string. if loop ends, return "";
             let value = "";
             for (let s = 0; s < NUM_SECTORS; s ++) {
-                for (let b = 1; b < NUM_BLOCKS; b ++) {
-                    // TSB 000 is reserved for the MBR so make the block start at 1 
+                for (let b = 0; b < NUM_BLOCKS; b ++) {
+                    if(s === 0 && b === 0) {
+                        continue; // TSB 000 is reserved for the MBR so make it skip that loop
+                    }
                     value = sessionStorage.getItem(`0${s}${b}`)
                     if (value.substring(0,1) === "0") { // if the first character is a 0, that means it is not in use and its value should be returned
                         return `0${s}${b}` // return the TSB of the first available block
