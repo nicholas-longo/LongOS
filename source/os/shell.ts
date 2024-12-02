@@ -864,7 +864,42 @@ module TSOS {
         }
 
         public copyFile(args: string[]) {
-            _StdOut.putText('copy');
+            // original file and new file name name not supplied
+            if (args.length <= 0) {
+                _StdOut.putText("Usage: copy <current filename> <new file name>. Please supply a current file name and new file name.");
+                return; 
+            }
+
+            // new file name not supplied
+            if (args.length === 1) {
+                _StdOut.putText("Usage: copy <current filename> <new file name>. Please supply a new file name.");
+                return; 
+            }
+
+            // do not let the new file name exceed the file name length
+            if(args[1].length > MAX_FILE_NAME_LENGTH) {
+                _StdOut.putText(`File names cannot exceed ${MAX_FILE_NAME_LENGTH} characters. Please select a different name to rename to.`);
+                return;
+            }
+
+            // protect against swap files
+            if(args[1].charAt(0) === "$") {
+                _StdOut.putText("Cannot rename file to any name that begins with '$'.");
+                return; 
+            }
+
+            let originalFileName = args[0];
+            let newFileName = args[1];
+
+            if(originalFileName === newFileName) {
+                _StdOut.putText("Cannot rename file to previous name, pick a different name.");
+                return;
+            }
+
+            _Kernel.krnCopyFile(originalFileName, newFileName);
+
+
+
         }
 
         public renameFile(args: string[]) {
@@ -886,6 +921,7 @@ module TSOS {
                 return;
             }
 
+            // protect against swap files
             if(args[1].charAt(0) === "$") {
                 _StdOut.putText("Cannot rename file to any name that begins with '$'.");
                 return; 

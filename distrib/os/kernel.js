@@ -453,6 +453,30 @@ var TSOS;
                 this.krnTrace(`Error when attempting to delete ${fileName}.`);
             }
         }
+        krnCopyFile(oldFileName, newFileName) {
+            this.krnTrace(`Attempting to copy contents of ${oldFileName} to ${newFileName}.`);
+            const result = _krnDiskSystemDeviceDriver.copyFile(oldFileName, newFileName);
+            switch (result) {
+                case (0):
+                    _StdOut.putText(`Contents of ${oldFileName} successefully copied to ${newFileName}`);
+                    break;
+                case (1):
+                    _StdOut.putText(`Disk is not formatted. Cannot rename files.`);
+                    break;
+                case (2):
+                    _StdOut.putText(`Cannot copy ${oldFileName} because there is no file with that name on disk. File copy failed.`);
+                    break;
+                case (3):
+                    _StdOut.putText(`Cannot copy ${oldFileName} to ${newFileName} because that name already exists on disk. Copy failed.`);
+                    break;
+            }
+            if (result === 0) {
+                this.krnTrace(`${oldFileName} successfully copied to ${newFileName}.`);
+            }
+            else {
+                this.krnTrace(`Error when attempting to copy ${oldFileName}.`);
+            }
+        }
     }
     TSOS.Kernel = Kernel;
 })(TSOS || (TSOS = {}));

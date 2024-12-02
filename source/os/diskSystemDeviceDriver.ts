@@ -212,6 +212,7 @@
             return 0;
         }
 
+
         // return a value to the kernel based on if successful or went wrong
         // 0 okay
         // 1 disk not formatted 
@@ -283,6 +284,45 @@
             this.updateDiskTable();
            
             return 0;
+        }
+
+        // return a value to the kernel based on if successful or went wrong
+        // 0 okay
+        // 1 disk not formatted 
+        // 2 original file name does not exist
+        // 3 new file name already exists 
+        // 4 not enough space available to write
+        public copyFile(originalFileName: string, newFileName: string): number {
+            if(!_DiskFormatted) {
+                return 1; 
+            }
+
+            const tsb = this.getTSBFromFileName(originalFileName);
+
+            if(tsb === "") { // if original file name does not exist
+                return 2; 
+            }
+
+            if(this.getTSBFromFileName(newFileName) !== "") { // if new file name already exists
+                return 3; 
+            }
+
+            // get the contents of the file
+            this.readFile(originalFileName);
+            const originalFileContents: string = READ_DATA;  
+
+            // make sure there is enough space before calling write
+            const contentsAsHexString = Utils.charactersToHexString(originalFileContents); // contents formatted as hex
+            const contentLength = contentsAsHexString.length; // length of the hex string
+            const numberOfAvailableDataBlocks = this.getNumberOfAvailableDataBlocks(); // number of available data blocks
+            
+            if(contentLength / MAX_DATA_SIZE > numberOfAvailableDataBlocks) {
+                return 4; 
+            }
+
+            this.writeFile(newFileName, originalFileContents); 
+            
+            return 0; 
         }
 
         public updateDiskTable(): void {
