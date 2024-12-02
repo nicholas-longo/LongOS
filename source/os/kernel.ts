@@ -24,6 +24,7 @@ module TSOS {
             _PCBManager = new PCBManager();         // deals with creating and terminating pcb blocks
             _CPUScheduler = new Scheduler(); 
             _CPUDispatcher = new Dispatcher(); 
+            _Swapper = new Swapper(); 
 
             // Initialize the console.
             _Console = new Console();             // The command line interface / console I/O device.

@@ -57,6 +57,7 @@ var _ProcessControlBlock: any = null; // MAY NEED TO CHANGE
 var _PCBManager: any = null; 
 var _CPUScheduler: any = null; 
 var _CPUDispatcher: any = null; 
+var _Swapper: any = null; 
 
 var _OSclock: number = 0;  // Page 23.
 

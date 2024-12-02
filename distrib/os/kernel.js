@@ -22,6 +22,7 @@ var TSOS;
             _PCBManager = new TSOS.PCBManager(); // deals with creating and terminating pcb blocks
             _CPUScheduler = new TSOS.Scheduler();
             _CPUDispatcher = new TSOS.Dispatcher();
+            _Swapper = new TSOS.Swapper();
             // Initialize the console.
             _Console = new TSOS.Console(); // The command line interface / console I/O device.
             _Console.init();
