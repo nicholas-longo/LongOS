@@ -354,10 +354,10 @@
             }
 
             // write to the file with the 0's added
-            const zeroesNeeded = MAX_DATA_SIZE * 2 - contentForSwapFile.length; // how many 0's to fill
+            const zeroesNeeded = 5 * MAX_DATA_SIZE * 2 - contentForSwapFile.length; // 5 for the amount of blocks, MAX_DATA_SIZE * 2 for the individual block - length to ensure no overfill
             let program = contentForSwapFile + "0".repeat(zeroesNeeded); 
+            
 
-            console.log(program);
 
             const writeResult = this.writeFile(swapFileName, program, true); // pass true because it is already in hex
 

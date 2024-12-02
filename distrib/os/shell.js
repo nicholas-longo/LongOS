@@ -508,7 +508,7 @@ var TSOS;
                 const pcbEntry = _PCBManager.createPCB(8);
                 pcbEntry.updatePCBForSwapFile();
                 pcbEntry.updatePCBTable();
-                let contentForSwapFile = program.map((num) => num.toString(16).toUpperCase()).join(''); // turn each of these into the proper hex characters for the swapfile
+                let contentForSwapFile = program.map((num) => num.toString(16).toUpperCase().padStart(2, '0')).join(''); // turn each of these into the proper hex characters for the swapfile. Chat GPT 12/2/24 helped me deal with the 0's not working correctly
                 _Swapper.createSwapFile(pcbEntry.PID, contentForSwapFile);
                 _StdOut.putText(`Process ID: ${pcbEntry.PID} Priority: ${pcbEntry.priority}`);
                 return;
