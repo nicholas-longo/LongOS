@@ -855,6 +855,11 @@ module TSOS {
                 return; 
             }
 
+            if(args[0].charAt(0) === "$"){
+                _StdOut.putText("Cannot delete swap files.");
+                return; 
+            }
+
             _Kernel.krnDeleteFile(args[0]);
         }
 
@@ -879,6 +884,11 @@ module TSOS {
             if(args[1].length > MAX_FILE_NAME_LENGTH) {
                 _StdOut.putText(`File names cannot exceed ${MAX_FILE_NAME_LENGTH} characters. Please select a different name to rename to.`);
                 return;
+            }
+
+            if(args[1].charAt(0) === "$") {
+                _StdOut.putText("Cannot rename file to any name that begins with '$'.");
+                return; 
             }
 
             let originalFileName = args[0];

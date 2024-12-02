@@ -688,6 +688,10 @@ var TSOS;
                 _StdOut.putText("Usage: delete <filename>. Please supply a file name.");
                 return;
             }
+            if (args[0].charAt(0) === "$") {
+                _StdOut.putText("Cannot delete swap files.");
+                return;
+            }
             _Kernel.krnDeleteFile(args[0]);
         }
         copyFile(args) {
@@ -707,6 +711,10 @@ var TSOS;
             // do not let the new file name exceed the file name length
             if (args[1].length > MAX_FILE_NAME_LENGTH) {
                 _StdOut.putText(`File names cannot exceed ${MAX_FILE_NAME_LENGTH} characters. Please select a different name to rename to.`);
+                return;
+            }
+            if (args[1].charAt(0) === "$") {
+                _StdOut.putText("Cannot rename file to any name that begins with '$'.");
                 return;
             }
             let originalFileName = args[0];
