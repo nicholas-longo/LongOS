@@ -261,6 +261,17 @@
             }
 
             // loop through each of the data blocks and set their in use to 0
+            let dataTSB = sessionStorage.getItem(tsb).substring(1, 4); // get the first tsb of the data block from the directory block
+            // make all of the original data blocks not be in use
+            while (dataTSB !== "---") {
+                const currentData = sessionStorage.getItem(dataTSB);
+                if (!currentData) {
+                    break; 
+                }
+                let changedDataBlock = "0"+ sessionStorage.getItem(dataTSB).substring(1); // change the in use bit but keep rest of value
+                sessionStorage.setItem(dataTSB, changedDataBlock)
+                dataTSB = currentData.substring(1, 4); // set the currentTSB to the next link  
+            }
 
 
             // make the directory no longer be in use
