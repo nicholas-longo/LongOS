@@ -508,10 +508,10 @@ var TSOS;
                 const pcbEntry = _PCBManager.createPCB(8);
                 pcbEntry.updatePCBForSwapFile();
                 pcbEntry.updatePCBTable();
+                _Swapper.createSwapFile(pcbEntry.PID);
                 _StdOut.putText(`Process ID: ${pcbEntry.PID} Priority: ${pcbEntry.priority}`);
                 return;
             }
-            console.log(_PCBManager.pcbQueue);
         }
         // shell run 
         // terminate the existing pcb

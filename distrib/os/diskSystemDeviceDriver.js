@@ -260,7 +260,11 @@ var TSOS;
             }
             return 0;
         }
-        createSwapFile() {
+        // return a value to the kernel based on if successful or went wrong
+        // 0 okay
+        // 1 disk not formatted 
+        // 
+        createSwapFile(PID) {
             console.log("ran");
             return 0;
         }
@@ -332,13 +336,15 @@ var TSOS;
             let end = fileNameAsHex.length; // the first 0 in the string (where the fileName ends)
             let value = ""; // used to keep track of the data at a particular block
             let valueTrimmed = ""; // cutting off the 0's of the string if needed
+            let inUse = "";
             for (let t = 0; t < 1; t++) {
                 for (let s = 0; s < NUM_SECTORS; s++) {
                     for (let b = 0; b < NUM_BLOCKS; b++) {
                         value = sessionStorage.getItem(`${t}${s}${b}`);
+                        inUse = value.substring(0, 1);
                         valueTrimmed = value.substring(4); // no header
                         valueTrimmed = valueTrimmed.substring(0, end); // trim the end if the file name is not max length
-                        if (fileNameAsHex === valueTrimmed) {
+                        if (inUse === "1" && fileNameAsHex === valueTrimmed) {
                             return `${t}${s}${b}`; // the file name matched an existing tsb
                         }
                     }
