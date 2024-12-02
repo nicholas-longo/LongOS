@@ -333,9 +333,29 @@
         // 0 okay
         // 1 disk not formatted 
         // 2 create failed
+        // 3 write failed
         public createSwapFile(PID: number, contentForSwapFile: string):number {
-            console.log(PID);
-            console.log(contentForSwapFile)
+            if(!_DiskFormatted) { // should never be called but want to be safe
+                return 1; 
+            }
+
+
+            // create the file with the name 
+            const swapFileName = "$" + PID; 
+            const createFileResult = this.createFile(swapFileName);
+
+            if(createFileResult !== 0) {
+                return 2; 
+            }
+
+
+
+            // write to the file with the 0's added
+            const header = sessionStorage.getItem(this.getTSBFromFileName(swapFileName)).substring(0,4); // in use bit and tsb of newly created swap file
+            const zeroesNeeded = MAX_DATA_SIZE * 2 - contentForSwapFile.length; // how many 0's to fill
+            let program = header + contentForSwapFile + "0".repeat(zeroesNeeded); 
+
+            console.log(program)
             return 0; 
         }
 
