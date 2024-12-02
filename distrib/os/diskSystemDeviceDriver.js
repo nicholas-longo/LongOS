@@ -263,9 +263,10 @@ var TSOS;
         // return a value to the kernel based on if successful or went wrong
         // 0 okay
         // 1 disk not formatted 
-        // 
-        createSwapFile(PID) {
-            console.log("ran");
+        // 2 create failed
+        createSwapFile(PID, contentForSwapFile) {
+            console.log(PID);
+            console.log(contentForSwapFile);
             return 0;
         }
         updateDiskTable() {

@@ -14,8 +14,8 @@ var TSOS;
             }
             return true;
         }
-        createSwapFile(PID) {
-            _krnDiskSystemDeviceDriver.createSwapFile(PID);
+        createSwapFile(PID, program) {
+            _krnDiskSystemDeviceDriver.createSwapFile(PID, program);
         }
         rollIn() {
         }

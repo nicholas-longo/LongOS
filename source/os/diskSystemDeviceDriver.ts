@@ -332,9 +332,10 @@
         // return a value to the kernel based on if successful or went wrong
         // 0 okay
         // 1 disk not formatted 
-        // 
-        public createSwapFile(PID: number) {
-            console.log("ran")
+        // 2 create failed
+        public createSwapFile(PID: number, contentForSwapFile: string):number {
+            console.log(PID);
+            console.log(contentForSwapFile)
             return 0; 
         }
 

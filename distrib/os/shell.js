@@ -508,7 +508,8 @@ var TSOS;
                 const pcbEntry = _PCBManager.createPCB(8);
                 pcbEntry.updatePCBForSwapFile();
                 pcbEntry.updatePCBTable();
-                _Swapper.createSwapFile(pcbEntry.PID);
+                let contentForSwapFile = program.map((num) => num.toString(16).toUpperCase()).join(''); // turn each of these into the proper hex characters for the swapfile
+                _Swapper.createSwapFile(pcbEntry.PID, contentForSwapFile);
                 _StdOut.putText(`Process ID: ${pcbEntry.PID} Priority: ${pcbEntry.priority}`);
                 return;
             }

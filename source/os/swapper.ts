@@ -19,8 +19,8 @@ module TSOS {
             return true; 
         }
 
-        public createSwapFile(PID: number): void {
-            _krnDiskSystemDeviceDriver.createSwapFile(PID);
+        public createSwapFile(PID: number, program: string): void {
+            _krnDiskSystemDeviceDriver.createSwapFile(PID, program);
         }
 
         public rollIn() {
