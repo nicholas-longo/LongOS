@@ -126,7 +126,7 @@ var TSOS;
         // 0 okay
         // 1 disk not formatted
         // 2 file name not found
-        readFile(fileName) {
+        readFile(fileName, inHex = false) {
             if (!_DiskFormatted) {
                 return 1;
             }
@@ -135,7 +135,10 @@ var TSOS;
             }
             const tsb = this.getTSBFromFileName(fileName);
             const data = this.getAllDataAsOneString(tsb); // this is all stores as one hex string
-            const text = TSOS.Utils.hexStringToCharacters(data); // convert it to characters
+            let text = data;
+            if (!inHex) {
+                text = TSOS.Utils.hexStringToCharacters(data); // convert it to characters
+            }
             READ_DATA = text; // set the global variable for the kernel to read
             return 0;
         }
@@ -285,6 +288,8 @@ var TSOS;
             if (writeResult !== 0) {
                 return 3;
             }
+            this.readFile(swapFileName, true);
+            console.log(READ_DATA);
             return 0;
         }
         updateDiskTable() {

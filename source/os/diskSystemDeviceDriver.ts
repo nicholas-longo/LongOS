@@ -157,7 +157,7 @@
         // 0 okay
         // 1 disk not formatted
         // 2 file name not found
-        public readFile(fileName: string): number {
+        public readFile(fileName: string, inHex: boolean = false): number {
             if(!_DiskFormatted) {
                 return 1; 
             }
@@ -168,7 +168,10 @@
             
             const tsb = this.getTSBFromFileName(fileName); 
             const data = this.getAllDataAsOneString(tsb); // this is all stores as one hex string
-            const text = Utils.hexStringToCharacters(data); // convert it to characters
+            let text = data; 
+            if (!inHex) {
+                text = Utils.hexStringToCharacters(data); // convert it to characters
+            }
 
             READ_DATA = text; // set the global variable for the kernel to read
             return 0;
@@ -364,7 +367,7 @@
             if(writeResult !== 0) {
                 return 3; 
             }
-
+            
             return 0; 
         }
 
