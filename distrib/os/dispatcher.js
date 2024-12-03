@@ -31,8 +31,6 @@ var TSOS;
                 _CPU.Xreg = newHeadPCB.xReg;
                 _CPU.Yreg = newHeadPCB.yReg;
                 _CPU.Zflag = newHeadPCB.zFlag;
-                console.log(prevHeadPCB.PID);
-                console.log(newHeadPCB.PID);
                 //if there are more than 3 running programs and the current head process in the ready queue is stored in disk
                 if (_PCBManager.pcbReadyQueue.length > 3 && newHeadPCB.segment === -1) {
                     _Swapper.rollOut(prevHeadPCB.PID);

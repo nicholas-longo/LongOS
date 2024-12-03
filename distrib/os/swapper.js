@@ -31,12 +31,12 @@ var TSOS;
                 ?.map((hex) => parseInt(hex, 16)) || []; // Convert each pair to a number
             // delete the previous swap file 
             _krnDiskSystemDeviceDriver.deleteFile(`$${PID}`);
-            // load the program into memory
-            _MemoryAccessor.flashMemory(program, segment);
             // update the location, seg, base, and limit accordingly
             const pcb = _PCBManager.findPCB(PID);
             pcb.updatePCBLocation("Memory");
             pcb.updateSegmentBaseAndLimit(segment);
+            // load the program into memory
+            _MemoryAccessor.flashMemory(program, segment);
             // update the pcb table
             pcb.updatePCBTable();
         }
@@ -45,7 +45,6 @@ var TSOS;
             const pcb = _PCBManager.findPCB(PID);
             const pcbSegment = pcb.segment;
             _MemoryManager.deallocateSegement(pcbSegment);
-            console.log(_MemoryManager.memoryAvailability);
             // create a swap file for its memory contents
             this.createSwapFile(PID, "A9038D4100A9018D4000AC4000A201FFEE4000AE4000EC4100D0EFA9448D4200A94F8D4300A94E8D4400A9458D4500A9008D4600A202A042FF00"); // AA is temp until i can get the right program
             // update the location, seg, base, and limit accordingly

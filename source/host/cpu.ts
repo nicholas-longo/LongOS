@@ -288,5 +288,3 @@ module TSOS {
 }
 
 
-// going to need to check and make sure that the HOB is not greater than 0, if it is find a way to break the program and not let it execute
-// DO that for project 3
