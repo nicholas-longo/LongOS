@@ -645,6 +645,8 @@ module TSOS {
         // prompt the cpu to begin its work
         // will have to change the status of the pcb block a few times, but I will add the logic for that a bit later because that is for project 3
         public shellRun(args: string[]) {
+            // TODO if a pid that is on disk is called make sure to swap something out of memory (the one in the first slot)
+            
             if (args.length <=0) { // make sure there is a PID given
                 _StdOut.putText("Usage: run <PID>  Please supply a PID.");
                 return; 

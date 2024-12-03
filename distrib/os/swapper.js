@@ -17,9 +17,18 @@ var TSOS;
         createSwapFile(PID, program) {
             _krnDiskSystemDeviceDriver.createSwapFile(PID, program);
         }
-        rollIn() {
+        // IR was reading undefined for processes in disk, look into that
+        rollIn(PID) {
+            // allocate the open memory segment to the process
+            // delete the previous swap file 
+            // update the location, seg, base, and limit accordingly
+            // update the pcb table
         }
-        rollOut() {
+        rollOut(PID) {
+            //deallocate the memory segment where the tail is (one that most recently ran)
+            // create a swap file for its memory contents
+            // update the location, seg, base, and limit accordingly
+            // update the pcb table
         }
     }
     TSOS.Swapper = Swapper;

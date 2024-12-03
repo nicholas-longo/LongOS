@@ -23,12 +23,21 @@ module TSOS {
             _krnDiskSystemDeviceDriver.createSwapFile(PID, program);
         }
 
-        public rollIn() {
+        // IR was reading undefined for processes in disk, look into that
+        
+        public rollIn(PID:number): void {
+            // allocate the open memory segment to the process
+            // delete the previous swap file 
+            // update the location, seg, base, and limit accordingly
+            // update the pcb table
 
         }
 
-        public rollOut() {
-
+        public rollOut(PID:number):void {
+            //deallocate the memory segment where the tail is (one that most recently ran)
+            // create a swap file for its memory contents
+            // update the location, seg, base, and limit accordingly
+            // update the pcb table
         }
 
 
