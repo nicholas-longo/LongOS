@@ -83,7 +83,7 @@ var TSOS;
             const contentLength = contentsAsHexString.length; // length of the hex string
             const numberOfAvailableDataBlocks = this.getNumberOfAvailableDataBlocks(); // number of available data blocks
             // incorrectylt saying there is not space, there is enough for one more block
-            if (contentLength / MAX_DATA_SIZE > (numberOfAvailableDataBlocks + 1)) { // +1 because it needs to count itself
+            if ((contentLength / 2) / MAX_DATA_SIZE > (numberOfAvailableDataBlocks + 1)) { // divide content length by 2 because and max_data_size is coutning 2 digits. +1 because it needs to count itself
                 return 3;
             }
             // if it gets here it means the file is already created and there is enough data for the contents 
@@ -287,6 +287,7 @@ var TSOS;
             let program = contentForSwapFile + "0".repeat(zeroesNeeded);
             const writeResult = this.writeFile(swapFileName, program, true); // pass true because it is already in hex
             if (writeResult !== 0) {
+                this.deleteFile(swapFileName); // there was an error creating the swap file so make sure it can be written over
                 return 3;
             }
             return 0;
