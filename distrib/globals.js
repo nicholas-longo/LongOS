@@ -90,6 +90,8 @@ let READ_DATA = "";
 let FILES_ON_DISK = "";
 let NUMBER_OF_BLOCKS_FOR_SWAP_FILE = 5;
 let WRITE_CONTENT_LENGTH = 0;
+let BASE_FOR_WRITING_ON_SWAP = 0;
+let ROLLING_IN_FLAG = false;
 var onDocumentLoad = function () {
     TSOS.Control.hostInit();
 };

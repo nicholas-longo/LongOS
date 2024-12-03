@@ -33,7 +33,7 @@ module TSOS {
                 
                 const prevHeadPCB = _PCBManager.pcbReadyQueue.shift(); // get the head PCB
                 _PCBManager.pcbReadyQueue.push(prevHeadPCB); // move it to the back of the ready queue
-                
+
                 const newHeadPCB = _PCBManager.pcbReadyQueue[0]; // get the new head
 
                 // update the necessary CPU registers 
@@ -45,7 +45,7 @@ module TSOS {
                 _CPU.Zflag = newHeadPCB.zFlag
                 
                 //if there are more than 3 running programs and the current head process in the ready queue is stored in disk
-                if(_PCBManager.pcbReadyQueue.length > 3 && newHeadPCB.segment === -1) {
+                if(newHeadPCB.segment === -1) {
                     _Swapper.rollOut(prevHeadPCB.PID);
                     _Swapper.rollIn(newHeadPCB.PID);
                 }

@@ -61,8 +61,11 @@ var TSOS;
         //calls write() from memory
         write() {
             let baseAdjustment = 0;
-            if (_PCBManager.pcbReadyQueue.length > 0) {
+            if (_PCBManager.pcbReadyQueue.length > 0 && !ROLLING_IN_FLAG) {
                 baseAdjustment = _PCBManager.getFirstReadyProcess().base;
+            }
+            if (ROLLING_IN_FLAG) {
+                baseAdjustment = BASE_FOR_WRITING_ON_SWAP;
             }
             _Memory.write(baseAdjustment);
         }
@@ -101,7 +104,6 @@ var TSOS;
         dumpMemory(base, limit) {
             const originalMAR = this.getMAR();
             let memoryDump = [];
-            console.log(base, limit);
             for (let address = base + 1; address < limit; address++) {
                 this.setMAR(address); // set the MAR 
                 this.read(); // read to set the MDR
@@ -109,7 +111,6 @@ var TSOS;
                 memoryDump.push(value); // add the value of the MDR into an array
             }
             this.setMAR(originalMAR); // set it back to the original value after retrieving the memory
-            console.log(memoryDump);
             return memoryDump;
         }
     }

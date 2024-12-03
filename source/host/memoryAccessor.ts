@@ -75,10 +75,16 @@ module TSOS {
         //calls write() from memory
         public write(): void {
             let baseAdjustment = 0; 
-            if (_PCBManager.pcbReadyQueue.length > 0) {
+            if (_PCBManager.pcbReadyQueue.length > 0 && !ROLLING_IN_FLAG) {
                 baseAdjustment = _PCBManager.getFirstReadyProcess().base
              }
+
+            if(ROLLING_IN_FLAG) {
+                baseAdjustment = BASE_FOR_WRITING_ON_SWAP;
+            }
+
             _Memory.write(baseAdjustment); 
+
         }
 
         // when called, it will add the entered address and value into the MAR and MDR
@@ -93,6 +99,7 @@ module TSOS {
         public flashMemory(program: Array<number>, segment: number) {
             const base = segment * 0x100; 
             const startingAddress: number = base;
+
             for (let i = 0; i < program.length; i ++) {
                 this.writeImmediate(startingAddress + i, program[i]) // address increments by 1 each time and is passed as the MAR, correct code is passed as the MDR
             }
@@ -122,7 +129,6 @@ module TSOS {
             const originalMAR = this.getMAR(); 
             let memoryDump: number[] = [];
 
-            console.log(base, limit)
             for (let address = base + 1; address < limit; address ++) {
                 this.setMAR(address); // set the MAR 
                 this.read(); // read to set the MDR
@@ -132,7 +138,6 @@ module TSOS {
 
             this.setMAR(originalMAR); // set it back to the original value after retrieving the memory
 
-            console.log(memoryDump)
             return memoryDump; 
         }
     }

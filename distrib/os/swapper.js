@@ -19,6 +19,7 @@ var TSOS;
         }
         // IR was reading undefined for processes in disk, look into that
         rollIn(PID) {
+            ROLLING_IN_FLAG = true; // this flag is needed so memory can adjust what base it uses
             // allocate the open memory segment to the process
             _MemoryManager.isSpaceAvailable();
             const segment = _CurrentMemorySegment; // get the segment that is open
@@ -39,18 +40,20 @@ var TSOS;
             _MemoryAccessor.flashMemory(program, segment);
             // update the pcb table
             pcb.updatePCBTable();
+            TSOS.Control.updateMemory();
+            ROLLING_IN_FLAG = false; // set to off when not rolling in
         }
         rollOut(PID) {
             //deallocate the memory segment where the tail is (one that most recently ran)
             const pcb = _PCBManager.findPCB(PID);
             const pcbSegment = pcb.segment;
+            BASE_FOR_WRITING_ON_SWAP = pcb.base;
             //get the program stored with the PID 
             const program = _MemoryAccessor.dumpMemory(pcb.base, pcb.limit);
             // convert the array of hex digits to string
             const programString = program
                 .map((value) => value.toString(16).toUpperCase().padStart(2, '0')) // Convert to hex and ensure 2 digits
                 .join(''); // Join all values into a single string
-            console.log(programString);
             _MemoryManager.deallocateSegement(pcbSegment);
             // create a swap file for its memory contents
             this.createSwapFile(PID, programString);

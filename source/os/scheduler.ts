@@ -40,6 +40,7 @@ module TSOS {
         public scheduleNextProcessAfterTermination(): void {
             // if there is another process in the ready queue when one is terminated, schedule it
             if (_PCBManager.pcbReadyQueue.length > 0) {
+                
                 this.loadRegistersAfterPCBTerminated(); 
                 this.scheduleHeadProcess(); 
             }
