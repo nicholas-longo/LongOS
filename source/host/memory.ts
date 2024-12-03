@@ -10,19 +10,18 @@ module TSOS {
         private MDR: number; // memory data register
 
          constructor() {
-        //initializes the memory array
-        this.memory = [];
-        this.MAR = 0;
-        this.MDR = 0;
-        this.init();
+            //initializes the memory array
+            this.memory = new Array(3 * 256).fill(0x00);
+            this.MAR = 0;
+            this.MDR = 0;
     }
         
     // initialize a blank memory array. the size 768 bytes so it can store 3 256 byte programs
-        public init(): void {
-            for (let i: number = 0x00; i < 0x300; i += 0x01) {
-                this.memory[i] = 0x00; 
-            }
-        }
+        // public init(): void {
+        //     for (let i: number = 0x00; i < 0x300; i += 0x01) {
+        //         this.memory[i] = 0x00; 
+        //     }
+        // }
 
         public getMemory(): number[] {
             return this.memory;

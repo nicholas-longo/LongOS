@@ -92,7 +92,7 @@ module TSOS {
             _CPU.init();       //       There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool.
             Control.updateCPUTable();
             _Memory = new Memory()
-            _Memory.init();
+            //Memory.init();
             Control.intializeMemoryTable(); // create the memory table
             _MemoryAccessor = new MemoryAccessor(_Memory)
 
@@ -152,6 +152,7 @@ module TSOS {
         public static updateCPUTable(): void {
             let cpuTable = document.getElementById("cpuTable") as HTMLTableElement;
 
+
             // get the current values from the CPU
             const PC = _CPU.PC;
             const IR = _CPU.IR;
@@ -159,6 +160,8 @@ module TSOS {
             const xReg = _CPU.Xreg;
             const yReg = _CPU.Yreg;
             const zFlag = _CPU.Zflag;
+
+            console.log(PC, IR, accumulator, xReg, yReg, zFlag)
            
             let row: HTMLTableRowElement | null = cpuTable.rows[1]; 
 

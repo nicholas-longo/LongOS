@@ -616,7 +616,7 @@ module TSOS {
     
                 // load the program into memory
                 _MemoryAccessor.flashMemory(program, currentSegment)
-    
+                
                 // create the pcb using the manager, set the status, and update the table
                 const pcbEntry = _PCBManager.createPCB(8); // pass the priority of 8 as default for a program
                 pcbEntry.updateSegmentBaseAndLimit(currentSegment);

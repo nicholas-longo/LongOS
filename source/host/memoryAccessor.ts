@@ -95,22 +95,61 @@ module TSOS {
             this.write();
         }
 
-        // for now just overwrite any exisitng program at 0
+         
+
+        // public flashMemory(program: Array<number>, segment: number) {
+        //     const base = segment * 0x100; 
+        //     const startingAddress: number = base;
+
+        //     // Store the original MAR to restore it later
+        //     const originalMAR = this.getMAR();
+
+        //     for (let i = 0; i < program.length; i ++) {
+        //         this.writeImmediate(startingAddress + i, program[i]) // address increments by 1 each time and is passed as the MAR, correct code is passed as the MDR
+        //     }
+
+        //     // fill the rest of the memory segment with 0's when the program is loaded in
+        //     for (let i = program.length; i < 0x100; i ++) {
+        //         this.writeImmediate(base + i, 0);
+        //     }
+
+        //     // Restore the original MAR
+        //     this.setMAR(originalMAR);
+
+        //     // Restore the original MAR
+        //     this.setMAR(originalMAR);
+
+        //     Control.updateMemory(); 
+        // }
+
+        // Claude AI 12/3/24 helped me modify my flash memory program to not add addresses to the memory and interfere with my swapper
         public flashMemory(program: Array<number>, segment: number) {
-            const base = segment * 0x100; 
-            const startingAddress: number = base;
-
-            for (let i = 0; i < program.length; i ++) {
-                this.writeImmediate(startingAddress + i, program[i]) // address increments by 1 each time and is passed as the MAR, correct code is passed as the MDR
+        
+            const base = segment * 0x100;  // Calculate base address for the segment
+        
+            // Explicitly reset the segment before writing
+            for (let i = base; i < base + 0x100; i++) {
+                _Memory.getMemory()[i] = 0x00;
             }
-
-            // fill the rest of the memory segment with 0's when the program is loaded in
-            for (let i = program.length; i < 0x100; i ++) {
-                this.writeImmediate(base + i, 0);
+        
+            // Write program to memory
+            for (let i = 0; i < program.length; i++) {
+                const address = base + i;
+                const value = program[i];
+                
+                // Direct memory manipulation to avoid potential issues with writeImmediate
+                _Memory.getMemory()[address] = value;
             }
-
+        
+            // Fill remaining segment with zeros
+            for (let i = base + program.length; i < base + 0x100; i++) {
+                _Memory.getMemory()[i] = 0x00;
+            }
+        
             Control.updateMemory(); 
         }
+        
+
 
         // uses bitwise operations to properly format the high and low order bytes
         public setMARFromLittleEndian(HOB: number, LOB: number): void {

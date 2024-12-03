@@ -50,6 +50,7 @@ module TSOS {
                     _Swapper.rollIn(newHeadPCB.PID);
                 }
 
+                
                 Control.updateCPUTable(); // update the CPU table
             }
             
@@ -58,6 +59,11 @@ module TSOS {
         // take the head process and make sure the cpu starts off with those registers
         public loadRegistersAfterTermination(): void {
             const pcb = _PCBManager.pcbReadyQueue[0];
+
+            // if something is terminated and a process in disk is next up, roll it in
+            if (pcb.segment === -1) {
+                _Swapper.rollIn(pcb.PID); 
+            }
 
             _CPU.PC = pcb.PC
             _CPU.IR = pcb.IR
@@ -70,4 +76,3 @@ module TSOS {
     }
 
 }
-

@@ -71,7 +71,7 @@ var TSOS;
             _CPU.init(); //       There's more to do, like dealing with scheduling and such, but this would be a start. Pretty cool.
             Control.updateCPUTable();
             _Memory = new TSOS.Memory();
-            _Memory.init();
+            //Memory.init();
             Control.intializeMemoryTable(); // create the memory table
             _MemoryAccessor = new TSOS.MemoryAccessor(_Memory);
             // ... then set the host clock pulse ...
@@ -130,6 +130,7 @@ var TSOS;
             const xReg = _CPU.Xreg;
             const yReg = _CPU.Yreg;
             const zFlag = _CPU.Zflag;
+            console.log(PC, IR, accumulator, xReg, yReg, zFlag);
             let row = cpuTable.rows[1];
             // if the row does not exist, make one
             if (!row) {

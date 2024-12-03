@@ -24,8 +24,6 @@ var TSOS;
                 const prevHeadPCB = _PCBManager.pcbReadyQueue.shift(); // get the head PCB
                 _PCBManager.pcbReadyQueue.push(prevHeadPCB); // move it to the back of the ready queue
                 const newHeadPCB = _PCBManager.pcbReadyQueue[0]; // get the new head
-                console.log(_PCBManager.pcbReadyQueue);
-                // head is what is being rolled in, tail what was just rolled out
                 // update the necessary CPU registers 
                 _CPU.PC = newHeadPCB.PC;
                 _CPU.IR = newHeadPCB.IR;
@@ -44,6 +42,10 @@ var TSOS;
         // take the head process and make sure the cpu starts off with those registers
         loadRegistersAfterTermination() {
             const pcb = _PCBManager.pcbReadyQueue[0];
+            // if something is terminated and a process in disk is next up, roll it in
+            if (pcb.segment === -1) {
+                _Swapper.rollIn(pcb.PID);
+            }
             _CPU.PC = pcb.PC;
             _CPU.IR = pcb.IR;
             _CPU.Acc = pcb.acc;

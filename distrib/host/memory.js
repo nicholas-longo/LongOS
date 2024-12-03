@@ -9,17 +9,16 @@ var TSOS;
         MDR; // memory data register
         constructor() {
             //initializes the memory array
-            this.memory = [];
+            this.memory = new Array(3 * 256).fill(0x00);
             this.MAR = 0;
             this.MDR = 0;
-            this.init();
         }
         // initialize a blank memory array. the size 768 bytes so it can store 3 256 byte programs
-        init() {
-            for (let i = 0x00; i < 0x300; i += 0x01) {
-                this.memory[i] = 0x00;
-            }
-        }
+        // public init(): void {
+        //     for (let i: number = 0x00; i < 0x300; i += 0x01) {
+        //         this.memory[i] = 0x00; 
+        //     }
+        // }
         getMemory() {
             return this.memory;
         }
