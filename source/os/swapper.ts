@@ -60,10 +60,21 @@ module TSOS {
             const pcb = _PCBManager.findPCB(PID);
             const pcbSegment = pcb.segment; 
 
+            
+            //get the program stored with the PID 
+            const program: number[] = _MemoryAccessor.dumpMemory(pcb.base, pcb.limit);
+
+            // convert the array of hex digits to string
+            const programString: string = program
+                .map((value) => value.toString(16).toUpperCase().padStart(2, '0')) // Convert to hex and ensure 2 digits
+                .join(''); // Join all values into a single string
+
+            console.log(programString);
+           
             _MemoryManager.deallocateSegement(pcbSegment);
 
             // create a swap file for its memory contents
-            this.createSwapFile(PID, "A9038D4100A9018D4000AC4000A201FFEE4000AE4000EC4100D0EFA9448D4200A94F8D4300A94E8D4400A9458D4500A9008D4600A202A042FF00") // AA is temp until i can get the right program
+            this.createSwapFile(PID, programString);
 
             // update the location, seg, base, and limit accordingly
             pcb.updatePCBForSwapFile(); 

@@ -97,6 +97,21 @@ var TSOS;
             const address = (HOB << 8) | LOB;
             this.setMAR(address);
         }
+        // return a specific chunk of memory
+        dumpMemory(base, limit) {
+            const originalMAR = this.getMAR();
+            let memoryDump = [];
+            console.log(base, limit);
+            for (let address = base + 1; address < limit; address++) {
+                this.setMAR(address); // set the MAR 
+                this.read(); // read to set the MDR
+                const value = this.getMDR();
+                memoryDump.push(value); // add the value of the MDR into an array
+            }
+            this.setMAR(originalMAR); // set it back to the original value after retrieving the memory
+            console.log(memoryDump);
+            return memoryDump;
+        }
     }
     TSOS.MemoryAccessor = MemoryAccessor;
 })(TSOS || (TSOS = {}));
