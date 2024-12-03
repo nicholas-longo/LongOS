@@ -26,9 +26,16 @@ var TSOS;
         }
         rollOut(PID) {
             //deallocate the memory segment where the tail is (one that most recently ran)
+            const pcb = _PCBManager.findPCB(PID);
+            const pcbSegment = pcb.segment;
+            _MemoryManager.deallocateSegement(pcbSegment);
+            console.log(_MemoryManager.memoryAvailability);
             // create a swap file for its memory contents
+            this.createSwapFile(PID, "AA"); // AA is temp until i can get the right program
             // update the location, seg, base, and limit accordingly
+            pcb.updatePCBForSwapFile();
             // update the pcb table
+            pcb.updatePCBTable();
         }
     }
     TSOS.Swapper = Swapper;

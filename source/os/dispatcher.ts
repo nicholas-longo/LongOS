@@ -53,8 +53,6 @@ module TSOS {
                     _Swapper.rollIn(newHeadPCB.PID);
                 }
 
-                console.log(_PCBManager.pcbReadyQueue)
-
                 Control.updateCPUTable(); // update the CPU table
             }
             

@@ -38,7 +38,6 @@ var TSOS;
                     _Swapper.rollOut(prevHeadPCB.PID);
                     _Swapper.rollIn(newHeadPCB.PID);
                 }
-                console.log(_PCBManager.pcbReadyQueue);
                 TSOS.Control.updateCPUTable(); // update the CPU table
             }
         }
