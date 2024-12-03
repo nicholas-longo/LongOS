@@ -92,6 +92,9 @@ var TSOS;
             this.base = -1;
             this.limit = -1;
         }
+        updatePCBLocation(location) {
+            this.location = location;
+        }
         updateSegmentBaseAndLimit(segment) {
             this.segment = segment;
             this.base = segment * 0x100; // i thought this math to figure out the base and segment is pretty cool and avoids passing some parameters
