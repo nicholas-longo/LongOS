@@ -677,7 +677,7 @@ module TSOS {
             }
 
             //if you want to run a pcb from disk, need to put it into memory first
-            if(pcb.segment === -1 && !calledFromRunAll) { // this means run was called directly and the user wants that program from disk to run. If it is called from runAll let the swapper and the scheduler do their thing
+            if(pcb.segment === -1 && !calledFromRunAll && !_CPU.isExecuting) { // this means run was called directly and the user wants that program from disk to run. If it is called from runAll let the swapper and the scheduler do their thing
                 _StdOut.putText(`Swapping PID: ${PID} to memory from disk`);
                 _Kernel.krnForceFromDiskToMemory(PID); 
             }
