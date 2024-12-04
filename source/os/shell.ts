@@ -644,7 +644,7 @@ module TSOS {
         // terminate the existing pcb
         // prompt the cpu to begin its work
         // will have to change the status of the pcb block a few times, but I will add the logic for that a bit later because that is for project 3
-        public shellRun(args: string[]) {
+        public shellRun(args: string[], calledFromRunAll: boolean = false) {
             // TODO if a pid that is on disk is called make sure to swap something out of memory (the one in the first slot)
             
             if (args.length <=0) { // make sure there is a PID given
@@ -676,11 +676,11 @@ module TSOS {
                     break;
             }
 
-            // if you want to run a pcb from disk, need to put it into memory first
-            // if(pcb.segment === -1) {
-            //     _StdOut.putText(`Swapping PID: ${PID} to memory from disk`);
-            //     _Kernel.krnForceFromDiskToMemory(PID); 
-            // }
+            //if you want to run a pcb from disk, need to put it into memory first
+            if(pcb.segment === -1 && !calledFromRunAll) { // this means run was called directly and the user wants that program from disk to run. If it is called from runAll let the swapper and the scheduler do their thing
+                _StdOut.putText(`Swapping PID: ${PID} to memory from disk`);
+                _Kernel.krnForceFromDiskToMemory(PID); 
+            }
             
 
         }
@@ -698,7 +698,7 @@ module TSOS {
                 const PIDAsString = pcbQueue[i].PID.toString();
                 if(pcbQueue[i].Status === "Resident") { // only pass if the program is resident 
                     residentPCBs.push(pcbQueue[i]);
-                    _OsShell.shellRun([PIDAsString])
+                    _OsShell.shellRun([PIDAsString], true);
                 }
             }
 

@@ -567,7 +567,7 @@ module TSOS {
             }
 
             _Swapper.rollOut(PIDFromMemory);
-            _Swapper.rollIn(PIDFromDisk)
+            _Swapper.rollIn(PIDFromDisk);
 
         }
 
