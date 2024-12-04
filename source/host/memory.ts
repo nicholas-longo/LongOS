@@ -52,6 +52,7 @@ module TSOS {
         // write the contents of the MDR to memory at the location indicated by the MAR
         public write(baseAdjustment: number = 0): void {
             this.memory[this.MAR + baseAdjustment] = this.MDR;
+
         }
 
         //MAR, MDR, and memory array are all overwritten with 0's

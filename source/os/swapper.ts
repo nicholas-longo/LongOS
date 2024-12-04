@@ -49,8 +49,9 @@ module TSOS {
             pcb.updatePCBLocation("Memory");
             pcb.updateSegmentBaseAndLimit(segment);
 
+            
             // load the program into memory
-            _MemoryAccessor.flashMemory(program, segment)
+            _MemoryAccessor.flashMemory(program, segment);
 
             // update the pcb table
             pcb.updatePCBTable();
