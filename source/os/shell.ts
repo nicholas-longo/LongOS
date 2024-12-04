@@ -659,6 +659,7 @@ module TSOS {
                 return;
             }
 
+            
             const status = pcb.Status; 
             switch(status) {
                 case("Resident"): 
@@ -674,6 +675,14 @@ module TSOS {
                     _StdOut.putText(`Process ID: ${PID} is already terminated.`)
                     break;
             }
+
+            // if you want to run a pcb from disk, need to put it into memory first
+            if(pcb.segment === -1) {
+                _StdOut.putText(`Swapping PID: ${PID} to memory from disk`);
+                _Kernel.krnForceFromDiskToMemory(PID); 
+            }
+            
+
         }
 
         public clearmem(): void {

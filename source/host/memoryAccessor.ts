@@ -122,7 +122,7 @@ module TSOS {
         //     Control.updateMemory(); 
         // }
 
-        // Claude AI 12/3/24 helped me modify my flash memory program to not add addresses to the memory and interfere with my swapper
+        //Claude AI 12/3/24 helped me modify my flash memory program to not add addresses to the memory and interfere with my swapper
         public flashMemory(program: Array<number>, segment: number) {
         
             const base = segment * 0x100;  // Calculate base address for the segment

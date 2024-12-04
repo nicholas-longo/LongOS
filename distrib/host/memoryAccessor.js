@@ -94,7 +94,7 @@ var TSOS;
         //     this.setMAR(originalMAR);
         //     Control.updateMemory(); 
         // }
-        // Claude AI 12/3/24 helped me modify my flash memory program to not add addresses to the memory and interfere with my swapper
+        //Claude AI 12/3/24 helped me modify my flash memory program to not add addresses to the memory and interfere with my swapper
         flashMemory(program, segment) {
             const base = segment * 0x100; // Calculate base address for the segment
             // Explicitly reset the segment before writing

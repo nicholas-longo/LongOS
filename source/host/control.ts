@@ -160,8 +160,6 @@ module TSOS {
             const xReg = _CPU.Xreg;
             const yReg = _CPU.Yreg;
             const zFlag = _CPU.Zflag;
-
-            console.log(PC, IR, accumulator, xReg, yReg, zFlag)
            
             let row: HTMLTableRowElement | null = cpuTable.rows[1]; 
 

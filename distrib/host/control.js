@@ -130,7 +130,6 @@ var TSOS;
             const xReg = _CPU.Xreg;
             const yReg = _CPU.Yreg;
             const zFlag = _CPU.Zflag;
-            console.log(PC, IR, accumulator, xReg, yReg, zFlag);
             let row = cpuTable.rows[1];
             // if the row does not exist, make one
             if (!row) {

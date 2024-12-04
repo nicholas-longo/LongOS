@@ -556,6 +556,21 @@ module TSOS {
            
         }
 
+        // force a requested process from disk to take the first available memory slot
+        public krnForceFromDiskToMemory(PIDFromDisk: number): void {
+            let PIDFromMemory:number = 0; 
+            for (let pcb of _PCBManager.pcbQueue) {
+                if(pcb.segmemt !== -1) {
+                    PIDFromMemory = pcb.PID; 
+                    break;
+                }
+            }
+
+            _Swapper.rollOut(PIDFromMemory);
+            _Swapper.rollIn(PIDFromDisk)
+
+        }
+
         
     }
 }
