@@ -127,6 +127,8 @@ let WRITE_CONTENT_LENGTH = 0;
 let BASE_FOR_WRITING_ON_SWAP = 0; 
 let ROLLING_IN_FLAG:boolean = false; 
 
+let CURRENT_SCHEDULE = "RR"
+
 
 var onDocumentLoad = function() {
 	TSOS.Control.hostInit();

@@ -578,6 +578,17 @@ module TSOS {
 
         }
 
+        public krnSetSchedule(schedule: string) {
+            if (schedule === "RR") {
+                CURRENT_SCHEDULE = "RR";
+                _CPUScheduler.setQuantum(6); // defualt value for RR
+            }
+            if (schedule === "FCFS") {
+                CURRENT_SCHEDULE = "FCFS";
+                _CPUScheduler.setQuantum(Number.MAX_SAFE_INTEGER -1); // set quantum to a huge number
+            }
+        }
+
         
     }
 }

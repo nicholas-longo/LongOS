@@ -193,10 +193,22 @@ module TSOS {
                 "<existing filename> <new filename> - renames the existing file name to the new file name");
             this.commandList[this.commandList.length] = sc;
 
-            // format 
+            // ls 
             sc = new ShellCommand(this.ls,
                 "ls",
                 "- list the files currently stored on disk");
+            this.commandList[this.commandList.length] = sc;
+            
+             // getSchedule
+             sc = new ShellCommand(this.getSchedule,
+                "getschedule",
+                "- prints the current CPU scheduling algorithm");
+            this.commandList[this.commandList.length] = sc;
+
+            // setSchedule
+            sc = new ShellCommand(this.setSchedule,
+                "setschedule",
+                "- sets CPU scheduling algorithm to selected choice.");
             this.commandList[this.commandList.length] = sc;
 
 
@@ -452,6 +464,12 @@ module TSOS {
                         break;
                     case "ls":
                         _StdOut.putText("List all those files that you worked so hard to make")
+                        break;
+                    case "getSchedule":
+                        _StdOut.putText("I am pretty sure you know what schedule it is already. But whatever.")
+                        break;
+                    case "setSchedule":
+                        _StdOut.putText("Whattya want, FCFS or RR?? I know, not priority!")
                         break;
                     default:
                         _StdOut.putText("No manual entry for " + args[0] + ".");
@@ -798,6 +816,12 @@ module TSOS {
                 return; 
             }
 
+            if(CURRENT_SCHEDULE === "FCFS") {
+                _StdOut.putText("Can only change the quantum for RR scheduling.");
+                return; 
+            }
+
+
             _CPUScheduler.setQuantum(quantum);
             _StdOut.putText(`Quantum value set to ${quantum}.`);
         }
@@ -998,6 +1022,41 @@ module TSOS {
             } else {
                 _Kernel.krnLS(false);
             }
+        }
+
+        public getSchedule() {
+            if (CURRENT_SCHEDULE === "RR") {
+                _StdOut.putText("The scheduler is using the round robin algorithm.");
+                return;
+            } 
+
+            if (CURRENT_SCHEDULE === "FCFS") {
+                _StdOut.putText("The scheduler is using the first come, first serve algorithm.");
+                return;
+            }
+        }
+
+        public setSchedule(args: string[]) {
+            if (args.length <= 0) {
+                _StdOut.putText("Usage: setSchedule <RR || FCFS>. Please supply a scheduling algorithm.");
+                return; 
+            }
+
+            if(args[0].toUpperCase() !== "RR" && args[0].toUpperCase() !== "FCFS") {
+                _StdOut.putText("Please supply a valid scheduling algorithm (RR || FCFS).");
+                return; 
+            }
+
+            if(args[0].toUpperCase() === "RR") {
+                _StdOut.putText("CPU scheduling algorithm changed to round robin.");
+            }
+
+            if(args[0].toUpperCase() === "FCFS") {
+                _StdOut.putText("CPU scheduling algorithm changed to first come, first serve.");
+            }
+
+            _Kernel.krnSetSchedule(args[0].toUpperCase());
+
         }
 
 

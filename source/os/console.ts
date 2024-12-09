@@ -11,7 +11,8 @@ module TSOS {
         private commands: string[] = ["ver", "help", "shutdown", "cls", "man", "trace", "rot13", 
                                     "prompt", "date", "whereami", "rickroll", "status", "bsod", "load", 
                                     "run", "clearmem", "runall", "ps", "kill", "killall", "quantum",
-                                    "format", "create", "read", "write", "delete", "copy", "rename", "ls"];
+                                    "format", "create", "read", "write", "delete", "copy", "rename", "ls",
+                                    "getschedule", "setschedule"];
 
         private commandHistoryArray: string[]; 
         private currentCommandHistoryIndex: number;
