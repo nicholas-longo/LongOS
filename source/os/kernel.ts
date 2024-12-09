@@ -447,9 +447,16 @@ module TSOS {
             }
         }
 
-        public krnLS() {
+        public krnLS(all: boolean) {
             this.krnTrace(`Attempting to list all files.`);
-            const result = _krnDiskSystemDeviceDriver.ls();
+
+            let result: number = 0; 
+            if(all) {
+                result = _krnDiskSystemDeviceDriver.ls(true);
+            } else {
+                result = _krnDiskSystemDeviceDriver.ls(false);
+            }
+            
 
             switch(result) {
                 case(0):

@@ -181,7 +181,7 @@
         // 0 okay
         // 1 disk not formatted 
         // 2 no files created
-        public ls(): number {
+        public ls(all: boolean): number {
             if(!_DiskFormatted) {
                 return 1; 
             }
@@ -189,7 +189,6 @@
             // loop through the directories, get the file name of each file and convert it to a string, store it to an array
             // if the array is empty at the end of the loop, return 2 (no files currently exist)
             // otherwise join the array on " " and save it to a global variable
-
             let files:string[] = [];
             let value = "";
             for (let s = 0; s < NUM_SECTORS; s ++) {
@@ -198,13 +197,17 @@
                     value = sessionStorage.getItem(`0${s}${b}`)
                     if (value.substring(0,1) === "1") { // if the first character is a 0, that means it is not in use and its value should be returned
                         let hexString = value.substring(4); // remove the header
-                        
-                        while (hexString.length >= 2 && hexString.slice(-2) === "00") {
-                            hexString = hexString.substring(0, hexString.length - 2); // Remove the last two characters
-                        }
-                    
-                       let fileName = Utils.hexStringToCharacters(hexString); // convert the hex to a string
-                       files.push(fileName); // add it to the files array
+                        let hexBytes = parseInt(hexString.substring(0,2), 16);
+                        console.log(hexBytes)
+                        let firstCharacter = Utils.byteToChar(hexBytes);
+                        console.log(firstCharacter)
+                        if(all || (firstCharacter !== "$" && firstCharacter !== ".")) { // if its all, get everything. if not, ignore any file names starting with $ or .
+                            while (hexString.length >= 2 && hexString.slice(-2) === "00") {
+                                hexString = hexString.substring(0, hexString.length - 2); // Remove the last two characters
+                            }
+                            let fileName = Utils.hexStringToCharacters(hexString); // convert the hex to a string
+                            files.push(fileName); // add it to the files array
+                        } 
                     }
                 }
             }

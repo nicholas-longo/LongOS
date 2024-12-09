@@ -147,7 +147,7 @@ var TSOS;
         // 0 okay
         // 1 disk not formatted 
         // 2 no files created
-        ls() {
+        ls(all) {
             if (!_DiskFormatted) {
                 return 1;
             }
@@ -162,11 +162,17 @@ var TSOS;
                     value = sessionStorage.getItem(`0${s}${b}`);
                     if (value.substring(0, 1) === "1") { // if the first character is a 0, that means it is not in use and its value should be returned
                         let hexString = value.substring(4); // remove the header
-                        while (hexString.length >= 2 && hexString.slice(-2) === "00") {
-                            hexString = hexString.substring(0, hexString.length - 2); // Remove the last two characters
+                        let hexBytes = parseInt(hexString.substring(0, 2), 16);
+                        console.log(hexBytes);
+                        let firstCharacter = TSOS.Utils.byteToChar(hexBytes);
+                        console.log(firstCharacter);
+                        if (all || (firstCharacter !== "$" && firstCharacter !== ".")) { // if its all, get everything. if not, ignore any file names starting with $ or .
+                            while (hexString.length >= 2 && hexString.slice(-2) === "00") {
+                                hexString = hexString.substring(0, hexString.length - 2); // Remove the last two characters
+                            }
+                            let fileName = TSOS.Utils.hexStringToCharacters(hexString); // convert the hex to a string
+                            files.push(fileName); // add it to the files array
                         }
-                        let fileName = TSOS.Utils.hexStringToCharacters(hexString); // convert the hex to a string
-                        files.push(fileName); // add it to the files array
                     }
                 }
             }

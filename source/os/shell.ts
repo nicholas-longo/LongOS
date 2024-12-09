@@ -992,8 +992,12 @@ module TSOS {
         }
 
         
-        public ls() {
-            _Kernel.krnLS();
+        public ls(args: string[]) {
+            if(args[0] === "-a"){
+                _Kernel.krnLS(true)
+            } else {
+                _Kernel.krnLS(false);
+            }
         }
 
 

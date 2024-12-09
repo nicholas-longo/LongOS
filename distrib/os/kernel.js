@@ -388,9 +388,15 @@ var TSOS;
                 this.krnTrace(`Error when attempting to write to file with name ${fileName}.`);
             }
         }
-        krnLS() {
+        krnLS(all) {
             this.krnTrace(`Attempting to list all files.`);
-            const result = _krnDiskSystemDeviceDriver.ls();
+            let result = 0;
+            if (all) {
+                result = _krnDiskSystemDeviceDriver.ls(true);
+            }
+            else {
+                result = _krnDiskSystemDeviceDriver.ls(false);
+            }
             switch (result) {
                 case (0):
                     _StdOut.putText(FILES_ON_DISK);

@@ -791,8 +791,13 @@ var TSOS;
             }
             _Kernel.krnRenameFile(originalFileName, newFileName);
         }
-        ls() {
-            _Kernel.krnLS();
+        ls(args) {
+            if (args[0] === "-a") {
+                _Kernel.krnLS(true);
+            }
+            else {
+                _Kernel.krnLS(false);
+            }
         }
     }
     TSOS.Shell = Shell;
