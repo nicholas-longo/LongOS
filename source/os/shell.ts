@@ -842,6 +842,11 @@ module TSOS {
                 _StdOut.putText("Usage: read <filename>. Please supply a filename.");
                 return; 
             }
+            
+            if(args[0].charAt(0) === "$") {
+                _StdOut.putText("Cannot read from swap files.");
+                return; 
+            }
 
             _Kernel.krnReadFile(args[0])
         }
@@ -870,6 +875,11 @@ module TSOS {
             // if the contents do not start and end with a quote
             if(contents.charAt(0) !== '"' || contents.charAt(contents.length - 1) !== '"') {
                 _StdOut.putText("Content needs to be written between \" marks.");
+                return; 
+            }
+
+            if(fileName.charAt(0) === "$") {
+                _StdOut.putText("Cannot write to swap files.");
                 return; 
             }
 
@@ -912,8 +922,14 @@ module TSOS {
             }
 
             // protect against swap files
+            if(args[0].charAt(0) === "$") {
+                _StdOut.putText("Cannot copy contents from swap file.");
+                return; 
+           }
+
+            // protect against swap files
             if(args[1].charAt(0) === "$") {
-                _StdOut.putText("Cannot rename file to any name that begins with '$'.");
+                _StdOut.putText("Cannot copy file to a with a name that begins with '$'.");
                 return; 
             }
 
@@ -921,7 +937,7 @@ module TSOS {
             let newFileName = args[1];
 
             if(originalFileName === newFileName) {
-                _StdOut.putText("Cannot rename file to previous name, pick a different name.");
+                _StdOut.putText("Cannot copy file to previous name, pick a different name.");
                 return;
             }
 
@@ -948,6 +964,12 @@ module TSOS {
             if(args[1].length > MAX_FILE_NAME_LENGTH) {
                 _StdOut.putText(`File names cannot exceed ${MAX_FILE_NAME_LENGTH} characters. Please select a different name to rename to.`);
                 return;
+            }
+
+            // protect against swap files
+            if(args[0].charAt(0) === "$") {
+                _StdOut.putText("Cannot rename swap files.");
+                return; 
             }
 
             // protect against swap files
