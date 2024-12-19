@@ -1,1 +1,4 @@
 zLabAnswers/
+
+# Ignore all .log files
+*.log
